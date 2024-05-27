@@ -1,0 +1,136 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+bgp:
+  activate:
+    ipv6:
+    - ebgp
+  advertise_loopback: true
+  as: 64510
+  community:
+    ebgp:
+    - standard
+    - extended
+    ibgp:
+    - standard
+    - extended
+    ibgp_localas:
+    - standard
+    - extended
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv6: false
+    as: 64510
+    ipv6: 2001:db8:64:22::22
+    name: spine2
+    type: ibgp
+  - activate:
+      ipv6: true
+    as: 64521
+    ifindex: 1
+    ipv6: true
+    local_if: eth1
+    name: leaf1
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64522
+    ifindex: 2
+    ipv6: true
+    local_if: eth2
+    name: leaf2
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64523
+    ifindex: 3
+    ipv6: true
+    local_if: eth3
+    name: leaf3
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64524
+    ifindex: 4
+    ipv6: true
+    local_if: eth4
+    name: leaf4
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.1
+box: ghcr.io/sysoleg/vyos-container
+clab:
+  binds:
+  - /lib/modules:/lib/modules
+  kind: linux
+hostname: clab-unnumbered-spine1
+interfaces:
+- ifindex: 1
+  ifname: eth1
+  ipv6: true
+  linkindex: 1
+  mtu: 1500
+  name: spine1 -> leaf1
+  neighbors:
+  - ifname: eth1
+    ipv6: true
+    node: leaf1
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 2
+  ifname: eth2
+  ipv6: true
+  linkindex: 2
+  mtu: 1500
+  name: spine1 -> leaf2
+  neighbors:
+  - ifname: eth1
+    ipv6: true
+    node: leaf2
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 3
+  ifname: eth3
+  ipv6: true
+  linkindex: 3
+  mtu: 1500
+  name: spine1 -> leaf3
+  neighbors:
+  - ifname: eth1
+    ipv6: true
+    node: leaf3
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 4
+  ifname: eth4
+  ipv6: true
+  linkindex: 4
+  mtu: 1500
+  name: spine1 -> leaf4
+  neighbors:
+  - ifname: eth1
+    ipv6: true
+    node: leaf4
+  pool: core
+  role: external
+  type: p2p
+loopback:
+  ifindex: 0
+  ifname: dum0
+  ipv6: 2001:db8:64:11::11/64
+  neighbors: []
+  type: loopback
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.101
+  mac: 08:4f:a9:00:00:01
+module:
+- bgp
+mtu: 1500
+router_id: 10.0.0.1

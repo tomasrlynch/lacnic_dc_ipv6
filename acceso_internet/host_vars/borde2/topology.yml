@@ -1,0 +1,130 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/acceso_internet/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+bgp:
+  activate:
+    ipv6:
+    - ibgp
+    - ebgp
+  advertise_loopback: true
+  as: 64500
+  community:
+    ebgp:
+    - standard
+    - extended
+    ibgp:
+    - standard
+    - extended
+    ibgp_localas:
+    - standard
+    - extended
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv6: true
+    as: 64500
+    ipv6: 2001:db8:64::1
+    name: borde1
+    type: ibgp
+  - activate:
+      ipv6: true
+    as: 65002
+    ifindex: 1
+    ipv6: 2001:db8:500:502::1
+    name: transito2
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 4210010001
+    ifindex: 3
+    ipv6: 2001:db8:ff:2:1::1
+    name: spine1
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 4210010001
+    ifindex: 4
+    ipv6: 2001:db8:ff:2:2::1
+    name: spine2
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.8
+box: ghcr.io/sysoleg/vyos-container
+clab:
+  binds:
+  - /lib/modules:/lib/modules
+  kind: linux
+hostname: clab-acceso_inter-borde2
+interfaces:
+- ifindex: 1
+  ifname: eth1
+  ipv6: 2001:db8:500:502::/127
+  linkindex: 2
+  mtu: 1500
+  name: borde2 -> transito2
+  neighbors:
+  - ifname: eth1
+    ipv6: 2001:db8:500:502::1/127
+    node: transito2
+  role: external
+  type: p2p
+- ifindex: 2
+  ifname: eth2
+  ipv6: 2001:db8:ff::1/127
+  isis:
+    network_type: point-to-point
+    passive: false
+  linkindex: 3
+  mtu: 1500
+  name: borde2 -> borde1
+  neighbors:
+  - ifname: eth2
+    ipv6: 2001:db8:ff::/127
+    node: borde1
+  type: p2p
+- ifindex: 3
+  ifname: eth3
+  ipv6: 2001:db8:ff:2:1::/127
+  linkindex: 6
+  mtu: 1500
+  name: borde2 -> spine1
+  neighbors:
+  - ifname: eth2
+    ipv6: 2001:db8:ff:2:1::1/127
+    node: spine1
+  role: external
+  type: p2p
+- ifindex: 4
+  ifname: eth4
+  ipv6: 2001:db8:ff:2:2::/127
+  linkindex: 7
+  mtu: 1500
+  name: borde2 -> spine2
+  neighbors:
+  - ifname: eth2
+    ipv6: 2001:db8:ff:2:2::1/127
+    node: spine2
+  role: external
+  type: p2p
+isis:
+  af:
+    ipv6: true
+  area: '49.0001'
+  type: level-2
+loopback:
+  ifindex: 0
+  ifname: dum0
+  ipv6: 2001:db8:64::2/128
+  neighbors: []
+  type: loopback
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.108
+  mac: 08:4f:a9:00:00:08
+module:
+- bgp
+- isis
+mtu: 1500
+router_id: 10.0.0.8

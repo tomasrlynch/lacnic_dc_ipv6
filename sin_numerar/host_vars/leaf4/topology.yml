@@ -1,0 +1,95 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+bgp:
+  activate:
+    ipv6:
+    - ebgp
+  advertise_loopback: true
+  as: 64524
+  community:
+    ebgp:
+    - standard
+    - large
+    - extended
+    ibgp:
+    - standard
+    - large
+    - extended
+    ibgp_localas:
+    - standard
+    - large
+    - extended
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv6: true
+    as: 64510
+    ifindex: 1
+    ipv6: true
+    local_if: eth1
+    name: spine1
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64510
+    ifindex: 2
+    ipv6: true
+    local_if: eth2
+    name: spine2
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.6
+box: quay.io/frrouting/frr:9.1.0
+clab:
+  binds:
+  - clab_files/leaf4/daemons:/etc/frr/daemons
+  - clab_files/leaf4/hosts:/etc/hosts
+  config_templates:
+  - daemons:/etc/frr/daemons
+  - hosts:/etc/hosts
+  kind: linux
+hostname: clab-unnumbered-leaf4
+interfaces:
+- ifindex: 1
+  ifname: eth1
+  ipv6: true
+  linkindex: 4
+  mtu: 1500
+  name: leaf4 -> spine1
+  neighbors:
+  - ifname: eth4
+    ipv6: true
+    node: spine1
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 2
+  ifname: eth2
+  ipv6: true
+  linkindex: 8
+  mtu: 1500
+  name: leaf4 -> spine2
+  neighbors:
+  - ifname: eth4
+    ipv6: true
+    node: spine2
+  pool: core
+  role: external
+  type: p2p
+loopback:
+  ifindex: 0
+  ifname: lo0
+  ipv6: 2001:db8:64:4::4/64
+  neighbors: []
+  type: loopback
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.106
+  mac: 08:4f:a9:00:00:06
+module:
+- bgp
+mtu: 1500
+router_id: 10.0.0.6

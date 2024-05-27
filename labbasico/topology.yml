@@ -1,0 +1,101 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host1:
+        id: 1
+    host2:
+        id: 2
+    host3:
+        id: 3
+    host4:
+        id: 4
+    leaf1:
+        id: 10
+        bgp.as: 4220010001
+        loopback:
+            ipv6: 2001:db8:64:1::1/128
+    leaf2:
+        id: 11
+        bgp.as: 4220010002
+        loopback:
+            ipv6: 2001:db8:64:2::2/128
+    leaf3:
+        id: 12
+        bgp.as: 4220010003
+        loopback:
+            ipv6: 2001:db8:64:3::3/128
+    leaf4:
+        id: 13
+        bgp.as: 4220010004
+        loopback:
+            ipv6: 2001:db8:64:4::4/128
+    spine1:
+        id: 5
+        loopback:
+            ipv6: 2001:db8:64:11::11/128
+    spine2:
+        id: 6
+        loopback:
+            ipv6: 2001:db8:64:22::22/128
+
+groups:
+    spine:
+        members: [ spine1, spine2 ]
+        bgp.as: 4210010001
+    hosts:
+        members: [ host1, host2, host3, host4 ]
+        device: linux
+links:
+    - spine1:
+      leaf1:
+      prefix.ipv6: 2001:db8:ff:11::/64
+    - spine1:
+      leaf2:
+      prefix.ipv6: 2001:db8:ff:12::/64
+    - spine1:
+      leaf3:
+      prefix.ipv6: 2001:db8:ff:13::/64
+    - spine1:
+      leaf4:
+      prefix.ipv6: 2001:db8:ff:14::/64
+    - spine2:
+      leaf1:
+      prefix.ipv6: 2001:db8:ff:21::/64
+    - spine2:
+      leaf2:
+      prefix.ipv6: 2001:db8:ff:22::/64
+    - spine2:
+      leaf3:
+      prefix.ipv6: 2001:db8:ff:23::/64
+    - spine2:
+      leaf4:
+      prefix.ipv6: 2001:db8:ff:24::/64
+    - host1:
+      leaf1:
+      prefix.ipv6: 2001:db8:aa:1::/64
+    - host2:
+      leaf2:
+      prefix.ipv6: 2001:db8:aa:2::/64
+    - host3:
+      leaf3:
+      prefix.ipv6: 2001:db8:aa:3::/64
+    - host4:
+      leaf4:
+      prefix.ipv6: 2001:db8:aa:4::/64

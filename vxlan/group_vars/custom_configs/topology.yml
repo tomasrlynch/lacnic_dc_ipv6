@@ -1,0 +1,5 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_custom_config:
+- ebgp.multihop

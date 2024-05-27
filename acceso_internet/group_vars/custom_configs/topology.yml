@@ -1,0 +1,5 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/acceso_internet/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_custom_config:
+- transito.j2

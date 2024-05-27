@@ -1,0 +1,166 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host1:
+        id: 1
+    host2:
+        id: 2
+    host3:
+        id: 3
+    host4:
+        id: 4
+    leaf1:
+        id: 10
+        bgp.as: 4220010001
+        loopback:
+            ipv6: 2001:db8:64:1::1/128
+    leaf2:
+        id: 11
+        bgp.as: 4220010002
+        loopback:
+            ipv6: 2001:db8:64:2::2/128
+    leaf3:
+        id: 12
+        bgp.as: 4220010003
+        loopback:
+            ipv6: 2001:db8:64:3::3/128
+    leaf4:
+        id: 13
+        bgp.as: 4220010004
+        loopback:
+            ipv6: 2001:db8:64:4::4/128
+    spine1:
+        id: 5
+        loopback:
+            ipv6: 2001:db8:64:11::11/128
+    spine2:
+        id: 6
+        loopback:
+            ipv6: 2001:db8:64:22::22/128
+    borde1:
+        loopback:
+            ipv6: 2001:db8:64::1/128
+    borde2:
+        loopback:
+            ipv6: 2001:db8:64::2/128
+    transito1:
+        loopback:
+            ipv6: 2001:db8:501::1/48
+        bgp.as: 65001
+    transito2:
+        loopback:
+            ipv6: 2001:db8:502::1/48
+        bgp.as: 65002
+
+groups:
+    spine:
+        members: [ spine1, spine2 ]
+        bgp.as: 4210010001
+    hosts:
+        members: [ host1, host2, host3, host4 ]
+        device: linux
+    borde:
+        members: [ borde1, borde2 ]
+        device: vyos
+        module: [ bgp, isis ]
+        bgp.activate.ipv6: [ ibgp, ebgp ]
+        bgp.as: 64500
+        #config: [ borde.j2 ]
+    transito:
+        members: [ transito1, transito2 ]
+        device: vyos
+        config: [ transito.j2 ]
+links:
+    #
+    # Borde a Transito
+    #
+    - borde1:
+      transito1:
+      prefix.ipv6: 2001:db8:500:501::/127
+    - borde2:
+      transito2:
+      prefix.ipv6: 2001:db8:500:502::/127
+    #
+    # Borde a Borde
+    #
+    - borde1:
+      borde2:
+      prefix.ipv6: 2001:db8:ff::/127
+    #
+    # Borde a Spine
+    #
+    - borde1:
+      spine1:
+      prefix.ipv6: 2001:db8:ff:1:1::/127
+    - borde1:
+      spine2:
+      prefix.ipv6: 2001:db8:ff:1:2::/127
+    - borde2:
+      spine1:
+      prefix.ipv6: 2001:db8:ff:2:1::/127
+    - borde2:
+      spine2:
+      prefix.ipv6: 2001:db8:ff:2:2::/127
+    #
+    # Spine a Leaf
+    #
+    - spine1:
+      leaf1:
+      prefix.ipv6: 2001:db8:ff:11::/64
+    - spine1:
+      leaf2:
+      prefix.ipv6: 2001:db8:ff:12::/64
+    - spine1:
+      leaf3:
+      prefix.ipv6: 2001:db8:ff:13::/64
+    - spine1:
+      leaf4:
+      prefix.ipv6: 2001:db8:ff:14::/64
+    - spine2:
+      leaf1:
+      prefix.ipv6: 2001:db8:ff:21::/64
+    - spine2:
+      leaf2:
+      prefix.ipv6: 2001:db8:ff:22::/64
+    - spine2:
+      leaf3:
+      prefix.ipv6: 2001:db8:ff:23::/64
+    - spine2:
+      leaf4:
+      prefix.ipv6: 2001:db8:ff:24::/64
+    #
+    # Host a Leaf
+    #
+    - host1:
+      leaf1:
+      prefix.ipv6: 2001:db8:aa:1::/64
+    - host2:
+      leaf2:
+      prefix.ipv6: 2001:db8:aa:2::/64
+    - host3:
+      leaf3:
+      prefix.ipv6: 2001:db8:aa:3::/64
+    - host4:
+      leaf4:
+      prefix.ipv6: 2001:db8:aa:4::/64
+    #
+    # Transito a Transito
+    #
+    - transito1 - transito2

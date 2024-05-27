@@ -1,0 +1,12 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vecinos_dinamicos/topology.yml', 'package:topology-defaults.yml']
+#
+
+ansible_connection: docker
+ansible_network_os: frr
+ansible_python_interpreter: auto_silent
+ansible_user: root
+netlab_initial: always
+netlab_show_command:
+- vtysh
+- -c
+- show $@

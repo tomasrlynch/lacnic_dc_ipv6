@@ -1,0 +1,88 @@
+name: unnumbered
+
+mgmt:
+  network: netlab_mgmt
+  ipv4-subnet: 192.168.121.0/24
+  # Note: 'start' not validated
+topology:
+  nodes:
+    spine1:
+      mgmt-ipv4: 192.168.121.101
+      kind: linux
+      image: ghcr.io/sysoleg/vyos-container
+      runtime: docker
+      group: spine,as64510
+      binds:
+      - /lib/modules:/lib/modules
+    spine2:
+      mgmt-ipv4: 192.168.121.102
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: spine,as64510
+      binds:
+      - clab_files/spine2/daemons:/etc/frr/daemons
+      - clab_files/spine2/hosts:/etc/hosts
+    leaf1:
+      mgmt-ipv4: 192.168.121.103
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64521
+      binds:
+      - clab_files/leaf1/daemons:/etc/frr/daemons
+      - clab_files/leaf1/hosts:/etc/hosts
+    leaf2:
+      mgmt-ipv4: 192.168.121.104
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64522
+      binds:
+      - clab_files/leaf2/daemons:/etc/frr/daemons
+      - clab_files/leaf2/hosts:/etc/hosts
+    leaf3:
+      mgmt-ipv4: 192.168.121.105
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64523
+      binds:
+      - clab_files/leaf3/daemons:/etc/frr/daemons
+      - clab_files/leaf3/hosts:/etc/hosts
+    leaf4:
+      mgmt-ipv4: 192.168.121.106
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64524
+      binds:
+      - clab_files/leaf4/daemons:/etc/frr/daemons
+      - clab_files/leaf4/hosts:/etc/hosts
+
+
+  links:
+  - endpoints:
+    - "spine1:eth1"
+    - "leaf1:eth1"
+  - endpoints:
+    - "spine1:eth2"
+    - "leaf2:eth1"
+  - endpoints:
+    - "spine1:eth3"
+    - "leaf3:eth1"
+  - endpoints:
+    - "spine1:eth4"
+    - "leaf4:eth1"
+  - endpoints:
+    - "spine2:eth1"
+    - "leaf1:eth2"
+  - endpoints:
+    - "spine2:eth2"
+    - "leaf2:eth2"
+  - endpoints:
+    - "spine2:eth3"
+    - "leaf3:eth2"
+  - endpoints:
+    - "spine2:eth4"
+    - "leaf4:eth2"

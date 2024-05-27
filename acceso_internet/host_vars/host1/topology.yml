@@ -1,0 +1,34 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/acceso_internet/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+box: python:3.9-alpine
+clab:
+  binds:
+  - clab_files/host1/hosts:/etc/hosts
+  config_templates:
+  - hosts:/etc/hosts
+  kind: linux
+hostname: clab-acceso_inter-host1
+interfaces:
+- bridge: acceso_int_16
+  ifindex: 1
+  ifname: eth1
+  ipv6: 2001:db8:aa:1::1/64
+  linkindex: 16
+  mtu: 1500
+  name: host1 -> leaf1
+  neighbors:
+  - ifname: eth3
+    ipv6: 2001:db8:aa:1::a/64
+    node: leaf1
+  role: stub
+  type: lan
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.101
+  mac: 08:4f:a9:00:00:01
+module: {}
+mtu: 1500
+role: host

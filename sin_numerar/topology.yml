@@ -1,0 +1,72 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    core:
+        unnumbered: true
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+nodes:
+    spine1:
+        device: vyos
+        loopback:
+            ipv6: 2001:db8:64:11::11/64
+    spine2:
+        loopback:
+            ipv6: 2001:db8:64:22::22/64
+    leaf1:
+        bgp.as: 64521
+        loopback:
+            ipv6: 2001:db8:64:1::1/64
+    leaf2:
+        bgp.as: 64522
+        loopback:
+            ipv6: 2001:db8:64:2::2/64
+    leaf3:
+        bgp.as: 64523
+        loopback:
+            ipv6: 2001:db8:64:3::3/64
+    leaf4:
+        bgp.as: 64524
+        loopback:
+            ipv6: 2001:db8:64:4::4/64
+groups:
+    spine:
+        members: [ spine1, spine2 ]
+        bgp.as: 64510
+links:
+    # Enlaces Internos LLA
+    - spine1:
+      leaf1:
+      pool: core
+    - spine1:
+      leaf2:
+      pool: core
+    - spine1:
+      leaf3:
+      pool: core
+    - spine1:
+      leaf4:
+      pool: core
+    - spine2:
+      leaf1:
+      pool: core
+    - spine2:
+      leaf2:
+      pool: core
+    - spine2:
+      leaf3:
+      pool: core
+    - spine2:
+      leaf4:
+      pool: core

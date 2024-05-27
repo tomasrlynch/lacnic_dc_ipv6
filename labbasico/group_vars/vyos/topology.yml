@@ -1,0 +1,8 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/labbasico/topology.yml', 'package:topology-defaults.yml']
+#
+
+ansible_connection: docker
+ansible_network_os: vyos
+ansible_ssh_pass: vyos
+ansible_user: vyos
+docker_shell: su - vyos
