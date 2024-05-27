@@ -7,23 +7,23 @@ all:
   children:
     linux:
       hosts:
-        clab-vecinos_dina-host1:
+        clab-labbasico-host1:
           ansible_host: 192.168.121.101
-        clab-vecinos_dina-host2:
+        clab-labbasico-host2:
           ansible_host: 192.168.121.102
-        clab-vecinos_dina-host3:
+        clab-labbasico-host3:
           ansible_host: 192.168.121.103
-        clab-vecinos_dina-host4:
+        clab-labbasico-host4:
           ansible_host: 192.168.121.104
-        clab-vecinos_dina-leaf1:
+        clab-labbasico-leaf1:
           ansible_host: 192.168.121.110
-        clab-vecinos_dina-leaf2:
+        clab-labbasico-leaf2:
           ansible_host: 192.168.121.111
-        clab-vecinos_dina-leaf3:
+        clab-labbasico-leaf3:
           ansible_host: 192.168.121.112
-        clab-vecinos_dina-leaf4:
+        clab-labbasico-leaf4:
           ansible_host: 192.168.121.113
-        clab-vecinos_dina-spine1:
+        clab-labbasico-spine1:
           ansible_host: 192.168.121.105
-        clab-vecinos_dina-spine2:
+        clab-labbasico-spine2:
           ansible_host: 192.168.121.106

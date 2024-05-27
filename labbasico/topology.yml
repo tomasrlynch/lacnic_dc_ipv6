@@ -1,3 +1,10 @@
+###################################################################################
+#                                                                                 #
+# Este archivo crea la configuración de las sesiones IBGP entre spine1 y spine2.  #
+# Ellas no son necesarias para el laboratorio y se pueden borrar. No las veran en #
+# las configuraciones que acompañan a este laboratorio.                           #
+#                                                                                 #
+###################################################################################
 ---
 provider: clab
 defaults.device: frr 
