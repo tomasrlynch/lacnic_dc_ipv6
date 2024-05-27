@@ -1,8 +1,17 @@
+##############################################################
+#                                                            #
+# IMPORTANTE                                                 #
+# No encontré la forma de implementar peer-groups en netlab. #
+# La siguiente estructura yaml crea la misma topologia y     #
+# configuraciones que el laboratorio básico.                 #
+# Las configuraciones deben ser cambiadas una vez que el lab #
+# está funcionando. Ver directorio config.                   #
+#                                                            #
+##############################################################
 ---
 provider: clab
 defaults.device: frr 
 module: [ bgp ]
-#plugin: [ bgp.session, ebgp.multihop ]
 plugin: [ bgp.session ]
 bgp:
     community.ebgp: [ standard, extended ]
