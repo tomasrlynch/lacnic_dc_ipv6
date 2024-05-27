@@ -1,12 +1,23 @@
 # Laboratorios LACNIC
-## Laboratorio Básico
+## Laboratorio Básico - ./labbasico
 En este laboratorio se muestran las configuraciones básicas de una topología Spine y Leaf.
 Los componentes son:
 - Dos Spines
 - Cuatro Leafs
 - Cuatro Hosts
-Ver ./labbasico
-## Laboratorio Acceso a Internet
+## Laboratorio Vecinos Dinamicos BGP - ./vecinos_dinamicos
+En este laboratorio se muestran las configuraciones de los spines para usar vecinos dinamicos
+Los componentes son:
+- Dos Spines
+- Cuatro Leafs
+- Cuatro Hosts
+## Laboratorio BGP sin Numerar - ./sin_numerar
+En este laboratorio se muestran las configuraciones de los spines y leaves para BGP unnumbered
+Los componentes son:
+- Dos Spines
+- Cuatro Leafs
+- Cuatro Hosts
+## Laboratorio Acceso a Internet - ./acceso_internet
 El laboratorio muestra las distintas políticas de BGP a aplicar a los Spines y Leafs.
 Los componentes son:
 - Dos routers de proveedores
@@ -14,10 +25,5 @@ Los componentes son:
 - Dos Spines
 - Cuatro Leafs
 - Cuatro Hosts
-Ver ./acceso_internet
-## Laboratorio Rango de Sesiones BGP
-Ver ./rango_bgp
-## Laboratorio BGP sin Numerar
-Ver ./sin_numerar
-## Laboratorio VxLAN
-Ver ./vxlan
+## Laboratorio VxLAN - ./vxlan
+Laboratorio de prueba no finalizado
