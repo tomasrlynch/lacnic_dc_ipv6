@@ -69,6 +69,8 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- spines.j2
 hostname: clab-vecinos_dina-spine1
 interfaces:
 - ifindex: 1

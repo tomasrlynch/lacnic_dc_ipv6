@@ -3,7 +3,7 @@ addressing:
     unnumbered: true
   l2only: {}
   lan:
-    ipv4: 172.16.0.0/16
+    ipv6: 2001:db8:aa::/48
     prefix: 24
   loopback:
     ipv6: 2001:db8:100::/48
@@ -1691,6 +1691,7 @@ defaults:
             ipv6: true
           relay: true
           server: true
+        initial: {}
       graphite:
         icon: server
       group_vars:
@@ -2838,7 +2839,7 @@ defaults:
             tunnel_id: '{id}'
             vifprefix: vgif_{id}
       name: ml_{id}
-  name: unnumbered
+  name: sin_numerar
   ospf:
     area: 0.0.0.0
     attributes:
@@ -3010,12 +3011,12 @@ defaults:
   paths:
     collect:
       dirs:
-      - /root/lacnic_ipv6dc/unnumbered/fetch-config
+      - /root/lacnic_ipv6dc/sin_numerar/fetch-config
       - /root/.netlab/fetch-config
       - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/fetch-config
     custom:
       dirs:
-      - /root/lacnic_ipv6dc/unnumbered
+      - /root/lacnic_ipv6dc/sin_numerar
       - /root/.netlab
       - /usr/local/lib/python3.8/dist-packages/netsim/extra
       files:
@@ -3049,7 +3050,7 @@ defaults:
       - '{{ custom_config }}/deploy.yml'
     deploy:
       dirs:
-      - /root/lacnic_ipv6dc/unnumbered/tasks
+      - /root/lacnic_ipv6dc/sin_numerar/tasks
       - /root/.netlab/tasks
       - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks
       files:
@@ -3072,7 +3073,7 @@ defaults:
       - deploy-config/{{ ansible_network_os }}.yml
     ready:
       dirs:
-      - /root/lacnic_ipv6dc/unnumbered/readiness-check
+      - /root/lacnic_ipv6dc/sin_numerar/readiness-check
       - /root/.netlab/readiness-check
       - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/readiness-check
       files:
@@ -3091,12 +3092,12 @@ defaults:
       - '{{netlab_device_type}}/{{config_module}}.j2'
     templates:
       dirs:
-      - /root/lacnic_ipv6dc/unnumbered/templates
+      - /root/lacnic_ipv6dc/sin_numerar/templates
       - /root/.netlab/templates
       - /usr/local/lib/python3.8/dist-packages/netsim/ansible/templates
       - /usr/local/lib/python3.8/dist-packages/netsim/daemons
     validate:
-    - /root/lacnic_ipv6dc/unnumbered/validate
+    - /root/lacnic_ipv6dc/sin_numerar/validate
   plugin: []
   ports:
     http: 80
@@ -3499,21 +3500,34 @@ defaults:
     - vrf
     use_v6_vtep: false
 groups:
-  as64510:
+  as4210010001:
     members:
     - spine1
     - spine2
-  as64521:
+  as4220010001:
     members:
     - leaf1
-  as64522:
+  as4220010002:
     members:
     - leaf2
-  as64523:
+  as4220010003:
     members:
     - leaf3
-  as64524:
+  as4220010004:
     members:
+    - leaf4
+  hosts:
+    device: linux
+    members:
+    - host1
+    - host2
+    - host3
+    - host4
+  leaves:
+    members:
+    - leaf1
+    - leaf2
+    - leaf3
     - leaf4
   spine:
     members:
@@ -3521,9 +3535,9 @@ groups:
     - spine2
     node_data:
       bgp:
-        as: 64510
+        as: 4210010001
 input:
-- /root/lacnic_ipv6dc/unnumbered/topology.yml
+- /root/lacnic_ipv6dc/sin_numerar/topology.yml
 - package:topology-defaults.yml
 links:
 - interfaces:
@@ -3654,10 +3668,222 @@ links:
     clab: true
   role: external
   type: p2p
+- bridge: sin_numera_9
+  interfaces:
+  - ifindex: 1
+    ifname: eth1
+    ipv6: 2001:db8:aa:1::1/64
+    node: host1
+  - ifindex: 3
+    ifname: eth3
+    ipv6: 2001:db8:aa:1::a/64
+    node: leaf1
+  linkindex: 9
+  node_count: 2
+  prefix:
+    ipv6: 2001:db8:aa:1::/64
+  provider:
+    clab: true
+  role: stub
+  type: lan
+- bridge: sin_numera_10
+  interfaces:
+  - ifindex: 1
+    ifname: eth1
+    ipv6: 2001:db8:aa:2::2/64
+    node: host2
+  - ifindex: 3
+    ifname: eth3
+    ipv6: 2001:db8:aa:2::b/64
+    node: leaf2
+  linkindex: 10
+  node_count: 2
+  prefix:
+    ipv6: 2001:db8:aa:2::/64
+  provider:
+    clab: true
+  role: stub
+  type: lan
+- bridge: sin_numera_11
+  interfaces:
+  - ifindex: 1
+    ifname: eth1
+    ipv6: 2001:db8:aa:3::3/64
+    node: host3
+  - ifindex: 3
+    ifname: eth3
+    ipv6: 2001:db8:aa:3::c/64
+    node: leaf3
+  linkindex: 11
+  node_count: 2
+  prefix:
+    ipv6: 2001:db8:aa:3::/64
+  provider:
+    clab: true
+  role: stub
+  type: lan
+- bridge: sin_numera_12
+  interfaces:
+  - ifindex: 1
+    ifname: eth1
+    ipv6: 2001:db8:aa:4::4/64
+    node: host4
+  - ifindex: 3
+    ifname: eth3
+    ipv6: 2001:db8:aa:4::d/64
+    node: leaf4
+  linkindex: 12
+  node_count: 2
+  prefix:
+    ipv6: 2001:db8:aa:4::/64
+  provider:
+    clab: true
+  role: stub
+  type: lan
 module:
 - bgp
-name: unnumbered
+name: sin_numerar
 nodes:
+  host1:
+    af:
+      ipv6: true
+    box: python:3.9-alpine
+    clab:
+      binds:
+      - clab_files/host1/hosts:/etc/hosts
+      config_templates:
+      - hosts:/etc/hosts
+      kind: linux
+    device: linux
+    hostname: clab-sin_numerar-host1
+    id: 1
+    interfaces:
+    - bridge: sin_numera_9
+      ifindex: 1
+      ifname: eth1
+      ipv6: 2001:db8:aa:1::1/64
+      linkindex: 9
+      mtu: 1500
+      name: host1 -> leaf1
+      neighbors:
+      - ifname: eth3
+        ipv6: 2001:db8:aa:1::a/64
+        node: leaf1
+      role: stub
+      type: lan
+    mgmt:
+      ifname: eth0
+      ipv4: 192.168.121.101
+      mac: 08:4f:a9:00:00:01
+    module: {}
+    mtu: 1500
+    name: host1
+    role: host
+  host2:
+    af:
+      ipv6: true
+    box: python:3.9-alpine
+    clab:
+      binds:
+      - clab_files/host2/hosts:/etc/hosts
+      config_templates:
+      - hosts:/etc/hosts
+      kind: linux
+    device: linux
+    hostname: clab-sin_numerar-host2
+    id: 2
+    interfaces:
+    - bridge: sin_numera_10
+      ifindex: 1
+      ifname: eth1
+      ipv6: 2001:db8:aa:2::2/64
+      linkindex: 10
+      mtu: 1500
+      name: host2 -> leaf2
+      neighbors:
+      - ifname: eth3
+        ipv6: 2001:db8:aa:2::b/64
+        node: leaf2
+      role: stub
+      type: lan
+    mgmt:
+      ifname: eth0
+      ipv4: 192.168.121.102
+      mac: 08:4f:a9:00:00:02
+    module: {}
+    mtu: 1500
+    name: host2
+    role: host
+  host3:
+    af:
+      ipv6: true
+    box: python:3.9-alpine
+    clab:
+      binds:
+      - clab_files/host3/hosts:/etc/hosts
+      config_templates:
+      - hosts:/etc/hosts
+      kind: linux
+    device: linux
+    hostname: clab-sin_numerar-host3
+    id: 3
+    interfaces:
+    - bridge: sin_numera_11
+      ifindex: 1
+      ifname: eth1
+      ipv6: 2001:db8:aa:3::3/64
+      linkindex: 11
+      mtu: 1500
+      name: host3 -> leaf3
+      neighbors:
+      - ifname: eth3
+        ipv6: 2001:db8:aa:3::c/64
+        node: leaf3
+      role: stub
+      type: lan
+    mgmt:
+      ifname: eth0
+      ipv4: 192.168.121.103
+      mac: 08:4f:a9:00:00:03
+    module: {}
+    mtu: 1500
+    name: host3
+    role: host
+  host4:
+    af:
+      ipv6: true
+    box: python:3.9-alpine
+    clab:
+      binds:
+      - clab_files/host4/hosts:/etc/hosts
+      config_templates:
+      - hosts:/etc/hosts
+      kind: linux
+    device: linux
+    hostname: clab-sin_numerar-host4
+    id: 4
+    interfaces:
+    - bridge: sin_numera_12
+      ifindex: 1
+      ifname: eth1
+      ipv6: 2001:db8:aa:4::4/64
+      linkindex: 12
+      mtu: 1500
+      name: host4 -> leaf4
+      neighbors:
+      - ifname: eth3
+        ipv6: 2001:db8:aa:4::d/64
+        node: leaf4
+      role: stub
+      type: lan
+    mgmt:
+      ifname: eth0
+      ipv4: 192.168.121.104
+      mac: 08:4f:a9:00:00:04
+    module: {}
+    mtu: 1500
+    name: host4
+    role: host
   leaf1:
     af:
       ipv6: true
@@ -3666,7 +3892,7 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64521
+      as: 4220010001
       community:
         ebgp:
         - standard
@@ -3684,7 +3910,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -3692,14 +3918,14 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 2
         ipv6: true
         local_if: eth2
         name: spine2
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.3
+      router_id: 10.0.0.10
     box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
@@ -3709,9 +3935,11 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
-    hostname: clab-unnumbered-leaf1
-    id: 3
+    hostname: clab-sin_numerar-leaf1
+    id: 10
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -3739,21 +3967,36 @@ nodes:
       pool: core
       role: external
       type: p2p
+    - bgp:
+        advertise: true
+      bridge: sin_numera_9
+      ifindex: 3
+      ifname: eth3
+      ipv6: 2001:db8:aa:1::a/64
+      linkindex: 9
+      mtu: 1500
+      name: leaf1 -> host1
+      neighbors:
+      - ifname: eth1
+        ipv6: 2001:db8:aa:1::1/64
+        node: host1
+      role: stub
+      type: lan
     loopback:
       ifindex: 0
       ifname: lo0
-      ipv6: 2001:db8:64:1::1/64
+      ipv6: 2001:db8:64:1::1/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.103
-      mac: 08:4f:a9:00:00:03
+      ipv4: 192.168.121.110
+      mac: 08:4f:a9:00:00:0a
     module:
     - bgp
     mtu: 1500
     name: leaf1
-    router_id: 10.0.0.3
+    router_id: 10.0.0.10
   leaf2:
     af:
       ipv6: true
@@ -3762,7 +4005,7 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64522
+      as: 4220010002
       community:
         ebgp:
         - standard
@@ -3780,7 +4023,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -3788,14 +4031,14 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 2
         ipv6: true
         local_if: eth2
         name: spine2
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.4
+      router_id: 10.0.0.11
     box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
@@ -3805,9 +4048,11 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
-    hostname: clab-unnumbered-leaf2
-    id: 4
+    hostname: clab-sin_numerar-leaf2
+    id: 11
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -3835,21 +4080,36 @@ nodes:
       pool: core
       role: external
       type: p2p
+    - bgp:
+        advertise: true
+      bridge: sin_numera_10
+      ifindex: 3
+      ifname: eth3
+      ipv6: 2001:db8:aa:2::b/64
+      linkindex: 10
+      mtu: 1500
+      name: leaf2 -> host2
+      neighbors:
+      - ifname: eth1
+        ipv6: 2001:db8:aa:2::2/64
+        node: host2
+      role: stub
+      type: lan
     loopback:
       ifindex: 0
       ifname: lo0
-      ipv6: 2001:db8:64:2::2/64
+      ipv6: 2001:db8:64:2::2/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.104
-      mac: 08:4f:a9:00:00:04
+      ipv4: 192.168.121.111
+      mac: 08:4f:a9:00:00:0b
     module:
     - bgp
     mtu: 1500
     name: leaf2
-    router_id: 10.0.0.4
+    router_id: 10.0.0.11
   leaf3:
     af:
       ipv6: true
@@ -3858,7 +4118,7 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64523
+      as: 4220010003
       community:
         ebgp:
         - standard
@@ -3876,7 +4136,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -3884,14 +4144,14 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 2
         ipv6: true
         local_if: eth2
         name: spine2
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.5
+      router_id: 10.0.0.12
     box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
@@ -3901,9 +4161,11 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
-    hostname: clab-unnumbered-leaf3
-    id: 5
+    hostname: clab-sin_numerar-leaf3
+    id: 12
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -3931,21 +4193,36 @@ nodes:
       pool: core
       role: external
       type: p2p
+    - bgp:
+        advertise: true
+      bridge: sin_numera_11
+      ifindex: 3
+      ifname: eth3
+      ipv6: 2001:db8:aa:3::c/64
+      linkindex: 11
+      mtu: 1500
+      name: leaf3 -> host3
+      neighbors:
+      - ifname: eth1
+        ipv6: 2001:db8:aa:3::3/64
+        node: host3
+      role: stub
+      type: lan
     loopback:
       ifindex: 0
       ifname: lo0
-      ipv6: 2001:db8:64:3::3/64
+      ipv6: 2001:db8:64:3::3/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.105
-      mac: 08:4f:a9:00:00:05
+      ipv4: 192.168.121.112
+      mac: 08:4f:a9:00:00:0c
     module:
     - bgp
     mtu: 1500
     name: leaf3
-    router_id: 10.0.0.5
+    router_id: 10.0.0.12
   leaf4:
     af:
       ipv6: true
@@ -3954,7 +4231,7 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64524
+      as: 4220010004
       community:
         ebgp:
         - standard
@@ -3972,7 +4249,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -3980,14 +4257,14 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64510
+        as: 4210010001
         ifindex: 2
         ipv6: true
         local_if: eth2
         name: spine2
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.6
+      router_id: 10.0.0.13
     box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
@@ -3997,9 +4274,11 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
-    hostname: clab-unnumbered-leaf4
-    id: 6
+    hostname: clab-sin_numerar-leaf4
+    id: 13
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -4027,21 +4306,36 @@ nodes:
       pool: core
       role: external
       type: p2p
+    - bgp:
+        advertise: true
+      bridge: sin_numera_12
+      ifindex: 3
+      ifname: eth3
+      ipv6: 2001:db8:aa:4::d/64
+      linkindex: 12
+      mtu: 1500
+      name: leaf4 -> host4
+      neighbors:
+      - ifname: eth1
+        ipv6: 2001:db8:aa:4::4/64
+        node: host4
+      role: stub
+      type: lan
     loopback:
       ifindex: 0
       ifname: lo0
-      ipv6: 2001:db8:64:4::4/64
+      ipv6: 2001:db8:64:4::4/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.106
-      mac: 08:4f:a9:00:00:06
+      ipv4: 192.168.121.113
+      mac: 08:4f:a9:00:00:0d
     module:
     - bgp
     mtu: 1500
     name: leaf4
-    router_id: 10.0.0.6
+    router_id: 10.0.0.13
   spine1:
     af:
       ipv6: true
@@ -4050,28 +4344,31 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64510
+      as: 4210010001
       community:
         ebgp:
         - standard
+        - large
         - extended
         ibgp:
         - standard
+        - large
         - extended
         ibgp_localas:
         - standard
+        - large
         - extended
       ipv6: true
       neighbors:
       - activate:
           ipv6: false
-        as: 64510
+        as: 4210010001
         ipv6: 2001:db8:64:22::22
         name: spine2
         type: ibgp
       - activate:
           ipv6: true
-        as: 64521
+        as: 4220010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -4079,7 +4376,7 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64522
+        as: 4220010002
         ifindex: 2
         ipv6: true
         local_if: eth2
@@ -4087,7 +4384,7 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64523
+        as: 4220010003
         ifindex: 3
         ipv6: true
         local_if: eth3
@@ -4095,22 +4392,28 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64524
+        as: 4220010004
         ifindex: 4
         ipv6: true
         local_if: eth4
         name: leaf4
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.1
-    box: ghcr.io/sysoleg/vyos-container
+      router_id: 10.0.0.5
+    box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
-      - /lib/modules:/lib/modules
+      - clab_files/spine1/daemons:/etc/frr/daemons
+      - clab_files/spine1/hosts:/etc/hosts
+      config_templates:
+      - daemons:/etc/frr/daemons
+      - hosts:/etc/hosts
       kind: linux
-    device: vyos
-    hostname: clab-unnumbered-spine1
-    id: 1
+    config:
+    - spines.j2
+    device: frr
+    hostname: clab-sin_numerar-spine1
+    id: 5
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -4166,19 +4469,19 @@ nodes:
       type: p2p
     loopback:
       ifindex: 0
-      ifname: dum0
-      ipv6: 2001:db8:64:11::11/64
+      ifname: lo0
+      ipv6: 2001:db8:64:11::11/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.101
-      mac: 08:4f:a9:00:00:01
+      ipv4: 192.168.121.105
+      mac: 08:4f:a9:00:00:05
     module:
     - bgp
     mtu: 1500
     name: spine1
-    router_id: 10.0.0.1
+    router_id: 10.0.0.5
   spine2:
     af:
       ipv6: true
@@ -4187,7 +4490,7 @@ nodes:
         ipv6:
         - ebgp
       advertise_loopback: true
-      as: 64510
+      as: 4210010001
       community:
         ebgp:
         - standard
@@ -4205,13 +4508,13 @@ nodes:
       neighbors:
       - activate:
           ipv6: false
-        as: 64510
+        as: 4210010001
         ipv6: 2001:db8:64:11::11
         name: spine1
         type: ibgp
       - activate:
           ipv6: true
-        as: 64521
+        as: 4220010001
         ifindex: 1
         ipv6: true
         local_if: eth1
@@ -4219,7 +4522,7 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64522
+        as: 4220010002
         ifindex: 2
         ipv6: true
         local_if: eth2
@@ -4227,7 +4530,7 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64523
+        as: 4220010003
         ifindex: 3
         ipv6: true
         local_if: eth3
@@ -4235,14 +4538,14 @@ nodes:
         type: ebgp
       - activate:
           ipv6: true
-        as: 64524
+        as: 4220010004
         ifindex: 4
         ipv6: true
         local_if: eth4
         name: leaf4
         type: ebgp
       next_hop_self: true
-      router_id: 10.0.0.2
+      router_id: 10.0.0.6
     box: quay.io/frrouting/frr:9.1.0
     clab:
       binds:
@@ -4252,9 +4555,11 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - spines.j2
     device: frr
-    hostname: clab-unnumbered-spine2
-    id: 2
+    hostname: clab-sin_numerar-spine2
+    id: 6
     interfaces:
     - ifindex: 1
       ifname: eth1
@@ -4311,18 +4616,18 @@ nodes:
     loopback:
       ifindex: 0
       ifname: lo0
-      ipv6: 2001:db8:64:22::22/64
+      ipv6: 2001:db8:64:22::22/128
       neighbors: []
       type: loopback
     mgmt:
       ifname: eth0
-      ipv4: 192.168.121.102
-      mac: 08:4f:a9:00:00:02
+      ipv4: 192.168.121.106
+      mac: 08:4f:a9:00:00:06
     module:
     - bgp
     mtu: 1500
     name: spine2
-    router_id: 10.0.0.2
+    router_id: 10.0.0.6
 plugin:
 - bgp.session
 - ebgp.multihop

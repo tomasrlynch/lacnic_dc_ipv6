@@ -49,6 +49,8 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- leaves.j2
 hostname: clab-vecinos_dina-leaf1
 interfaces:
 - ifindex: 1

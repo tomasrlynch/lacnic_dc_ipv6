@@ -1,3 +1,7 @@
+###################################################################################
+#                                                                                 #
+#                                                                                 #
+###################################################################################
 ---
 provider: clab
 defaults.device: frr 
@@ -10,42 +14,65 @@ bgp:
 addressing:
     core:
         unnumbered: true
-    loopback:
-        ipv4:
-        ipv6: 2001:db8:100::/48
     p2p:
         ipv4: 
         ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
 nodes:
-    spine1:
-        device: vyos
-        loopback:
-            ipv6: 2001:db8:64:11::11/64
-    spine2:
-        loopback:
-            ipv6: 2001:db8:64:22::22/64
+    host1:
+        id: 1
+    host2:
+        id: 2
+    host3:
+        id: 3
+    host4:
+        id: 4
     leaf1:
-        bgp.as: 64521
+        id: 10
+        bgp.as: 4220010001
         loopback:
-            ipv6: 2001:db8:64:1::1/64
+            ipv6: 2001:db8:64:1::1/128
     leaf2:
-        bgp.as: 64522
+        id: 11
+        bgp.as: 4220010002
         loopback:
-            ipv6: 2001:db8:64:2::2/64
+            ipv6: 2001:db8:64:2::2/128
     leaf3:
-        bgp.as: 64523
+        id: 12
+        bgp.as: 4220010003
         loopback:
-            ipv6: 2001:db8:64:3::3/64
+            ipv6: 2001:db8:64:3::3/128
     leaf4:
-        bgp.as: 64524
+        id: 13
+        bgp.as: 4220010004
         loopback:
-            ipv6: 2001:db8:64:4::4/64
+            ipv6: 2001:db8:64:4::4/128
+    spine1:
+        id: 5
+        loopback:
+            ipv6: 2001:db8:64:11::11/128
+    spine2:
+        id: 6
+        loopback:
+            ipv6: 2001:db8:64:22::22/128
+
 groups:
     spine:
         members: [ spine1, spine2 ]
-        bgp.as: 64510
+        bgp.as: 4210010001
+        config: [ spines.j2 ]
+    leaves:
+        members: [ leaf1, leaf2, leaf3, leaf4 ]
+        config: [ leaves.j2 ]
+    hosts:
+        members: [ host1, host2, host3, host4 ]
+        device: linux
 links:
-    # Enlaces Internos LLA
     - spine1:
       leaf1:
       pool: core
@@ -70,3 +97,15 @@ links:
     - spine2:
       leaf4:
       pool: core
+    - host1:
+      leaf1:
+      prefix.ipv6: 2001:db8:aa:1::/64
+    - host2:
+      leaf2:
+      prefix.ipv6: 2001:db8:aa:2::/64
+    - host3:
+      leaf3:
+      prefix.ipv6: 2001:db8:aa:3::/64
+    - host4:
+      leaf4:
+      prefix.ipv6: 2001:db8:aa:4::/64

@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/sin_numerar/topology.yml', 'package:topology-defaults.yml']
 #
 
 af:
@@ -8,7 +8,7 @@ bgp:
     ipv6:
     - ebgp
   advertise_loopback: true
-  as: 64522
+  as: 4220010002
   community:
     ebgp:
     - standard
@@ -26,7 +26,7 @@ bgp:
   neighbors:
   - activate:
       ipv6: true
-    as: 64510
+    as: 4210010001
     ifindex: 1
     ipv6: true
     local_if: eth1
@@ -34,14 +34,14 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64510
+    as: 4210010001
     ifindex: 2
     ipv6: true
     local_if: eth2
     name: spine2
     type: ebgp
   next_hop_self: true
-  router_id: 10.0.0.4
+  router_id: 10.0.0.11
 box: quay.io/frrouting/frr:9.1.0
 clab:
   binds:
@@ -51,7 +51,9 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
-hostname: clab-unnumbered-leaf2
+config:
+- leaves.j2
+hostname: clab-sin_numerar-leaf2
 interfaces:
 - ifindex: 1
   ifname: eth1
@@ -79,17 +81,32 @@ interfaces:
   pool: core
   role: external
   type: p2p
+- bgp:
+    advertise: true
+  bridge: sin_numera_10
+  ifindex: 3
+  ifname: eth3
+  ipv6: 2001:db8:aa:2::b/64
+  linkindex: 10
+  mtu: 1500
+  name: leaf2 -> host2
+  neighbors:
+  - ifname: eth1
+    ipv6: 2001:db8:aa:2::2/64
+    node: host2
+  role: stub
+  type: lan
 loopback:
   ifindex: 0
   ifname: lo0
-  ipv6: 2001:db8:64:2::2/64
+  ipv6: 2001:db8:64:2::2/128
   neighbors: []
   type: loopback
 mgmt:
   ifname: eth0
-  ipv4: 192.168.121.104
-  mac: 08:4f:a9:00:00:04
+  ipv4: 192.168.121.111
+  mac: 08:4f:a9:00:00:0b
 module:
 - bgp
 mtu: 1500
-router_id: 10.0.0.4
+router_id: 10.0.0.11

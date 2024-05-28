@@ -43,7 +43,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010001
+      group: leaves,as4220010001
       binds:
       - clab_files/leaf1/daemons:/etc/frr/daemons
       - clab_files/leaf1/hosts:/etc/hosts
@@ -52,7 +52,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010002
+      group: leaves,as4220010002
       binds:
       - clab_files/leaf2/daemons:/etc/frr/daemons
       - clab_files/leaf2/hosts:/etc/hosts
@@ -61,7 +61,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010003
+      group: leaves,as4220010003
       binds:
       - clab_files/leaf3/daemons:/etc/frr/daemons
       - clab_files/leaf3/hosts:/etc/hosts
@@ -70,7 +70,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010004
+      group: leaves,as4220010004
       binds:
       - clab_files/leaf4/daemons:/etc/frr/daemons
       - clab_files/leaf4/hosts:/etc/hosts

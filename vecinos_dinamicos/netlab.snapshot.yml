@@ -3488,6 +3488,12 @@ groups:
     - host2
     - host3
     - host4
+  leaves:
+    members:
+    - leaf1
+    - leaf2
+    - leaf3
+    - leaf4
   spine:
     members:
     - spine1
@@ -3900,6 +3906,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
     hostname: clab-vecinos_dina-leaf1
     id: 10
@@ -4007,6 +4015,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
     hostname: clab-vecinos_dina-leaf2
     id: 11
@@ -4114,6 +4124,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
     hostname: clab-vecinos_dina-leaf3
     id: 12
@@ -4221,6 +4233,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - leaves.j2
     device: frr
     hostname: clab-vecinos_dina-leaf4
     id: 13
@@ -4348,6 +4362,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - spines.j2
     device: frr
     hostname: clab-vecinos_dina-spine1
     id: 5
@@ -4484,6 +4500,8 @@ nodes:
       - daemons:/etc/frr/daemons
       - hosts:/etc/hosts
       kind: linux
+    config:
+    - spines.j2
     device: frr
     hostname: clab-vecinos_dina-spine2
     id: 6

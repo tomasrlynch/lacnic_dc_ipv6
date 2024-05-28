@@ -1,35 +1,51 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/sin_numerar/topology.yml', 'package:topology-defaults.yml']
 #
 
 hosts:
+  host1:
+    ipv6:
+    - 2001:db8:aa:1::1
+  host2:
+    ipv6:
+    - 2001:db8:aa:2::2
+  host3:
+    ipv6:
+    - 2001:db8:aa:3::3
+  host4:
+    ipv6:
+    - 2001:db8:aa:4::4
   leaf1:
     ipv6:
     - 2001:db8:64:1::1
+    - 2001:db8:aa:1::a
   leaf2:
     ipv6:
     - 2001:db8:64:2::2
+    - 2001:db8:aa:2::b
   leaf3:
     ipv6:
     - 2001:db8:64:3::3
+    - 2001:db8:aa:3::c
   leaf4:
     ipv6:
     - 2001:db8:64:4::4
+    - 2001:db8:aa:4::d
   spine1:
     ipv6:
     - 2001:db8:64:11::11
   spine2:
     ipv6:
     - 2001:db8:64:22::22
-netlab_name: unnumbered
+netlab_name: sin_numerar
 netlab_provider: clab
 paths_collect:
   dirs:
-  - /root/lacnic_ipv6dc/unnumbered/fetch-config
+  - /root/lacnic_ipv6dc/sin_numerar/fetch-config
   - /root/.netlab/fetch-config
   - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/fetch-config
 paths_custom:
   dirs:
-  - /root/lacnic_ipv6dc/unnumbered
+  - /root/lacnic_ipv6dc/sin_numerar
   - /root/.netlab
   - /usr/local/lib/python3.8/dist-packages/netsim/extra
   files:
@@ -63,7 +79,7 @@ paths_custom:
   - '{{ custom_config }}/deploy.yml'
 paths_deploy:
   dirs:
-  - /root/lacnic_ipv6dc/unnumbered/tasks
+  - /root/lacnic_ipv6dc/sin_numerar/tasks
   - /root/.netlab/tasks
   - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks
   files:
@@ -84,7 +100,7 @@ paths_deploy:
   - deploy-config/{{ ansible_network_os }}.yml
 paths_ready:
   dirs:
-  - /root/lacnic_ipv6dc/unnumbered/readiness-check
+  - /root/lacnic_ipv6dc/sin_numerar/readiness-check
   - /root/.netlab/readiness-check
   - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/readiness-check
   files:
@@ -103,18 +119,18 @@ paths_t_files:
   - '{{netlab_device_type}}/{{config_module}}.j2'
 paths_templates:
   dirs:
-  - /root/lacnic_ipv6dc/unnumbered/templates
+  - /root/lacnic_ipv6dc/sin_numerar/templates
   - /root/.netlab/templates
   - /usr/local/lib/python3.8/dist-packages/netsim/ansible/templates
   - /usr/local/lib/python3.8/dist-packages/netsim/daemons
 paths_validate:
-- /root/lacnic_ipv6dc/unnumbered/validate
+- /root/lacnic_ipv6dc/sin_numerar/validate
 pools:
   core:
     unnumbered: true
   l2only: {}
   lan:
-    ipv4: 172.16.0.0/16
+    ipv6: 2001:db8:aa::/48
     prefix: 24
   loopback:
     ipv6: 2001:db8:100::/48

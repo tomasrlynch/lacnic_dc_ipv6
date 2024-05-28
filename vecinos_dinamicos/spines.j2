@@ -1,0 +1,21 @@
+interface eth1
+no ipv6 nd ra-interval 5
+ipv6 nd suppress-ra
+interface eth2
+no ipv6 nd ra-interval 5
+ipv6 nd suppress-ra
+interface eth3
+no ipv6 nd ra-interval 5
+ipv6 nd suppress-ra
+interface eth4
+no ipv6 nd ra-interval 5
+ipv6 nd suppress-ra
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors %}
+no neighbor {{ ngb.ipv6 }}
+{% endfor %}
+neighbor LEAF peer-group
+neighbor LEAF remote-as external
+bgp listen range 2001:db8:ff::/48 peer-group LEAF
+address-family ipv6 unicast
+neighbor LEAF activate

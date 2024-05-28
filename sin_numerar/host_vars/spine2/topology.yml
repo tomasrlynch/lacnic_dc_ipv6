@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/sin_numerar/topology.yml', 'package:topology-defaults.yml']
 #
 
 af:
@@ -8,7 +8,7 @@ bgp:
     ipv6:
     - ebgp
   advertise_loopback: true
-  as: 64510
+  as: 4210010001
   community:
     ebgp:
     - standard
@@ -26,13 +26,13 @@ bgp:
   neighbors:
   - activate:
       ipv6: false
-    as: 64510
+    as: 4210010001
     ipv6: 2001:db8:64:11::11
     name: spine1
     type: ibgp
   - activate:
       ipv6: true
-    as: 64521
+    as: 4220010001
     ifindex: 1
     ipv6: true
     local_if: eth1
@@ -40,7 +40,7 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64522
+    as: 4220010002
     ifindex: 2
     ipv6: true
     local_if: eth2
@@ -48,7 +48,7 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64523
+    as: 4220010003
     ifindex: 3
     ipv6: true
     local_if: eth3
@@ -56,14 +56,14 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64524
+    as: 4220010004
     ifindex: 4
     ipv6: true
     local_if: eth4
     name: leaf4
     type: ebgp
   next_hop_self: true
-  router_id: 10.0.0.2
+  router_id: 10.0.0.6
 box: quay.io/frrouting/frr:9.1.0
 clab:
   binds:
@@ -73,7 +73,9 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
-hostname: clab-unnumbered-spine2
+config:
+- spines.j2
+hostname: clab-sin_numerar-spine2
 interfaces:
 - ifindex: 1
   ifname: eth1
@@ -130,14 +132,14 @@ interfaces:
 loopback:
   ifindex: 0
   ifname: lo0
-  ipv6: 2001:db8:64:22::22/64
+  ipv6: 2001:db8:64:22::22/128
   neighbors: []
   type: loopback
 mgmt:
   ifname: eth0
-  ipv4: 192.168.121.102
-  mac: 08:4f:a9:00:00:02
+  ipv4: 192.168.121.106
+  mac: 08:4f:a9:00:00:06
 module:
 - bgp
 mtu: 1500
-router_id: 10.0.0.2
+router_id: 10.0.0.6

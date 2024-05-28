@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/unnumbered/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/sin_numerar/topology.yml', 'package:topology-defaults.yml']
 #
 
 af:
@@ -8,28 +8,31 @@ bgp:
     ipv6:
     - ebgp
   advertise_loopback: true
-  as: 64510
+  as: 4210010001
   community:
     ebgp:
     - standard
+    - large
     - extended
     ibgp:
     - standard
+    - large
     - extended
     ibgp_localas:
     - standard
+    - large
     - extended
   ipv6: true
   neighbors:
   - activate:
       ipv6: false
-    as: 64510
+    as: 4210010001
     ipv6: 2001:db8:64:22::22
     name: spine2
     type: ibgp
   - activate:
       ipv6: true
-    as: 64521
+    as: 4220010001
     ifindex: 1
     ipv6: true
     local_if: eth1
@@ -37,7 +40,7 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64522
+    as: 4220010002
     ifindex: 2
     ipv6: true
     local_if: eth2
@@ -45,7 +48,7 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64523
+    as: 4220010003
     ifindex: 3
     ipv6: true
     local_if: eth3
@@ -53,20 +56,26 @@ bgp:
     type: ebgp
   - activate:
       ipv6: true
-    as: 64524
+    as: 4220010004
     ifindex: 4
     ipv6: true
     local_if: eth4
     name: leaf4
     type: ebgp
   next_hop_self: true
-  router_id: 10.0.0.1
-box: ghcr.io/sysoleg/vyos-container
+  router_id: 10.0.0.5
+box: quay.io/frrouting/frr:9.1.0
 clab:
   binds:
-  - /lib/modules:/lib/modules
+  - clab_files/spine1/daemons:/etc/frr/daemons
+  - clab_files/spine1/hosts:/etc/hosts
+  config_templates:
+  - daemons:/etc/frr/daemons
+  - hosts:/etc/hosts
   kind: linux
-hostname: clab-unnumbered-spine1
+config:
+- spines.j2
+hostname: clab-sin_numerar-spine1
 interfaces:
 - ifindex: 1
   ifname: eth1
@@ -122,15 +131,15 @@ interfaces:
   type: p2p
 loopback:
   ifindex: 0
-  ifname: dum0
-  ipv6: 2001:db8:64:11::11/64
+  ifname: lo0
+  ipv6: 2001:db8:64:11::11/128
   neighbors: []
   type: loopback
 mgmt:
   ifname: eth0
-  ipv4: 192.168.121.101
-  mac: 08:4f:a9:00:00:01
+  ipv4: 192.168.121.105
+  mac: 08:4f:a9:00:00:05
 module:
 - bgp
 mtu: 1500
-router_id: 10.0.0.1
+router_id: 10.0.0.5

@@ -1,11 +1,5 @@
 ##############################################################
 #                                                            #
-# IMPORTANTE                                                 #
-# No encontré la forma de implementar peer-groups en netlab. #
-# La siguiente estructura yaml crea la misma topologia y     #
-# configuraciones que el laboratorio básico.                 #
-# Las configuraciones deben ser cambiadas una vez que el lab #
-# está funcionando. Ver directorio config.                   #
 #                                                            #
 ##############################################################
 ---
@@ -69,6 +63,10 @@ groups:
     spine:
         members: [ spine1, spine2 ]
         bgp.as: 4210010001
+        config: [ spines.j2 ]
+    leaves:
+        members: [ leaf1, leaf2, leaf3, leaf4 ]
+        config: [ leaves.j2 ]
     hosts:
         members: [ host1, host2, host3, host4 ]
         device: linux
