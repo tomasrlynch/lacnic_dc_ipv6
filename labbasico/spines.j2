@@ -1,0 +1,4 @@
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+no neighbor {{ ngb.ipv6 }}
+{% endfor %}
