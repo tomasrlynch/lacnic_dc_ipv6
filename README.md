@@ -1,7 +1,7 @@
 # Laboratorios LACNIC
 El curso "IPv6 en Data Centers" cuenta con cuatro laboratorios. Cada uno de ellos está descripto a continuación.
-Los directorios de los laboratorios tienen un archivo "topology.yml" que es utulizado por netlab para crear cada una de las topologías con las que trabajamos.
-Dentro de esos directorios se encuentra un subdirectorio llamado "configuraciones" donde se encuentran todas las configuraciones finales de cada uno de los elementos de red del laboratorio.
+Dentro del directorio "configuraciones" existen subdirectorios para cada uno de los labs con las configuraciones de los equipos de red.
+Para este curso, los laboratorios son generados automáticamente utilizando [netlab](https://netlab.tools/). Cada uno de los directorios de los laboratorios tienen un archivo `topology.yml` que es utilizado por netlab para crear cada una de las topologías con las que trabajamos.
 > [!NOTE]
 > Las configuraciones de los hosts no se muestran debido a que hay muchas maneras distintas de configurarlos. En los laboratorios utilizaremos Alpine Linux ya que viene por defecto en netlab.
 ## Laboratorio Básico - ./labbasico
