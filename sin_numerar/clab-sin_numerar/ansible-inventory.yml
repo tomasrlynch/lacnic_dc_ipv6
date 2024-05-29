@@ -7,23 +7,23 @@ all:
   children:
     linux:
       hosts:
-        clab-labbasico-host1:
+        clab-sin_numerar-host1:
           ansible_host: 192.168.121.101
-        clab-labbasico-host2:
+        clab-sin_numerar-host2:
           ansible_host: 192.168.121.102
-        clab-labbasico-host3:
+        clab-sin_numerar-host3:
           ansible_host: 192.168.121.103
-        clab-labbasico-host4:
+        clab-sin_numerar-host4:
           ansible_host: 192.168.121.104
-        clab-labbasico-leaf1:
+        clab-sin_numerar-leaf1:
           ansible_host: 192.168.121.110
-        clab-labbasico-leaf2:
+        clab-sin_numerar-leaf2:
           ansible_host: 192.168.121.111
-        clab-labbasico-leaf3:
+        clab-sin_numerar-leaf3:
           ansible_host: 192.168.121.112
-        clab-labbasico-leaf4:
+        clab-sin_numerar-leaf4:
           ansible_host: 192.168.121.113
-        clab-labbasico-spine1:
+        clab-sin_numerar-spine1:
           ansible_host: 192.168.121.105
-        clab-labbasico-spine2:
+        clab-sin_numerar-spine2:
           ansible_host: 192.168.121.106

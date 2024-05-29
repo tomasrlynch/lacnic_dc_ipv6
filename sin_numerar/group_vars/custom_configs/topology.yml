@@ -2,5 +2,5 @@
 #
 
 netlab_custom_config:
-- spines.j2
 - leaves.j2
+- spines.j2
