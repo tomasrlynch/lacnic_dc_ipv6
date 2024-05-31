@@ -7,6 +7,7 @@ Para este curso, los laboratorios son generados automáticamente utilizando [net
 > Las configuraciones de los hosts no se muestran debido a que hay muchas maneras distintas de configurarlos. En los laboratorios utilizaremos Alpine Linux ya que viene por defecto en netlab.
 ## Laboratorio Básico
 Directorio: `labbasico`
+
 En este laboratorio se muestran las configuraciones básicas de una topología Spine y Leaf.
 Los componentes son:
 - Dos Spines
@@ -14,6 +15,7 @@ Los componentes son:
 - Cuatro Hosts
 ## Laboratorio Vecinos Dinamicos BGP
 Directorio: `vecinos_dinamicos`
+
 En este laboratorio se muestran las configuraciones de los spines para usar vecinos dinamicos
 Los componentes son:
 - Dos Spines
@@ -21,6 +23,7 @@ Los componentes son:
 - Cuatro Hosts
 ## Laboratorio BGP sin Numerar
 Direcotrio: `sin_numerar`
+
 En este laboratorio se muestran las configuraciones de los spines y leaves para BGP unnumbered
 Los componentes son:
 - Dos Spines
@@ -28,6 +31,7 @@ Los componentes son:
 - Cuatro Hosts
 ## Laboratorio Acceso a Internet
 Directorio: `acceso_internet`
+
 El laboratorio muestra las distintas políticas de BGP a aplicar a los Spines y Leafs.
 Los componentes son:
 - Dos routers de proveedores
