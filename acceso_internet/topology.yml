@@ -3,7 +3,7 @@ provider: clab
 defaults.device: frr 
 module: [ bgp ]
 #plugin: [ bgp.session, ebgp.multihop ]
-plugin: [ bgp.session, ebgp.multihop ]
+plugin: [ bgp.session ]
 bgp:
     community.ebgp: [ standard, extended ]
     activate:

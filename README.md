@@ -39,3 +39,7 @@ Los componentes son:
 - Dos Spines
 - Cuatro Leafs
 - Cuatro Hosts
+
+En el directorio `./configuraciones` encontrarán las configuraciones para dos laboratorios:
+1. `./configuraciones/internet_sin_filtro` este directorio contiene las configuraciones iniciales de los equipos
+2. `./configuraciones/internet_con_filtro` este directorio contiene las configuraciones finales de los equipos 

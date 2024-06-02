@@ -50,12 +50,12 @@ hosts:
     ipv6:
     - 2001:db8:501::501
     - 2001:db8:500:501::1
-    - 2001:db8:ff::1
+    - 2001:db8:ff::a
   transito2:
     ipv6:
     - 2001:db8:502::502
     - 2001:db8:500:502::1
-    - 2001:db8:ff::2
+    - 2001:db8:ff::b
 netlab_name: acceso_inter
 netlab_provider: clab
 paths_collect:

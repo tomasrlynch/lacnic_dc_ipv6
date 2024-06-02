@@ -469,31 +469,6 @@ defaults:
           min_value: 1
           true_value: 1
           type: int
-        multihop:
-          activate:
-            ipv4:
-              type: list
-              valid_values:
-              - ipv4
-              - ipv6
-              - ipv4_label
-              - ipv6_label
-              - 6pe
-              - vpnv4
-              - vpnv6
-              - evpn
-            ipv6:
-              type: list
-              valid_values:
-              - ipv4
-              - ipv6
-              - ipv4_label
-              - ipv6_label
-              - 6pe
-              - vpnv4
-              - vpnv6
-              - evpn
-          sessions: list
         next_hop_self: bool
         password: str
         replace_global_as: bool
@@ -584,7 +559,6 @@ defaults:
           min_value: 1
           true_value: 1
           type: int
-        multihop: int
         password: str
         tcp_ao:
           true_value: hmac-sha-1
@@ -721,7 +695,6 @@ defaults:
       advertise_roles: null
       as_list: null
       ebgp_role: null
-      multihop: null
       rr_list: null
     supported_on:
     - arubacx
@@ -825,7 +798,6 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
-          multihop: true
           password: true
           remove_private_as: true
           timers: true
@@ -972,7 +944,6 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
-          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1076,7 +1047,6 @@ defaults:
           gtsm: true
           ipv6_lla: true
           local_as: true
-          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1328,7 +1298,6 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
-          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1461,7 +1430,6 @@ defaults:
           ipv6_lla: true
           local_as: true
           local_as_ibgp: true
-          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1541,7 +1509,6 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
-          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -3886,16 +3853,16 @@ links:
 - interfaces:
   - ifindex: 2
     ifname: eth2
-    ipv6: 2001:db8:ff::1/64
+    ipv6: 2001:db8:ff::a/127
     node: transito1
   - ifindex: 2
     ifname: eth2
-    ipv6: 2001:db8:ff::2/64
+    ipv6: 2001:db8:ff::b/127
     node: transito2
   linkindex: 20
   node_count: 2
   prefix:
-    ipv6: 2001:db8:ff::/64
+    ipv6: 2001:db8:ff::a/127
   provider:
     clab: true
   role: external
@@ -5160,7 +5127,7 @@ nodes:
           ipv6: true
         as: 65002
         ifindex: 2
-        ipv6: 2001:db8:ff::2
+        ipv6: 2001:db8:ff::b
         name: transito2
         type: ebgp
       next_hop_self: true
@@ -5190,13 +5157,13 @@ nodes:
       type: p2p
     - ifindex: 2
       ifname: eth2
-      ipv6: 2001:db8:ff::1/64
+      ipv6: 2001:db8:ff::a/127
       linkindex: 20
       mtu: 1500
       name: transito1 -> transito2
       neighbors:
       - ifname: eth2
-        ipv6: 2001:db8:ff::2/64
+        ipv6: 2001:db8:ff::b/127
         node: transito2
       role: external
       type: p2p
@@ -5247,7 +5214,7 @@ nodes:
           ipv6: true
         as: 65001
         ifindex: 2
-        ipv6: 2001:db8:ff::1
+        ipv6: 2001:db8:ff::a
         name: transito1
         type: ebgp
       next_hop_self: true
@@ -5277,13 +5244,13 @@ nodes:
       type: p2p
     - ifindex: 2
       ifname: eth2
-      ipv6: 2001:db8:ff::2/64
+      ipv6: 2001:db8:ff::b/127
       linkindex: 20
       mtu: 1500
       name: transito2 -> transito1
       neighbors:
       - ifname: eth2
-        ipv6: 2001:db8:ff::1/64
+        ipv6: 2001:db8:ff::a/127
         node: transito1
       role: external
       type: p2p
@@ -5304,5 +5271,4 @@ nodes:
     router_id: 10.0.0.8
 plugin:
 - bgp.session
-- ebgp.multihop
 provider: clab
