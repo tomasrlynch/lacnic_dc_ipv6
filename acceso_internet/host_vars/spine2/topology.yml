@@ -32,45 +32,51 @@ bgp:
     type: ibgp
   - activate:
       ipv6: true
-    as: 64500
-    ifindex: 1
-    ipv6: '2001:db8:ff:1:2::'
-    name: borde1
-    type: ebgp
-  - activate:
-      ipv6: true
-    as: 64500
-    ifindex: 2
-    ipv6: '2001:db8:ff:2:2::'
-    name: borde2
-    type: ebgp
-  - activate:
-      ipv6: true
     as: 4220010001
-    ifindex: 3
-    ipv6: 2001:db8:ff:21::1
+    ifindex: 1
+    ipv6: true
+    local_if: eth1
     name: leaf1
     type: ebgp
   - activate:
       ipv6: true
     as: 4220010002
-    ifindex: 4
-    ipv6: 2001:db8:ff:22::1
+    ifindex: 2
+    ipv6: true
+    local_if: eth2
     name: leaf2
     type: ebgp
   - activate:
       ipv6: true
     as: 4220010003
-    ifindex: 5
-    ipv6: 2001:db8:ff:23::1
+    ifindex: 3
+    ipv6: true
+    local_if: eth3
     name: leaf3
     type: ebgp
   - activate:
       ipv6: true
     as: 4220010004
-    ifindex: 6
-    ipv6: 2001:db8:ff:24::1
+    ifindex: 4
+    ipv6: true
+    local_if: eth4
     name: leaf4
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64500
+    ifindex: 5
+    ipv6: true
+    local_if: eth5
+    name: borde1
+    type: ebgp
+  - activate:
+      ipv6: true
+    as: 64500
+    ifindex: 6
+    ipv6: true
+    local_if: eth6
+    name: borde2
     type: ebgp
   next_hop_self: true
   router_id: 10.0.0.6
@@ -83,78 +89,86 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- spines.j2
 hostname: clab-acceso_inter-spine2
 interfaces:
 - ifindex: 1
   ifname: eth1
-  ipv6: 2001:db8:ff:1:2::1/127
+  ipv6: true
   linkindex: 5
-  mtu: 1500
-  name: spine2 -> borde1
-  neighbors:
-  - ifname: eth4
-    ipv6: 2001:db8:ff:1:2::/127
-    node: borde1
-  role: external
-  type: p2p
-- ifindex: 2
-  ifname: eth2
-  ipv6: 2001:db8:ff:2:2::1/127
-  linkindex: 7
-  mtu: 1500
-  name: spine2 -> borde2
-  neighbors:
-  - ifname: eth4
-    ipv6: 2001:db8:ff:2:2::/127
-    node: borde2
-  role: external
-  type: p2p
-- ifindex: 3
-  ifname: eth3
-  ipv6: 2001:db8:ff:21::2/64
-  linkindex: 12
   mtu: 1500
   name: spine2 -> leaf1
   neighbors:
   - ifname: eth2
-    ipv6: 2001:db8:ff:21::1/64
+    ipv6: true
     node: leaf1
+  pool: core
   role: external
   type: p2p
-- ifindex: 4
-  ifname: eth4
-  ipv6: 2001:db8:ff:22::2/64
-  linkindex: 13
+- ifindex: 2
+  ifname: eth2
+  ipv6: true
+  linkindex: 6
   mtu: 1500
   name: spine2 -> leaf2
   neighbors:
   - ifname: eth2
-    ipv6: 2001:db8:ff:22::1/64
+    ipv6: true
     node: leaf2
+  pool: core
   role: external
   type: p2p
-- ifindex: 5
-  ifname: eth5
-  ipv6: 2001:db8:ff:23::2/64
-  linkindex: 14
+- ifindex: 3
+  ifname: eth3
+  ipv6: true
+  linkindex: 7
   mtu: 1500
   name: spine2 -> leaf3
   neighbors:
   - ifname: eth2
-    ipv6: 2001:db8:ff:23::1/64
+    ipv6: true
     node: leaf3
+  pool: core
   role: external
   type: p2p
-- ifindex: 6
-  ifname: eth6
-  ipv6: 2001:db8:ff:24::2/64
-  linkindex: 15
+- ifindex: 4
+  ifname: eth4
+  ipv6: true
+  linkindex: 8
   mtu: 1500
   name: spine2 -> leaf4
   neighbors:
   - ifname: eth2
-    ipv6: 2001:db8:ff:24::1/64
+    ipv6: true
     node: leaf4
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 5
+  ifname: eth5
+  ipv6: true
+  linkindex: 14
+  mtu: 1500
+  name: spine2 -> borde1
+  neighbors:
+  - ifname: eth2
+    ipv6: true
+    node: borde1
+  pool: core
+  role: external
+  type: p2p
+- ifindex: 6
+  ifname: eth6
+  ipv6: true
+  linkindex: 16
+  mtu: 1500
+  name: spine2 -> borde2
+  neighbors:
+  - ifname: eth2
+    ipv6: true
+    node: borde2
+  pool: core
   role: external
   type: p2p
 loopback:

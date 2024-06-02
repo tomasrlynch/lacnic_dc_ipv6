@@ -12,11 +12,11 @@ clab:
   kind: linux
 hostname: clab-acceso_inter-host2
 interfaces:
-- bridge: acceso_int_17
+- bridge: acceso_int_10
   ifindex: 1
   ifname: eth1
   ipv6: 2001:db8:aa:2::2/64
-  linkindex: 17
+  linkindex: 10
   mtu: 1500
   name: host2 -> leaf2
   neighbors:

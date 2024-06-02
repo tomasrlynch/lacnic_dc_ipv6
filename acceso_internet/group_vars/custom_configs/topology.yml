@@ -2,4 +2,7 @@
 #
 
 netlab_custom_config:
-- transito.j2
+- leaves.j2
+- bordes.j2
+- transitos.j2
+- spines.j2

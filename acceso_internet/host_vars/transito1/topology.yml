@@ -36,24 +36,24 @@ bgp:
     name: transito2
     type: ebgp
   next_hop_self: true
-  router_id: 10.0.0.9
+  router_id: 10.0.0.7
 box: ghcr.io/sysoleg/vyos-container
 clab:
   binds:
   - /lib/modules:/lib/modules
   kind: linux
 config:
-- transito.j2
+- transitos.j2
 hostname: clab-acceso_inter-transito1
 interfaces:
 - ifindex: 1
   ifname: eth1
   ipv6: 2001:db8:500:501::1/127
-  linkindex: 1
+  linkindex: 18
   mtu: 1500
   name: transito1 -> borde1
   neighbors:
-  - ifname: eth1
+  - ifname: eth4
     ipv6: 2001:db8:500:501::/127
     node: borde1
   role: external
@@ -73,14 +73,14 @@ interfaces:
 loopback:
   ifindex: 0
   ifname: dum0
-  ipv6: 2001:db8:501::1/48
+  ipv6: 2001:db8:501::501/48
   neighbors: []
   type: loopback
 mgmt:
   ifname: eth0
-  ipv4: 192.168.121.109
-  mac: 08:4f:a9:00:00:09
+  ipv4: 192.168.121.107
+  mac: 08:4f:a9:00:00:07
 module:
 - bgp
 mtu: 1500
-router_id: 10.0.0.9
+router_id: 10.0.0.7

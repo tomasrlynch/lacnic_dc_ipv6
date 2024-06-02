@@ -1,0 +1,28 @@
+#!/bin/vbash
+source /opt/vyatta/etc/functions/script-template
+
+if [ "$(id -g -n)" != 'vyattacfg' ] ; then
+    exec sg vyattacfg -c "/bin/vbash $(readlink -f $0) $@"
+fi
+#
+configure
+set protocols isis dynamic-hostname
+set protocols isis interface dum0
+set protocols isis interface eth3 network point-to-point
+set protocols isis level 'level-2'
+delete protocols bgp neighbor eth1 address-family ipv6-unicast nexthop-self
+delete protocols bgp neighbor eth2 address-family ipv6-unicast nexthop-self
+{% for ngb in bgp.neighbors %}
+delete protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast nexthop-self
+{% endfor %}
+{% for ngb in bgp.neighbors if 'borde2' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast nexthop-self
+set protocols isis net '49.0001.0000.0000.0101.00'
+{% endfor %}
+{% for ngb in bgp.neighbors if 'borde1' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast nexthop-self
+set protocols isis net '49.0001.0000.0000.0102.00'
+{% endfor %}
+commit
+save
+exit

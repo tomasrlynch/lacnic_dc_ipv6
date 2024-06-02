@@ -43,7 +43,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010001
+      group: leaves,as4220010001
       binds:
       - clab_files/leaf1/daemons:/etc/frr/daemons
       - clab_files/leaf1/hosts:/etc/hosts
@@ -52,7 +52,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010002
+      group: leaves,as4220010002
       binds:
       - clab_files/leaf2/daemons:/etc/frr/daemons
       - clab_files/leaf2/hosts:/etc/hosts
@@ -61,7 +61,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010003
+      group: leaves,as4220010003
       binds:
       - clab_files/leaf3/daemons:/etc/frr/daemons
       - clab_files/leaf3/hosts:/etc/hosts
@@ -70,7 +70,7 @@ topology:
       kind: linux
       image: quay.io/frrouting/frr:9.1.0
       runtime: docker
-      group: as4220010004
+      group: leaves,as4220010004
       binds:
       - clab_files/leaf4/daemons:/etc/frr/daemons
       - clab_files/leaf4/hosts:/etc/hosts
@@ -93,7 +93,7 @@ topology:
       - clab_files/spine2/daemons:/etc/frr/daemons
       - clab_files/spine2/hosts:/etc/hosts
     borde1:
-      mgmt-ipv4: 192.168.121.107
+      mgmt-ipv4: 192.168.121.201
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -101,7 +101,7 @@ topology:
       binds:
       - /lib/modules:/lib/modules
     borde2:
-      mgmt-ipv4: 192.168.121.108
+      mgmt-ipv4: 192.168.121.202
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -109,7 +109,7 @@ topology:
       binds:
       - /lib/modules:/lib/modules
     transito1:
-      mgmt-ipv4: 192.168.121.109
+      mgmt-ipv4: 192.168.121.107
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -117,7 +117,7 @@ topology:
       binds:
       - /lib/modules:/lib/modules
     transito2:
-      mgmt-ipv4: 192.168.121.114
+      mgmt-ipv4: 192.168.121.108
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -128,50 +128,29 @@ topology:
 
   links:
   - endpoints:
-    - "borde1:eth1"
-    - "transito1:eth1"
-  - endpoints:
-    - "borde2:eth1"
-    - "transito2:eth1"
-  - endpoints:
-    - "borde1:eth2"
-    - "borde2:eth2"
-  - endpoints:
-    - "spine1:eth1"
-    - "borde1:eth3"
-  - endpoints:
-    - "spine2:eth1"
-    - "borde1:eth4"
-  - endpoints:
-    - "spine1:eth2"
-    - "borde2:eth3"
-  - endpoints:
-    - "spine2:eth2"
-    - "borde2:eth4"
-  - endpoints:
     - "leaf1:eth1"
-    - "spine1:eth3"
+    - "spine1:eth1"
   - endpoints:
     - "leaf2:eth1"
-    - "spine1:eth4"
+    - "spine1:eth2"
   - endpoints:
     - "leaf3:eth1"
-    - "spine1:eth5"
+    - "spine1:eth3"
   - endpoints:
     - "leaf4:eth1"
-    - "spine1:eth6"
+    - "spine1:eth4"
   - endpoints:
     - "leaf1:eth2"
-    - "spine2:eth3"
+    - "spine2:eth1"
   - endpoints:
     - "leaf2:eth2"
-    - "spine2:eth4"
+    - "spine2:eth2"
   - endpoints:
     - "leaf3:eth2"
-    - "spine2:eth5"
+    - "spine2:eth3"
   - endpoints:
     - "leaf4:eth2"
-    - "spine2:eth6"
+    - "spine2:eth4"
   - endpoints:
     - "host1:eth1"
     - "leaf1:eth3"
@@ -184,6 +163,27 @@ topology:
   - endpoints:
     - "host4:eth1"
     - "leaf4:eth3"
+  - endpoints:
+    - "spine1:eth5"
+    - "borde1:eth1"
+  - endpoints:
+    - "spine2:eth5"
+    - "borde1:eth2"
+  - endpoints:
+    - "spine1:eth6"
+    - "borde2:eth1"
+  - endpoints:
+    - "spine2:eth6"
+    - "borde2:eth2"
+  - endpoints:
+    - "borde1:eth3"
+    - "borde2:eth3"
+  - endpoints:
+    - "borde1:eth4"
+    - "transito1:eth1"
+  - endpoints:
+    - "borde2:eth4"
+    - "transito2:eth1"
   - endpoints:
     - "transito1:eth2"
     - "transito2:eth2"

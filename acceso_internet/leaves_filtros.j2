@@ -1,0 +1,13 @@
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+{% endfor %}
+neighbor SPINES peer-group
+neighbor SPINES remote-as external
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+neighbor {{ ngb.local_if }} interface peer-group SPINES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+address-family ipv6 unicast
+neighbor SPINES activate
+

@@ -28,14 +28,16 @@ bgp:
       ipv6: true
     as: 4210010001
     ifindex: 1
-    ipv6: 2001:db8:ff:12::2
+    ipv6: true
+    local_if: eth1
     name: spine1
     type: ebgp
   - activate:
       ipv6: true
     as: 4210010001
     ifindex: 2
-    ipv6: 2001:db8:ff:22::2
+    ipv6: true
+    local_if: eth2
     name: spine2
     type: ebgp
   next_hop_self: true
@@ -49,39 +51,43 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- leaves.j2
 hostname: clab-acceso_inter-leaf2
 interfaces:
 - ifindex: 1
   ifname: eth1
-  ipv6: 2001:db8:ff:12::1/64
-  linkindex: 9
+  ipv6: true
+  linkindex: 2
   mtu: 1500
   name: leaf2 -> spine1
   neighbors:
-  - ifname: eth4
-    ipv6: 2001:db8:ff:12::2/64
+  - ifname: eth2
+    ipv6: true
     node: spine1
+  pool: core
   role: external
   type: p2p
 - ifindex: 2
   ifname: eth2
-  ipv6: 2001:db8:ff:22::1/64
-  linkindex: 13
+  ipv6: true
+  linkindex: 6
   mtu: 1500
   name: leaf2 -> spine2
   neighbors:
-  - ifname: eth4
-    ipv6: 2001:db8:ff:22::2/64
+  - ifname: eth2
+    ipv6: true
     node: spine2
+  pool: core
   role: external
   type: p2p
 - bgp:
     advertise: true
-  bridge: acceso_int_17
+  bridge: acceso_int_10
   ifindex: 3
   ifname: eth3
   ipv6: 2001:db8:aa:2::b/64
-  linkindex: 17
+  linkindex: 10
   mtu: 1500
   name: leaf2 -> host2
   neighbors:

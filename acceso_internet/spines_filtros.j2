@@ -1,0 +1,26 @@
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+no neighbor {{ ngb.ipv6 }}
+{% endfor %}
+{% for ngb in bgp.neighbors if 'leaf' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+{% endfor %}
+neighbor LEAVES peer-group
+neighbor LEAVES remote-as external
+{% for ngb in bgp.neighbors if 'leaf' in ngb.name %}
+neighbor {{ ngb.local_if }} interface peer-group LEAVES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+{% for ngb in bgp.neighbors if 'borde' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+{% endfor %}
+neighbor BORDES peer-group
+neighbor BORDES remote-as external
+{% for ngb in bgp.neighbors if 'borde' in ngb.name %}
+neighbor {{ ngb.local_if }} interface peer-group BORDES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+address-family ipv6 unicast
+neighbor LEAVES activate
+neighbor BORDES activate
+
