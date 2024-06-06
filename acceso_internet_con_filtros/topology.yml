@@ -1,0 +1,176 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+#plugin: [ bgp.session, ebgp.multihop ]
+plugin: [ bgp.session ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    core:
+        unnumbered: true
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host1:
+        id: 1
+    host2:
+        id: 2
+    host3:
+        id: 3
+    host4:
+        id: 4
+    leaf1:
+        id: 10
+        bgp.as: 4220010001
+        loopback:
+            ipv6: 2001:db8:64:1::1/128
+    leaf2:
+        id: 11
+        bgp.as: 4220010002
+        loopback:
+            ipv6: 2001:db8:64:2::2/128
+    leaf3:
+        id: 12
+        bgp.as: 4220010003
+        loopback:
+            ipv6: 2001:db8:64:3::3/128
+    leaf4:
+        id: 13
+        bgp.as: 4220010004
+        loopback:
+            ipv6: 2001:db8:64:4::4/128
+    spine1:
+        id: 5
+        loopback:
+            ipv6: 2001:db8:64:11::11/128
+    spine2:
+        id: 6
+        loopback:
+            ipv6: 2001:db8:64:22::22/128
+    borde1:
+        id: 101
+        loopback:
+            ipv6: 2001:db8:64::1/128
+    borde2:
+        id: 102
+        loopback:
+            ipv6: 2001:db8:64::2/128
+    transito1:
+        loopback:
+            ipv6: 2001:db8:501::501/48
+        bgp.as: 65001
+    transito2:
+        loopback:
+            ipv6: 2001:db8:502::502/48
+        bgp.as: 65002
+groups:
+    spine:
+        members: [ spine1, spine2 ]
+        bgp.as: 4210010001
+        config: [ spines_filtros.j2 ]
+    leaves:
+        members: [ leaf1, leaf2, leaf3, leaf4 ]
+        config: [ leaves_filtros.j2 ]
+    hosts:
+        members: [ host1, host2, host3, host4 ]
+        device: linux
+    borde:
+        members: [ borde1, borde2 ]
+        device: vyos
+        module: [ bgp ]
+        bgp.activate.ipv6: [ ibgp, ebgp ]
+        bgp.as: 64500
+        config: [ bordes_filtros.j2 ]
+    transito:
+        members: [ transito1, transito2 ]
+        device: vyos
+        config: [ transitos.j2 ]
+links:
+    #
+    # Spine a Leaf
+    #
+    - spine1:
+      leaf1:
+      pool: core
+    - spine1:
+      leaf2:
+      pool: core
+    - spine1:
+      leaf3:
+      pool: core
+    - spine1:
+      leaf4:
+      pool: core
+    - spine2:
+      leaf1:
+      pool: core
+    - spine2:
+      leaf2:
+      pool: core
+    - spine2:
+      leaf3:
+      pool: core
+    - spine2:
+      leaf4:
+      pool: core
+    #
+    # Host a Leaf
+    #
+    - host1:
+      leaf1:
+      prefix.ipv6: 2001:db8:aa:1::/64
+    - host2:
+      leaf2:
+      prefix.ipv6: 2001:db8:aa:2::/64
+    - host3:
+      leaf3:
+      prefix.ipv6: 2001:db8:aa:3::/64
+    - host4:
+      leaf4:
+      prefix.ipv6: 2001:db8:aa:4::/64
+    #
+    # Borde a Spine
+    #
+    - borde1:
+      spine1:
+      pool: core
+    - borde1:
+      spine2:
+      pool: core
+    - borde2:
+      spine1:
+      pool: core
+    - borde2:
+      spine2:
+      pool: core
+    #
+    # Borde a Borde
+    #
+    - borde1:
+      borde2:
+      prefix.ipv6: 2001:db8:ff::/127
+    #
+    # Borde a Transito
+    #
+    - borde1:
+      transito1:
+      prefix.ipv6: 2001:db8:500:501::/127
+    - borde2:
+      transito2:
+      prefix.ipv6: 2001:db8:500:502::/127
+    #
+    # Transito a Transito
+    #
+    - transito1:
+      transito2:
+      prefix.ipv6: 2001:db8:ff::a/127

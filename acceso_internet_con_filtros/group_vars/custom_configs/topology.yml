@@ -1,0 +1,8 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/acceso_internet_con_filtros/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_custom_config:
+- bordes_filtros.j2
+- transitos.j2
+- leaves_filtros.j2
+- spines_filtros.j2
