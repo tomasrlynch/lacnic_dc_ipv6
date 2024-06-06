@@ -1,3 +1,14 @@
+ipv6 prefix-list RUTA_DEFAULT seq 5 permit ::/0
+route-map BORDE_IMPORTAR permit 100
+match ipv6 address prefix-list RUTA_DEFAULT
+route-map BORDE_IMPORTAR deny 1000
+route-map BORDE_EXPORTAR deny 100
+match ipv6 address prefix-list RUTA_DEFAULT
+route-map BORDE_EXPORTAR permit 1000
+route-map LEAF_IMPORTAR deny 100
+match ipv6 address prefix-list RUTA_DEFAULT
+route-map LEAF_IMPORTAR permit 1000
+route-map LEAF_EXPORTAR permit 1000
 router bgp {{ bgp.as }}
 {% for ngb in bgp.neighbors if 'spine' in ngb.name %}
 no neighbor {{ ngb.ipv6 }}
@@ -22,5 +33,8 @@ neighbor {{ ngb.local_if }} description {{ ngb.name }}
 {% endfor %}
 address-family ipv6 unicast
 neighbor LEAVES activate
+neighbor LEAVES route-map LEAF_IMPORTAR in
+neighbor LEAVES route-map LEAF_EXPORTAR out
 neighbor BORDES activate
-
+neighbor BORDES route-map BORDE_IMPORTAR in
+neighbor BORDES route-map BORDE_EXPORTAR out
