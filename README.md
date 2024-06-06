@@ -33,8 +33,10 @@ El laboratorio muestra las distintas políticas de BGP a aplicar a los Spines y 
 - Cuatro Leafs
 - Cuatro Hosts
 
-En el directorio `./configuraciones` encontrarán las configuraciones para dos laboratorios:
+En el directorio `./configuraciones` encontrarán las configuraciones para el laboratorio:
 1. `./configuraciones/internet_sin_filtro` este directorio contiene las configuraciones iniciales de los equipos
 2. `./configuraciones/internet_con_filtro` este directorio contiene las configuraciones finales de los equipos 
 
-Template netlab: `acceso_internet`
+Templates netlab: 
+- En `acceso_internet` encontrarán los templates para generar el laboratorio sin filtros.
+- En `acceso_internet_con_filtros` encontrarán los templates para generar el laboratorio con filtros.
