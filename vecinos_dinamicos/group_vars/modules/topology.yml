@@ -1,5 +1,0 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/vecinos_dinamicos/topology.yml', 'package:topology-defaults.yml']
-#
-
-netlab_module:
-- bgp
