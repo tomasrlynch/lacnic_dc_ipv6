@@ -1,0 +1,74 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/bgp_para_clientes/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+bgp:
+  activate:
+    ipv6:
+    - ebgp
+  advertise_loopback: true
+  as: 64501
+  community:
+    ebgp:
+    - standard
+    - large
+    - extended
+    ibgp:
+    - standard
+    - large
+    - extended
+    ibgp_localas:
+    - standard
+    - large
+    - extended
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv6: true
+    as: 4220010001
+    ifindex: 1
+    ipv6: 2001:db8:aa:1::2
+    name: leaf1
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.1
+box: quay.io/frrouting/frr:9.1.0
+clab:
+  binds:
+  - clab_files/host1/daemons:/etc/frr/daemons
+  - clab_files/host1/hosts:/etc/hosts
+  config_templates:
+  - daemons:/etc/frr/daemons
+  - hosts:/etc/hosts
+  kind: linux
+config:
+- hosts_config.j2
+hostname: clab-bgp_para_cli-host1
+interfaces:
+- ifindex: 1
+  ifname: eth1
+  ipv6: 2001:db8:aa:1::1/64
+  linkindex: 9
+  mtu: 1500
+  name: host1 -> leaf1
+  neighbors:
+  - ifname: eth3
+    ipv6: 2001:db8:aa:1::2/64
+    node: leaf1
+  role: external
+  type: p2p
+loopback:
+  ifindex: 0
+  ifname: lo0
+  ipv6: 2001:db8:100:1::1/64
+  neighbors: []
+  type: loopback
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.101
+  mac: 08:4f:a9:00:00:01
+module:
+- bgp
+mtu: 1500
+router_id: 10.0.0.1

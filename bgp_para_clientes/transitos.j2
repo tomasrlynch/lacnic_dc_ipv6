@@ -1,0 +1,58 @@
+#!/bin/vbash
+source /opt/vyatta/etc/functions/script-template
+
+if [ "$(id -g -n)" != 'vyattacfg' ] ; then
+    exec sg vyattacfg -c "/bin/vbash $(readlink -f $0) $@"
+fi
+
+configure
+#
+# Políticas simples de importación y exportación de prefijos a peers:
+# - Importación: descarta ruta default y prefijos mayores a /48
+# - Exportación: permite todos los prefijos
+#
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 action 'permit'
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 ge '49'
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 prefix '::/0'
+set policy prefix-list6 RUTA_DEFAULT rule 100 action 'permit'
+set policy prefix-list6 RUTA_DEFAULT rule 100 prefix '::/0'
+set policy route-map PEER_IMPORTAR rule 100 action 'deny'
+set policy route-map PEER_IMPORTAR rule 100 match ipv6 address prefix-list 'RUTA_DEFAULT'
+set policy route-map PEER_IMPORTAR rule 200 action 'deny'
+set policy route-map PEER_IMPORTAR rule 200 match ipv6 address prefix-list 'PREFIJOS_MAYOR_48'
+set policy route-map PEER_IMPORTAR rule 1000 action 'permit'
+set policy route-map PEER_EXPORTAR rule 1000 action 'permit'
+#
+# Asignación de políticas a todos los peers
+#
+{% for ngb in bgp.neighbors %}
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map import 'PEER_IMPORTAR'
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map export 'PEER_EXPORTAR'
+delete protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast nexthop-self
+{% endfor %}
+#
+# Creación de prefijos para propagar a vecinos
+# - Si el vecino es tránsito2 entonces estamos en tránsito1
+# - Si el vecino es tránsito1 entonces estamos en tránsito2
+#
+{% for ngb in bgp.neighbors if 'transito2' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} solo
+set protocols static route6 2001:db8:1000::/48 blackhole
+set protocols bgp address-family ipv6-unicast network 2001:db8:1000::/48
+{% for myloop in range(15) %}
+set protocols static route6 2001:db8:100{{ '%0x' % loop.index }}::/48 blackhole
+set protocols bgp address-family ipv6-unicast network 2001:db8:100{{ '%0x' % loop.index }}::/48
+{% endfor %}
+{% endfor %}
+{% for ngb in bgp.neighbors if 'transito1' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} solo
+set protocols static route6 2001:db8:2000::/48 blackhole
+set protocols bgp address-family ipv6-unicast network 2001:db8:2000::/48
+{% for myloop in range(15) %}
+set protocols static route6 2001:db8:200{{ '%0x' % loop.index }}::/48 blackhole
+set protocols bgp address-family ipv6-unicast network 2001:db8:200{{ '%0x' % loop.index }}::/48
+{% endfor %}
+{% endfor %}
+commit
+save
+exit

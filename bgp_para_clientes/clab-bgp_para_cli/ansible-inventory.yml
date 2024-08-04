@@ -1,0 +1,37 @@
+all:
+  vars:
+    # The generated inventory is assumed to be used from the clab host.
+    # Hence no http proxy should be used. Therefore we make sure the http
+    # module does not attempt using any global http proxy.
+    ansible_httpapi_use_proxy: false
+  children:
+    linux:
+      hosts:
+        clab-bgp_para_cli-borde1:
+          ansible_host: 192.168.121.201
+        clab-bgp_para_cli-borde2:
+          ansible_host: 192.168.121.202
+        clab-bgp_para_cli-host1:
+          ansible_host: 192.168.121.101
+        clab-bgp_para_cli-host2:
+          ansible_host: 192.168.121.102
+        clab-bgp_para_cli-host3:
+          ansible_host: 192.168.121.103
+        clab-bgp_para_cli-host4:
+          ansible_host: 192.168.121.104
+        clab-bgp_para_cli-leaf1:
+          ansible_host: 192.168.121.110
+        clab-bgp_para_cli-leaf2:
+          ansible_host: 192.168.121.111
+        clab-bgp_para_cli-leaf3:
+          ansible_host: 192.168.121.112
+        clab-bgp_para_cli-leaf4:
+          ansible_host: 192.168.121.113
+        clab-bgp_para_cli-spine1:
+          ansible_host: 192.168.121.105
+        clab-bgp_para_cli-spine2:
+          ansible_host: 192.168.121.106
+        clab-bgp_para_cli-transito1:
+          ansible_host: 192.168.121.107
+        clab-bgp_para_cli-transito2:
+          ansible_host: 192.168.121.108
