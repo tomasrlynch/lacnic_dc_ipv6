@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/bgp_para_clientes/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/servicio_bgp_simple/topology.yml', 'package:topology-defaults.yml']
 #
 
 ansible_connection: docker

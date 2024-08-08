@@ -24,15 +24,19 @@ nodes:
     host1:
         id: 1
         bgp.as: 64501
+        loopback.ipv6: 2001:db8:1::1/48
     host2:
         id: 2
         bgp.as: 64502
+        loopback.ipv6: 2001:db8:2::2/48
     host3:
         id: 3
         bgp.as: 64503
+        loopback.ipv6: 2001:db8:3::3/48
     host4:
         id: 4
         bgp.as: 64504
+        loopback.ipv6: 2001:db8:4::4/48
     leaf1:
         id: 10
         bgp.as: 4220010001
@@ -87,7 +91,7 @@ groups:
         config: [ leaves_filtros.j2 ]
     hosts:
         members: [ host1, host2, host3, host4 ]
-        config: [ hosts_config.j2 ]
+        #config: [ hosts_config.j2 ]
         #device: linux
     borde:
         members: [ borde1, borde2 ]
@@ -169,13 +173,13 @@ links:
     #
     - borde1:
       transito1:
-      prefix.ipv6: 2001:db8:500:501::/127
+      prefix.ipv6: 2001:db8:ff:501::/127
     - borde2:
       transito2:
-      prefix.ipv6: 2001:db8:500:502::/127
+      prefix.ipv6: 2001:db8:ff:502::/127
     #
     # Transito a Transito
     #
     - transito1:
       transito2:
-      prefix.ipv6: 2001:db8:ff::a/127
+      prefix.ipv6: 2001:db8:555::/127

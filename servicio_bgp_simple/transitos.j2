@@ -35,24 +35,24 @@ delete protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast nexthop
 # - Si el vecino es tránsito2 entonces estamos en tránsito1
 # - Si el vecino es tránsito1 entonces estamos en tránsito2
 #
-{% for ngb in bgp.neighbors if 'transito2' in ngb.name %}
-set protocols bgp neighbor {{ ngb.ipv6 }} solo
-set protocols static route6 2001:db8:1000::/48 blackhole
-set protocols bgp address-family ipv6-unicast network 2001:db8:1000::/48
-{% for myloop in range(15) %}
-set protocols static route6 2001:db8:100{{ '%0x' % loop.index }}::/48 blackhole
-set protocols bgp address-family ipv6-unicast network 2001:db8:100{{ '%0x' % loop.index }}::/48
-{% endfor %}
-{% endfor %}
-{% for ngb in bgp.neighbors if 'transito1' in ngb.name %}
-set protocols bgp neighbor {{ ngb.ipv6 }} solo
-set protocols static route6 2001:db8:2000::/48 blackhole
-set protocols bgp address-family ipv6-unicast network 2001:db8:2000::/48
-{% for myloop in range(15) %}
-set protocols static route6 2001:db8:200{{ '%0x' % loop.index }}::/48 blackhole
-set protocols bgp address-family ipv6-unicast network 2001:db8:200{{ '%0x' % loop.index }}::/48
-{% endfor %}
-{% endfor %}
+#{% for ngb in bgp.neighbors if 'transito2' in ngb.name %}
+#set protocols bgp neighbor {{ ngb.ipv6 }} solo
+#set protocols static route6 2001:db8:1000::/48 blackhole
+#set protocols bgp address-family ipv6-unicast network 2001:db8:1000::/48
+#{% for myloop in range(15) %}
+#set protocols static route6 2001:db8:100{{ '%0x' % loop.index }}::/48 blackhole
+#set protocols bgp address-family ipv6-unicast network 2001:db8:100{{ '%0x' % loop.index }}::/48
+#{% endfor %}
+#{% endfor %}
+#{% for ngb in bgp.neighbors if 'transito1' in ngb.name %}
+#set protocols bgp neighbor {{ ngb.ipv6 }} solo
+#set protocols static route6 2001:db8:2000::/48 blackhole
+#set protocols bgp address-family ipv6-unicast network 2001:db8:2000::/48
+#{% for myloop in range(15) %}
+#set protocols static route6 2001:db8:200{{ '%0x' % loop.index }}::/48 blackhole
+#set protocols bgp address-family ipv6-unicast network 2001:db8:200{{ '%0x' % loop.index }}::/48
+#{% endfor %}
+#{% endfor %}
 commit
 save
 exit

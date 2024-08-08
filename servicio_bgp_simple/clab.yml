@@ -1,4 +1,4 @@
-name: bgp_para_cli
+name: servicio_bgp
 
 mgmt:
   network: netlab_mgmt

@@ -1,9 +1,8 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/bgp_para_clientes/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/servicio_bgp_simple/topology.yml', 'package:topology-defaults.yml']
 #
 
 netlab_custom_config:
+- leaves_filtros.j2
+- spines_filtros.j2
 - bordes_filtros.j2
 - transitos.j2
-- spines_filtros.j2
-- leaves_filtros.j2
-- hosts_config.j2

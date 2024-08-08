@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/bgp_para_clientes/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/servicio_bgp_simple/topology.yml', 'package:topology-defaults.yml']
 #
 
 af:
@@ -42,9 +42,7 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
-config:
-- hosts_config.j2
-hostname: clab-bgp_para_cli-host4
+hostname: clab-servicio_bgp-host4
 interfaces:
 - ifindex: 1
   ifname: eth1
@@ -61,7 +59,7 @@ interfaces:
 loopback:
   ifindex: 0
   ifname: lo0
-  ipv6: 2001:db8:100:4::1/64
+  ipv6: 2001:db8:4::4/48
   neighbors: []
   type: loopback
 mgmt:

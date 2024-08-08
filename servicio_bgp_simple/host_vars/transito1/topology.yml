@@ -1,4 +1,4 @@
-# Ansible inventory created from ['/root/lacnic_ipv6dc/bgp_para_clientes/topology.yml', 'package:topology-defaults.yml']
+# Ansible inventory created from ['/root/lacnic_ipv6dc/servicio_bgp_simple/topology.yml', 'package:topology-defaults.yml']
 #
 
 af:
@@ -25,14 +25,14 @@ bgp:
       ipv6: true
     as: 64500
     ifindex: 1
-    ipv6: '2001:db8:500:501::'
+    ipv6: '2001:db8:ff:501::'
     name: borde1
     type: ebgp
   - activate:
       ipv6: true
     as: 65002
     ifindex: 2
-    ipv6: 2001:db8:ff::b
+    ipv6: 2001:db8:555::1
     name: transito2
     type: ebgp
   next_hop_self: true
@@ -44,29 +44,29 @@ clab:
   kind: linux
 config:
 - transitos.j2
-hostname: clab-bgp_para_cli-transito1
+hostname: clab-servicio_bgp-transito1
 interfaces:
 - ifindex: 1
   ifname: eth1
-  ipv6: 2001:db8:500:501::1/127
+  ipv6: 2001:db8:ff:501::1/127
   linkindex: 18
   mtu: 1500
   name: transito1 -> borde1
   neighbors:
   - ifname: eth4
-    ipv6: 2001:db8:500:501::/127
+    ipv6: 2001:db8:ff:501::/127
     node: borde1
   role: external
   type: p2p
 - ifindex: 2
   ifname: eth2
-  ipv6: 2001:db8:ff::a/127
+  ipv6: 2001:db8:555::/127
   linkindex: 20
   mtu: 1500
   name: transito1 -> transito2
   neighbors:
   - ifname: eth2
-    ipv6: 2001:db8:ff::b/127
+    ipv6: 2001:db8:555::1/127
     node: transito2
   role: external
   type: p2p

@@ -3,7 +3,7 @@ Para estos cursos, los laboratorios son generados automáticamente utilizando [n
 
 ## IPv6 en Data Centers
 El curso "IPv6 en Data Centers" cuenta con cuatro laboratorios. Cada uno de ellos está descripto a continuación. Dentro del directorio `configuraciones` existen subdirectorios para cada uno de los labs con las configuraciones de los equipos de red.
-> [!NOTA]
+> [!NOTE]
 > Las configuraciones de los hosts no se muestran debido a que hay muchas maneras distintas de configurarlos y en este curso son simples servidores Linux. En los laboratorios utilizaremos Alpine Linux ya que viene por defecto en netlab.
 
 ### Laboratorio Básico
