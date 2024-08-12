@@ -2,8 +2,8 @@
 provider: clab
 defaults.device: frr 
 module: [ bgp ]
-#plugin: [ bgp.session, ebgp.multihop ]
-plugin: [ bgp.session ]
+plugin: [ bgp.session, ebgp.multihop ]
+#plugin: [ bgp.session ]
 bgp:
     community.ebgp: [ standard, extended ]
     activate:
@@ -137,15 +137,19 @@ links:
     #
     - host1:
       leaf1:
+          bgp.local_as: 65000
       prefix.ipv6: 2001:db8:aa:1::/64
     - host2:
       leaf2:
+          bgp.local_as: 65000
       prefix.ipv6: 2001:db8:aa:2::/64
     - host3:
       leaf3:
+          bgp.local_as: 65000
       prefix.ipv6: 2001:db8:aa:3::/64
     - host4:
       leaf4:
+          bgp.local_as: 65000
       prefix.ipv6: 2001:db8:aa:4::/64
     #
     # Borde a Spine

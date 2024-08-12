@@ -469,6 +469,31 @@ defaults:
           min_value: 1
           true_value: 1
           type: int
+        multihop:
+          activate:
+            ipv4:
+              type: list
+              valid_values:
+              - ipv4
+              - ipv6
+              - ipv4_label
+              - ipv6_label
+              - 6pe
+              - vpnv4
+              - vpnv6
+              - evpn
+            ipv6:
+              type: list
+              valid_values:
+              - ipv4
+              - ipv6
+              - ipv4_label
+              - ipv6_label
+              - 6pe
+              - vpnv4
+              - vpnv6
+              - evpn
+          sessions: list
         next_hop_self: bool
         password: str
         replace_global_as: bool
@@ -559,6 +584,7 @@ defaults:
           min_value: 1
           true_value: 1
           type: int
+        multihop: int
         password: str
         tcp_ao:
           true_value: hmac-sha-1
@@ -695,6 +721,7 @@ defaults:
       advertise_roles: null
       as_list: null
       ebgp_role: null
+      multihop: null
       rr_list: null
     supported_on:
     - arubacx
@@ -798,6 +825,7 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
+          multihop: true
           password: true
           remove_private_as: true
           timers: true
@@ -944,6 +972,7 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
+          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1047,6 +1076,7 @@ defaults:
           gtsm: true
           ipv6_lla: true
           local_as: true
+          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1298,6 +1328,7 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
+          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1430,6 +1461,7 @@ defaults:
           ipv6_lla: true
           local_as: true
           local_as_ibgp: true
+          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -1509,6 +1541,7 @@ defaults:
           gtsm: true
           local_as: true
           local_as_ibgp: true
+          multihop: true
           passive: true
           password: true
           remove_private_as: true
@@ -3679,7 +3712,9 @@ links:
     ifname: eth1
     ipv6: 2001:db8:aa:1::1/64
     node: host1
-  - ifindex: 3
+  - bgp:
+      local_as: 65000
+    ifindex: 3
     ifname: eth3
     ipv6: 2001:db8:aa:1::2/64
     node: leaf1
@@ -3696,7 +3731,9 @@ links:
     ifname: eth1
     ipv6: 2001:db8:aa:2::1/64
     node: host2
-  - ifindex: 3
+  - bgp:
+      local_as: 65000
+    ifindex: 3
     ifname: eth3
     ipv6: 2001:db8:aa:2::2/64
     node: leaf2
@@ -3713,7 +3750,9 @@ links:
     ifname: eth1
     ipv6: 2001:db8:aa:3::1/64
     node: host3
-  - ifindex: 3
+  - bgp:
+      local_as: 65000
+    ifindex: 3
     ifname: eth3
     ipv6: 2001:db8:aa:3::2/64
     node: leaf3
@@ -3730,7 +3769,9 @@ links:
     ifname: eth1
     ipv6: 2001:db8:aa:4::1/64
     node: host4
-  - ifindex: 3
+  - bgp:
+      local_as: 65000
+    ifindex: 3
     ifname: eth3
     ipv6: 2001:db8:aa:4::2/64
     node: leaf4
@@ -4159,7 +4200,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 4220010001
+        as: 65000
         ifindex: 1
         ipv6: 2001:db8:aa:1::2
         name: leaf1
@@ -4186,7 +4227,9 @@ nodes:
       mtu: 1500
       name: host1 -> leaf1
       neighbors:
-      - ifname: eth3
+      - bgp:
+          local_as: 65000
+        ifname: eth3
         ipv6: 2001:db8:aa:1::2/64
         node: leaf1
       role: external
@@ -4232,7 +4275,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 4220010002
+        as: 65000
         ifindex: 1
         ipv6: 2001:db8:aa:2::2
         name: leaf2
@@ -4259,7 +4302,9 @@ nodes:
       mtu: 1500
       name: host2 -> leaf2
       neighbors:
-      - ifname: eth3
+      - bgp:
+          local_as: 65000
+        ifname: eth3
         ipv6: 2001:db8:aa:2::2/64
         node: leaf2
       role: external
@@ -4305,7 +4350,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 4220010003
+        as: 65000
         ifindex: 1
         ipv6: 2001:db8:aa:3::2
         name: leaf3
@@ -4332,7 +4377,9 @@ nodes:
       mtu: 1500
       name: host3 -> leaf3
       neighbors:
-      - ifname: eth3
+      - bgp:
+          local_as: 65000
+        ifname: eth3
         ipv6: 2001:db8:aa:3::2/64
         node: leaf3
       role: external
@@ -4378,7 +4425,7 @@ nodes:
       neighbors:
       - activate:
           ipv6: true
-        as: 4220010004
+        as: 65000
         ifindex: 1
         ipv6: 2001:db8:aa:4::2
         name: leaf4
@@ -4405,7 +4452,9 @@ nodes:
       mtu: 1500
       name: host4 -> leaf4
       neighbors:
-      - ifname: eth3
+      - bgp:
+          local_as: 65000
+        ifname: eth3
         ipv6: 2001:db8:aa:4::2/64
         node: leaf4
       role: external
@@ -4470,6 +4519,7 @@ nodes:
         as: 64501
         ifindex: 3
         ipv6: 2001:db8:aa:1::1
+        local_as: 65000
         name: host1
         type: ebgp
       next_hop_self: true
@@ -4515,7 +4565,9 @@ nodes:
       pool: core
       role: external
       type: p2p
-    - ifindex: 3
+    - bgp:
+        local_as: 65000
+      ifindex: 3
       ifname: eth3
       ipv6: 2001:db8:aa:1::2/64
       linkindex: 9
@@ -4587,6 +4639,7 @@ nodes:
         as: 64502
         ifindex: 3
         ipv6: 2001:db8:aa:2::1
+        local_as: 65000
         name: host2
         type: ebgp
       next_hop_self: true
@@ -4632,7 +4685,9 @@ nodes:
       pool: core
       role: external
       type: p2p
-    - ifindex: 3
+    - bgp:
+        local_as: 65000
+      ifindex: 3
       ifname: eth3
       ipv6: 2001:db8:aa:2::2/64
       linkindex: 10
@@ -4704,6 +4759,7 @@ nodes:
         as: 64503
         ifindex: 3
         ipv6: 2001:db8:aa:3::1
+        local_as: 65000
         name: host3
         type: ebgp
       next_hop_self: true
@@ -4749,7 +4805,9 @@ nodes:
       pool: core
       role: external
       type: p2p
-    - ifindex: 3
+    - bgp:
+        local_as: 65000
+      ifindex: 3
       ifname: eth3
       ipv6: 2001:db8:aa:3::2/64
       linkindex: 11
@@ -4821,6 +4879,7 @@ nodes:
         as: 64504
         ifindex: 3
         ipv6: 2001:db8:aa:4::1
+        local_as: 65000
         name: host4
         type: ebgp
       next_hop_self: true
@@ -4866,7 +4925,9 @@ nodes:
       pool: core
       role: external
       type: p2p
-    - ifindex: 3
+    - bgp:
+        local_as: 65000
+      ifindex: 3
       ifname: eth3
       ipv6: 2001:db8:aa:4::2/64
       linkindex: 12
@@ -5445,4 +5506,5 @@ nodes:
     router_id: 10.0.0.8
 plugin:
 - bgp.session
+- ebgp.multihop
 provider: clab

@@ -1,0 +1,40 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+plugin: [ bgp.session ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:dd::/48
+nodes:
+    router1:
+        id: 1
+        bgp.as: 64501
+        loopback.ipv6: 2001:db8:1::1/48
+    router2:
+        id: 2 
+        bgp.as: 64502
+        loopback.ipv6: 2001:db8:2::1/48
+    router3:
+        id: 3
+        bgp.as: 64503
+        loopback.ipv6: 2001:db8:3::1/48
+links:
+    # Host a Leaf
+    #
+    - router1:
+      router2:
+          bgp.local_as: 64500
+    - router3:
+      router2:

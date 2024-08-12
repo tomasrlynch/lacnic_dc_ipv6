@@ -45,6 +45,7 @@ bgp:
     as: 64501
     ifindex: 3
     ipv6: 2001:db8:aa:1::1
+    local_as: 65000
     name: host1
     type: ebgp
   next_hop_self: true
@@ -88,7 +89,9 @@ interfaces:
   pool: core
   role: external
   type: p2p
-- ifindex: 3
+- bgp:
+    local_as: 65000
+  ifindex: 3
   ifname: eth3
   ipv6: 2001:db8:aa:1::2/64
   linkindex: 9

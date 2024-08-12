@@ -26,7 +26,7 @@ bgp:
   neighbors:
   - activate:
       ipv6: true
-    as: 4220010002
+    as: 65000
     ifindex: 1
     ipv6: 2001:db8:aa:2::2
     name: leaf2
@@ -51,7 +51,9 @@ interfaces:
   mtu: 1500
   name: host2 -> leaf2
   neighbors:
-  - ifname: eth3
+  - bgp:
+      local_as: 65000
+    ifname: eth3
     ipv6: 2001:db8:aa:2::2/64
     node: leaf2
   role: external

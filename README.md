@@ -43,7 +43,7 @@ Templates netlab:
 - En `acceso_internet` encontrarán los templates para generar el laboratorio sin filtros.
 - En `acceso_internet_con_filtros` encontrarán los templates para generar el laboratorio con filtros.
 
-## Servicios Avanzados de Data Center IPv6
+## Servicios Avanzados de Data Center 
 
 ### Servicio de BGP
 El laboratorio muestra las configuraciones necesarias en los Leaves y Hosts para dar un servicio de BGP a los clientes. Los componentes son:
@@ -60,6 +60,8 @@ Con esta base se arman dos laboratorios muy parecidos pero que difieren en la co
 Templates netlab:
 - En `servicio_bgp_simple` encontrarán los templates para generar el laboratorio sin filtros.
 - En `servicio_bgp_anycast` encontrarán los templates para generar el laboratorio con filtros.
+
+*Nota: en `./local_as` podrán encontrar un laboratorio dedicado a local AS.*
 
 ### Servicio de Redes Privadas
 ### Servicio de Conexión Externa
