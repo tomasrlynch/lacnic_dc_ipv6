@@ -85,21 +85,19 @@ groups:
     spine:
         members: [ spine1, spine2 ]
         bgp.as: 4210010001
-        config: [ spines_filtros.j2 ]
+        config: [ spines.j2 ]
     leaves:
         members: [ leaf1, leaf2, leaf3, leaf4 ]
-        config: [ leaves_filtros.j2 ]
+        config: [ leaves.j2 ]
     hosts:
         members: [ host1, host2, host3, host4 ]
-        #config: [ hosts_config.j2 ]
-        #device: linux
     borde:
         members: [ borde1, borde2 ]
         device: vyos
         module: [ bgp ]
         bgp.activate.ipv6: [ ibgp, ebgp ]
         bgp.as: 64500
-        config: [ bordes_filtros.j2 ]
+        config: [ bordes.j2 ]
     transito:
         members: [ transito1, transito2 ]
         device: vyos

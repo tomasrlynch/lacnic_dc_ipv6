@@ -2,12 +2,14 @@
 provider: clab
 defaults.device: frr 
 module: [ bgp ]
-plugin: [ bgp.session ]
+plugin: [ bgp.session, ebgp.multihop ]
 bgp:
     community.ebgp: [ standard, extended ]
     activate:
         ipv6: [ ebgp ]
 addressing:
+    core:
+        unnumbered: true
     p2p:
         ipv4: 
         ipv6: 2001:db8:ff::/48
@@ -36,5 +38,6 @@ links:
     - router1:
       router2:
           bgp.local_as: 64500
+      pool: core
     - router3:
       router2:

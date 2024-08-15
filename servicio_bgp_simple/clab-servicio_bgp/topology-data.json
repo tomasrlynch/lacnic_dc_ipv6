@@ -1,0 +1,706 @@
+{
+  "name": "servicio_bgp",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "netlab_mgmt",
+        "bridge": "br-15be18482eb6",
+        "ipv4-subnet": "192.168.121.0/24",
+        "ipv4-gw": "192.168.121.1",
+        "external-access": true
+      }
+    }
+  },
+  "nodes": {
+    "borde1": {
+      "index": "0",
+      "shortname": "borde1",
+      "longname": "clab-servicio_bgp-borde1",
+      "fqdn": "borde1.servicio_bgp.io",
+      "group": "borde,as64500",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/borde1",
+      "kind": "linux",
+      "image": "ghcr.io/sysoleg/vyos-container",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.201",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "borde,as64500",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/borde1",
+        "clab-node-name": "borde1",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "borde2": {
+      "index": "1",
+      "shortname": "borde2",
+      "longname": "clab-servicio_bgp-borde2",
+      "fqdn": "borde2.servicio_bgp.io",
+      "group": "borde,as64500",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/borde2",
+      "kind": "linux",
+      "image": "ghcr.io/sysoleg/vyos-container",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.202",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "borde,as64500",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/borde2",
+        "clab-node-name": "borde2",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "host1": {
+      "index": "2",
+      "shortname": "host1",
+      "longname": "clab-servicio_bgp-host1",
+      "fqdn": "host1.servicio_bgp.io",
+      "group": "hosts,as64501",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host1",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.101",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "hosts,as64501",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host1",
+        "clab-node-name": "host1",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "host2": {
+      "index": "3",
+      "shortname": "host2",
+      "longname": "clab-servicio_bgp-host2",
+      "fqdn": "host2.servicio_bgp.io",
+      "group": "hosts,as64502",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host2",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.102",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "hosts,as64502",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host2",
+        "clab-node-name": "host2",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "host3": {
+      "index": "4",
+      "shortname": "host3",
+      "longname": "clab-servicio_bgp-host3",
+      "fqdn": "host3.servicio_bgp.io",
+      "group": "hosts,as64503",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host3",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.103",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "hosts,as64503",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host3",
+        "clab-node-name": "host3",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "host4": {
+      "index": "5",
+      "shortname": "host4",
+      "longname": "clab-servicio_bgp-host4",
+      "fqdn": "host4.servicio_bgp.io",
+      "group": "hosts,as64504",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host4",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.104",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "hosts,as64504",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/host4",
+        "clab-node-name": "host4",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "leaf1": {
+      "index": "6",
+      "shortname": "leaf1",
+      "longname": "clab-servicio_bgp-leaf1",
+      "fqdn": "leaf1.servicio_bgp.io",
+      "group": "leaves,as4220010001",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf1",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.110",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "leaves,as4220010001",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf1",
+        "clab-node-name": "leaf1",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "leaf2": {
+      "index": "7",
+      "shortname": "leaf2",
+      "longname": "clab-servicio_bgp-leaf2",
+      "fqdn": "leaf2.servicio_bgp.io",
+      "group": "leaves,as4220010002",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf2",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.111",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "leaves,as4220010002",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf2",
+        "clab-node-name": "leaf2",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "leaf3": {
+      "index": "8",
+      "shortname": "leaf3",
+      "longname": "clab-servicio_bgp-leaf3",
+      "fqdn": "leaf3.servicio_bgp.io",
+      "group": "leaves,as4220010003",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf3",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.112",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "leaves,as4220010003",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf3",
+        "clab-node-name": "leaf3",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "leaf4": {
+      "index": "9",
+      "shortname": "leaf4",
+      "longname": "clab-servicio_bgp-leaf4",
+      "fqdn": "leaf4.servicio_bgp.io",
+      "group": "leaves,as4220010004",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf4",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.113",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "leaves,as4220010004",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/leaf4",
+        "clab-node-name": "leaf4",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "spine1": {
+      "index": "10",
+      "shortname": "spine1",
+      "longname": "clab-servicio_bgp-spine1",
+      "fqdn": "spine1.servicio_bgp.io",
+      "group": "spine,as4210010001",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/spine1",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.105",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "spine,as4210010001",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/spine1",
+        "clab-node-name": "spine1",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "spine2": {
+      "index": "11",
+      "shortname": "spine2",
+      "longname": "clab-servicio_bgp-spine2",
+      "fqdn": "spine2.servicio_bgp.io",
+      "group": "spine,as4210010001",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/spine2",
+      "kind": "linux",
+      "image": "quay.io/frrouting/frr:9.1.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.106",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "spine,as4210010001",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/spine2",
+        "clab-node-name": "spine2",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "transito1": {
+      "index": "12",
+      "shortname": "transito1",
+      "longname": "clab-servicio_bgp-transito1",
+      "fqdn": "transito1.servicio_bgp.io",
+      "group": "transito,as65001",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/transito1",
+      "kind": "linux",
+      "image": "ghcr.io/sysoleg/vyos-container",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.107",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "transito,as65001",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/transito1",
+        "clab-node-name": "transito1",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    },
+    "transito2": {
+      "index": "13",
+      "shortname": "transito2",
+      "longname": "clab-servicio_bgp-transito2",
+      "fqdn": "transito2.servicio_bgp.io",
+      "group": "transito,as65002",
+      "labdir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/transito2",
+      "kind": "linux",
+      "image": "ghcr.io/sysoleg/vyos-container",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "192.168.121.108",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-15be18482eb6",
+        "clab-node-group": "transito,as65002",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab-servicio_bgp/transito2",
+        "clab-node-name": "transito2",
+        "clab-node-type": "",
+        "clab-topo-file": "/root/lacnic_ipv6dc/servicio_bgp_simple/clab.yml",
+        "containerlab": "servicio_bgp"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "leaf1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:f5:1e:e7",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:8d:1e:fc",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:59:6b:04",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:26:67:82",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:80:d3:7b",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine1",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:c6:e9:c7",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:8f:1d:20",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine1",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:e2:0a:6e",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:5c:4a:2c",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:fa:96:61",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:16:97:ce",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:89:e9:33",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:c4:7e:76",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine2",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:db:73:1f",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "leaf4",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:da:25:79",
+        "peer": "z"
+      },
+      "z": {
+        "node": "spine2",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:13:6c:ad",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:bd:8b:2b",
+        "peer": "z"
+      },
+      "z": {
+        "node": "leaf1",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:a8:c2:96",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:91:1b:c2",
+        "peer": "z"
+      },
+      "z": {
+        "node": "leaf2",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:1f:51:81",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:46:49:45",
+        "peer": "z"
+      },
+      "z": {
+        "node": "leaf3",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:95:aa:ae",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:42:87:49",
+        "peer": "z"
+      },
+      "z": {
+        "node": "leaf4",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:a6:e8:90",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "spine1",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:9f:7a:32",
+        "peer": "z"
+      },
+      "z": {
+        "node": "borde1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:bc:b9:7d",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "spine2",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:61:35:dd",
+        "peer": "z"
+      },
+      "z": {
+        "node": "borde1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:cd:5c:16",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "spine1",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:c9:f2:3b",
+        "peer": "z"
+      },
+      "z": {
+        "node": "borde2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:4f:b1:47",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "spine2",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:e2:13:98",
+        "peer": "z"
+      },
+      "z": {
+        "node": "borde2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:35:7f:a8",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "borde1",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:3f:74:21",
+        "peer": "z"
+      },
+      "z": {
+        "node": "borde2",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:e0:c8:d7",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "borde1",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:65:59:1c",
+        "peer": "z"
+      },
+      "z": {
+        "node": "transito1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:a1:36:2d",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "borde2",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:d0:31:7f",
+        "peer": "z"
+      },
+      "z": {
+        "node": "transito2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:c4:a4:22",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "transito1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:11:48:60",
+        "peer": "z"
+      },
+      "z": {
+        "node": "transito2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:07:56:c6",
+        "peer": "a"
+      }
+    }
+  ]
+}

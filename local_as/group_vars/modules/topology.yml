@@ -1,0 +1,5 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/local_as/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_module:
+- bgp

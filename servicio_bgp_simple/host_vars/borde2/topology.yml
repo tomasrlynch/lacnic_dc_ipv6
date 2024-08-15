@@ -59,7 +59,7 @@ clab:
   - /lib/modules:/lib/modules
   kind: linux
 config:
-- bordes_filtros.j2
+- bordes.j2
 hostname: clab-servicio_bgp-borde2
 interfaces:
 - ifindex: 1

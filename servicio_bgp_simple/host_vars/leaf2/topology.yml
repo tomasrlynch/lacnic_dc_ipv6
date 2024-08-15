@@ -60,7 +60,7 @@ clab:
   - hosts:/etc/hosts
   kind: linux
 config:
-- leaves_filtros.j2
+- leaves.j2
 hostname: clab-servicio_bgp-leaf2
 interfaces:
 - ifindex: 1

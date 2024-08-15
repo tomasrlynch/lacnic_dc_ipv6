@@ -1,0 +1,44 @@
+name: local_as
+
+mgmt:
+  network: netlab_mgmt
+  ipv4-subnet: 192.168.121.0/24
+  # Note: 'start' not validated
+topology:
+  nodes:
+    router1:
+      mgmt-ipv4: 192.168.121.101
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64501
+      binds:
+      - clab_files/router1/daemons:/etc/frr/daemons
+      - clab_files/router1/hosts:/etc/hosts
+    router2:
+      mgmt-ipv4: 192.168.121.102
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64502
+      binds:
+      - clab_files/router2/daemons:/etc/frr/daemons
+      - clab_files/router2/hosts:/etc/hosts
+    router3:
+      mgmt-ipv4: 192.168.121.103
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: as64503
+      binds:
+      - clab_files/router3/daemons:/etc/frr/daemons
+      - clab_files/router3/hosts:/etc/hosts
+
+
+  links:
+  - endpoints:
+    - "router1:eth1"
+    - "router2:eth1"
+  - endpoints:
+    - "router2:eth2"
+    - "router3:eth1"

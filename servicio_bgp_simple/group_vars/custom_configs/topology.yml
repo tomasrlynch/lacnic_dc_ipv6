@@ -3,6 +3,6 @@
 
 netlab_custom_config:
 - transitos.j2
-- bordes_filtros.j2
-- leaves_filtros.j2
-- spines_filtros.j2
+- leaves.j2
+- bordes.j2
+- spines.j2
