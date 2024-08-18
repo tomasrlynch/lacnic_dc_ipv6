@@ -37,6 +37,8 @@ nodes:
         id: 4
         bgp.as: 64504
         loopback.ipv6: 2001:db8:4::4/48
+    bird:
+        device: linux
     leaf1:
         id: 10
         bgp.as: 4220010001
@@ -135,19 +137,19 @@ links:
     #
     - host1:
       leaf1:
-          bgp.local_as: 65000
+          bgp.local_as: 64500
       prefix.ipv6: 2001:db8:aa:1::/64
     - host2:
       leaf2:
-          bgp.local_as: 65000
+          bgp.local_as: 64500
       prefix.ipv6: 2001:db8:aa:2::/64
     - host3:
       leaf3:
-          bgp.local_as: 65000
+          bgp.local_as: 64500
       prefix.ipv6: 2001:db8:aa:3::/64
     - host4:
       leaf4:
-          bgp.local_as: 65000
+          bgp.local_as: 64500
       prefix.ipv6: 2001:db8:aa:4::/64
     #
     # Borde a Spine
@@ -185,3 +187,8 @@ links:
     - transito1:
       transito2:
       prefix.ipv6: 2001:db8:555::/127
+    #
+    # Leaf1 a Bird
+    - leaf1:
+      bird:
+      prefix: 2001:db8:aa:5::/64

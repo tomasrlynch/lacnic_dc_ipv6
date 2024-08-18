@@ -10,6 +10,7 @@ screen -t host1 netlab connect host1
 screen -t host2 netlab connect host2
 screen -t host3 netlab connect host3
 screen -t host4 netlab connect host4
+screen -t bird netlab connect bird
 screen -t leaf1 netlab connect leaf1
 screen -t leaf2 netlab connect leaf2
 screen -t leaf3 netlab connect leaf3

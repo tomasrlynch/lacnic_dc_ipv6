@@ -7,7 +7,8 @@ route-map SPINE_IMPORTAR permit 1000
 route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR permit 100
 match ipv6 address prefix-list RUTA_DEFAULT
 route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR deny 1000
-route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR permit 1000
+route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR permit 100
+route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR deny 1000
 {% endfor %}
 router bgp {{ bgp.as }}
 neighbor SPINES peer-group
@@ -24,5 +25,6 @@ neighbor SPINES route-map SPINE_EXPORTAR out
 {% for ngb in bgp.neighbors if 'host' in ngb.name %}
 neighbor {{ ngb.ipv6 }} route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR in
 neighbor {{ ngb.ipv6 }} route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR out
+neighbor {{ ngb.ipv6 }} maximum-prefix 100
 {% endfor %}
 

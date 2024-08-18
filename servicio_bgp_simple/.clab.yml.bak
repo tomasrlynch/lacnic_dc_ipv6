@@ -42,6 +42,14 @@ topology:
       binds:
       - clab_files/host4/daemons:/etc/frr/daemons
       - clab_files/host4/hosts:/etc/hosts
+    bird:
+      mgmt-ipv4: 192.168.121.107
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/bird/hosts:/etc/hosts
     leaf1:
       mgmt-ipv4: 192.168.121.110
       kind: linux
@@ -113,7 +121,7 @@ topology:
       binds:
       - /lib/modules:/lib/modules
     transito1:
-      mgmt-ipv4: 192.168.121.107
+      mgmt-ipv4: 192.168.121.108
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -121,7 +129,7 @@ topology:
       binds:
       - /lib/modules:/lib/modules
     transito2:
-      mgmt-ipv4: 192.168.121.108
+      mgmt-ipv4: 192.168.121.109
       kind: linux
       image: ghcr.io/sysoleg/vyos-container
       runtime: docker
@@ -191,3 +199,6 @@ topology:
   - endpoints:
     - "transito1:eth2"
     - "transito2:eth2"
+  - endpoints:
+    - "bird:eth1"
+    - "leaf1:eth4"
