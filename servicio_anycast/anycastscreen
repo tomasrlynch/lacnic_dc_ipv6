@@ -1,0 +1,21 @@
+# don't display the copyright page
+startup_message off
+
+# increase scrollback buffer size
+defscrollback 10000
+sessionname anycast
+#
+# create windows
+screen -t host11 netlab connect host11
+screen -t host12 netlab connect host12
+screen -t host31 netlab connect host31
+screen -t host32 netlab connect host32
+screen -t leaf11 netlab connect leaf11
+screen -t leaf31 netlab connect leaf31
+screen -t spine11 netlab connect spine11
+screen -t spine31 netlab connect spine31
+screen -t borde11 netlab connect borde11
+screen -t borde31 netlab connect borde31
+screen -t transito1 netlab connect transito1
+screen -t transito2 netlab connect transito2
+screen -t transito3 netlab connect transito3

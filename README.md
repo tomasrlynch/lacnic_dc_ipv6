@@ -63,6 +63,16 @@ Templates netlab:
 
 *Nota: en `./local_as` podrán encontrar un laboratorio dedicado a local AS.*
 
-### Servicio de Redes Privadas
+### Servicio de Redes Privadas Capa 2
+El laboratorio muestra las configuraciones de VXLAN y EVPN para túneles de capa 2. Existen dos VXLAN distintas y estos son sus componentes:
+- Cuatro hosts de VXLAN 101000 denominados `host[1-4]1`
+- Cuatro hosts de VXLAN 101001 denominados `host[1-4]2`
+- Dos hosts `host[AB]` que son clientes unicast IPv6
+- Dos Spines
+- Cuatro Leaves
+
+Los archivos de este laboratorio se encuentran en `./configuraciones/vxlan_l2`
+
+### Servicio de Redes Privadas Capa 3
 ### Servicio de Conexión Externa
 ### Interconexión de Data Centers (DCI)

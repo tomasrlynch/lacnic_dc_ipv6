@@ -1,0 +1,30 @@
+ipv6 prefix-list RUTA_DEFAULT seq 5 permit ::/0
+route-map SPINE_EXPORTAR deny 100
+match ipv6 address prefix-list RUTA_DEFAULT
+route-map SPINE_EXPORTAR permit 1000
+route-map SPINE_IMPORTAR permit 1000
+{% for ngb in bgp.neighbors if 'host' in ngb.name %}
+route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR permit 100
+match ipv6 address prefix-list RUTA_DEFAULT
+route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR deny 1000
+route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR permit 100
+route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR deny 1000
+{% endfor %}
+router bgp {{ bgp.as }}
+neighbor SPINES peer-group
+neighbor SPINES remote-as external
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+neighbor {{ ngb.local_if }} interface peer-group SPINES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+address-family ipv6 unicast
+neighbor SPINES activate
+neighbor SPINES route-map SPINE_IMPORTAR in
+neighbor SPINES route-map SPINE_EXPORTAR out
+{% for ngb in bgp.neighbors if 'host' in ngb.name %}
+neighbor {{ ngb.ipv6 }} route-map CLIENTE_{{ ngb.name.upper() }}_IMPORTAR in
+neighbor {{ ngb.ipv6 }} route-map CLIENTE_{{ ngb.name.upper() }}_EXPORTAR out
+neighbor {{ ngb.ipv6 }} maximum-prefix 100
+{% endfor %}
+

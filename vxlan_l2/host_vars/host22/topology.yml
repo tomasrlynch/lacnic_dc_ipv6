@@ -1,0 +1,61 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l2/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv4: true
+  ipv6: true
+box: python:3.9-alpine
+clab:
+  binds:
+  - clab_files/host22/hosts:/etc/hosts
+  config_templates:
+  - hosts:/etc/hosts
+  kind: linux
+hostname: clab-vxlan_l2-host22
+interfaces:
+- bridge: vxlan_l2_14
+  gateway:
+    ipv4: 10.2.0.2/24
+  ifindex: 1
+  ifname: eth1
+  ipv4: 10.2.0.34/24
+  ipv6: 2001:db8:2::22/48
+  linkindex: 14
+  mtu: 1500
+  name: l2vpn-host22 -> [host12,leaf1,leaf2,host32,leaf3,host42,leaf4]
+  neighbors:
+  - ifname: eth1
+    ipv4: 10.2.0.18/24
+    ipv6: 2001:db8:2::12/48
+    node: host12
+  - ifname: vlan1001
+    ipv4: 10.2.0.1/24
+    ipv6: 2001:db8:2::1/48
+    node: leaf1
+  - ifname: vlan1001
+    ipv4: 10.2.0.2/24
+    ipv6: 2001:db8:2::2/48
+    node: leaf2
+  - ifname: eth1
+    ipv4: 10.2.0.50/24
+    ipv6: 2001:db8:2::32/48
+    node: host32
+  - ifname: vlan1001
+    ipv4: 10.2.0.3/24
+    ipv6: 2001:db8:2::3/48
+    node: leaf3
+  - ifname: eth1
+    ipv4: 10.2.0.66/24
+    ipv6: 2001:db8:2::42/48
+    node: host42
+  - ifname: vlan1001
+    ipv4: 10.2.0.4/24
+    ipv6: 2001:db8:2::4/48
+    node: leaf4
+  type: lan
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.134
+  mac: 08:4f:a9:00:00:22
+mtu: 1500
+role: host

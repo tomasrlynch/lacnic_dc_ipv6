@@ -1,0 +1,44 @@
+#!/bin/vbash
+source /opt/vyatta/etc/functions/script-template
+
+if [ "$(id -g -n)" != 'vyattacfg' ] ; then
+    exec sg vyattacfg -c "/bin/vbash $(readlink -f $0) $@"
+fi
+#
+configure
+set protocols static route6 ::/0 blackhole distance '254'
+set policy prefix-list6 RUTA_DEFAULT rule 100 action 'permit'
+set policy prefix-list6 RUTA_DEFAULT rule 100 prefix '::/0'
+set policy route-map SPINE_EXPORTAR rule 100 action 'permit'
+set policy route-map SPINE_EXPORTAR rule 100 match ipv6 address prefix-list 'RUTA_DEFAULT'
+set policy route-map SPINE_EXPORTAR rule 1000 action 'deny'
+set policy route-map SPINE_IMPORTAR rule 100 action 'deny'
+set policy route-map SPINE_IMPORTAR rule 100 match ipv6 address prefix-list 'RUTA_DEFAULT'
+set policy route-map SPINE_IMPORTAR rule 1000 action 'permit'
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast default-originate
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map export 'SPINE_EXPORTAR'
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map import 'SPINE_IMPORTAR'
+{% endfor %}
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 action 'permit'
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 ge '49'
+set policy prefix-list6 PREFIJOS_MAYOR_48 rule 100 prefix '::/0'
+set policy large-community-list TRANSITO rule 100 action 'permit'
+set policy large-community-list TRANSITO rule 100 regex '64500:100:0'
+set policy route-map TRANSITO_EXPORTAR rule 100 action 'deny'
+set policy route-map TRANSITO_EXPORTAR rule 100 match ipv6 address prefix-list 'RUTA_DEFAULT'
+set policy route-map TRANSITO_EXPORTAR rule 200 action 'deny'
+set policy route-map TRANSITO_EXPORTAR rule 200 match ipv6 address prefix-list 'PREFIJOS_MAYOR_48'
+set policy route-map TRANSITO_EXPORTAR rule 300 action 'deny'
+set policy route-map TRANSITO_EXPORTAR rule 300 match large-community large-community-list 'TRANSITO'
+set policy route-map TRANSITO_EXPORTAR rule 1000 action 'permit'
+set policy route-map TRANSITO_IMPORTAR rule 1000 action 'permit'
+set policy route-map TRANSITO_IMPORTAR rule 1000 set large-community add '64500:100:0'
+{% for ngb in bgp.neighbors if 'transito' in ngb.name %}
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast remove-private-as all
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map export 'TRANSITO_EXPORTAR'
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv6-unicast route-map import 'TRANSITO_IMPORTAR'
+{% endfor %}
+commit
+save
+exit

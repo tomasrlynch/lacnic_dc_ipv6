@@ -1,0 +1,189 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l2/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv4: true
+  ipv6: true
+bgp:
+  activate:
+    ipv4:
+    - ebgp
+    ipv6:
+    - ebgp
+  advertise_loopback: true
+  as: 4210010001
+  community:
+    ebgp:
+    - standard
+    - large
+    - extended
+    ibgp:
+    - standard
+    - large
+    - extended
+    ibgp_localas:
+    - standard
+    - large
+    - extended
+  ipv4: true
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv4: false
+      ipv6: false
+    as: 4210010001
+    ipv4: 10.0.0.11
+    ipv6: 2001:db8:64:11::11
+    name: spine1
+    type: ibgp
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4220010001
+    evpn: true
+    ifindex: 1
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth1
+    name: leaf1
+    type: ebgp
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4220010002
+    evpn: true
+    ifindex: 2
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth2
+    name: leaf2
+    type: ebgp
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4220010003
+    evpn: true
+    ifindex: 3
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth3
+    name: leaf3
+    type: ebgp
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4220010004
+    evpn: true
+    ifindex: 4
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth4
+    name: leaf4
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.22
+box: quay.io/frrouting/frr:9.1.0
+clab:
+  binds:
+  - clab_files/spine2/daemons:/etc/frr/daemons
+  - clab_files/spine2/hosts:/etc/hosts
+  config_templates:
+  - daemons:/etc/frr/daemons
+  - hosts:/etc/hosts
+  kind: linux
+config:
+- spines.j2
+evpn:
+  session:
+  - ebgp
+  vlans: []
+hostname: clab-vxlan_l2-spine2
+interfaces:
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.22/32
+  ifindex: 1
+  ifname: eth1
+  ipv4: true
+  ipv6: true
+  linkindex: 5
+  mtu: 1500
+  name: spine2 -> leaf1
+  neighbors:
+  - ifname: eth2
+    ipv4: true
+    ipv6: true
+    node: leaf1
+  pool: core
+  role: external
+  type: p2p
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.22/32
+  ifindex: 2
+  ifname: eth2
+  ipv4: true
+  ipv6: true
+  linkindex: 6
+  mtu: 1500
+  name: spine2 -> leaf2
+  neighbors:
+  - ifname: eth2
+    ipv4: true
+    ipv6: true
+    node: leaf2
+  pool: core
+  role: external
+  type: p2p
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.22/32
+  ifindex: 3
+  ifname: eth3
+  ipv4: true
+  ipv6: true
+  linkindex: 7
+  mtu: 1500
+  name: spine2 -> leaf3
+  neighbors:
+  - ifname: eth2
+    ipv4: true
+    ipv6: true
+    node: leaf3
+  pool: core
+  role: external
+  type: p2p
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.22/32
+  ifindex: 4
+  ifname: eth4
+  ipv4: true
+  ipv6: true
+  linkindex: 8
+  mtu: 1500
+  name: spine2 -> leaf4
+  neighbors:
+  - ifname: eth2
+    ipv4: true
+    ipv6: true
+    node: leaf4
+  pool: core
+  role: external
+  type: p2p
+loopback:
+  ifindex: 0
+  ifname: lo
+  ipv4: 10.0.0.22/32
+  ipv6: 2001:db8:64:22::22/128
+  neighbors: []
+  type: loopback
+  virtual_interface: true
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.106
+  mac: 08:4f:a9:00:00:06
+module:
+- bgp
+- evpn
+mtu: 1500

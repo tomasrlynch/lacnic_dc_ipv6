@@ -1,0 +1,101 @@
+---
+provider: clab
+defaults.device: frr 
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+#plugin: [ bgp.session ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+addressing:
+    p2p:
+        ipv4: 
+        ipv6: 2001:db8:ff::/48
+    loopback:
+        ipv4:
+        ipv6: 2001:db8:100::/48
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host11:
+        loopback.ipv6: 2001:db8:1::1/48
+    host12:
+        loopback.ipv6: 2001:db8:1::2/128
+    host31:
+        loopback.ipv6: 2001:db8:1::1/48
+    host32:
+        loopback.ipv6: 2001:db8:1::2/128
+    leaf11:
+        bgp.as: 4220010001
+    leaf31:
+        bgp.as: 4220030001
+    spine11:
+        bgp.as: 4210010001
+    spine31:
+        bgp.as: 4210030001
+    borde11:
+    borde31:
+    transito1:
+        bgp.as: 65001
+    transito2:
+        bgp.as: 65002
+    transito3:
+        bgp.as: 65003
+groups:
+    hosts:
+        members: [ host11, host12, host31, host32 ]
+        device: linux
+    borde:
+        members: [ borde11, borde31 ]
+        device: vyos
+        bgp.as: 64500
+        config: [ bordes.j2 ]
+    transito:
+        members: [ transito1, transito2, transito3 ]
+        device: vyos
+links:
+    #
+    # Spine a Leaf
+    #
+    - spine11:
+      leaf11:
+    - spine31:
+      leaf31:
+    #
+    # Host a Leaf
+    #
+    - host11:
+      leaf11:
+          bgp.local_as: 64500
+    - host12:
+      leaf11:
+          bgp.local_as: 64500
+    - host31:
+      leaf31:
+          bgp.local_as: 64500
+    - host32:
+      leaf31:
+          bgp.local_as: 64500
+    #
+    # Borde a Spine
+    #
+    - borde11:
+      spine11:
+    - borde31:
+      spine31:
+    #
+    # Borde a Transito
+    #
+    - borde11:
+      transito1:
+    - borde31:
+      transito3:
+    #
+    # Transito a Transito
+    #
+    - transito1:
+      transito2:
+    - transito2:
+      transito3:

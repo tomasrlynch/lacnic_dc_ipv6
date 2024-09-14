@@ -1,0 +1,165 @@
+---
+provider: clab
+defaults.device: linux
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+        ipv4: [ ebgp ]
+vlans:
+    azul:
+        #mode: bridge # default es irb
+        prefix.ipv4: 10.1.0.0/24 # Requerido por Netlab, no puede hacer VXLAN IPv6-only
+        prefix.ipv6: 2001:db8:1::/48
+    verde:
+        #mode: bridge # default es irb
+        prefix.ipv4: 10.2.0.0/24 # Requerido por Netlab, no puede hacer VXLAN IPv6-only
+        prefix.ipv6: 2001:db8:2::/48
+evpn:
+    as: 65000 # recomendable utilizar un sistema autonomo publico
+    session:
+    - ebgp
+    vlans:
+    - verde
+    - azul
+addressing:
+    core:
+        unnumbered: true
+    lan:
+        #ipv4: 10.10.0.0/16 
+        ipv4: 
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host11:
+        id: 17
+    host21:
+        id: 33
+    host31:
+        id: 49
+    host41:
+        id: 65
+    host12:
+        id: 18
+    host22:
+        id: 34
+    host32:
+        id: 50
+    host42:
+        id: 66
+    hostA:
+        id: 10
+    hostB:
+        id: 11
+    leaf1:
+        id: 1
+        bgp.as: 4220010001
+        loopback:
+            ipv4: 10.0.0.1/32
+            ipv6: 2001:db8:64:1::1/128
+    leaf2:
+        id: 2
+        bgp.as: 4220010002
+        loopback:
+            ipv4: 10.0.0.2/32
+            ipv6: 2001:db8:64:2::2/128
+    leaf3:
+        id: 3
+        bgp.as: 4220010003
+        loopback:
+            ipv4: 10.0.0.3/32
+            ipv6: 2001:db8:64:3::3/128
+    leaf4:
+        id: 4
+        bgp.as: 4220010004
+        loopback:
+            ipv4: 10.0.0.4/32
+            ipv6: 2001:db8:64:4::4/128
+    spine1:
+        id: 5
+        loopback:
+            ipv4: 10.0.0.11/32
+            ipv6: 2001:db8:64:11::11/128
+    spine2:
+        id: 6
+        loopback:
+            ipv4: 10.0.0.22/32
+            ipv6: 2001:db8:64:22::22/128
+groups:
+    spine:
+        members: [ spine1, spine2 ]
+        module: [ bgp, evpn ]
+        bgp.as: 4210010001
+        config: [ spines.j2 ]
+        device: frr
+    leaf:
+        members: [ leaf1, leaf2, leaf3, leaf4 ]
+        module: [ vlan, vxlan, bgp, evpn ]
+        config: [ leaves.j2 ]
+        device: frr
+links:
+    # Enlaces Internos LLA
+    - spine1:
+      leaf1:
+      pool: core
+    - spine1:
+      leaf2:
+      pool: core
+    - spine1:
+      leaf3:
+      pool: core
+    - spine1:
+      leaf4:
+      pool: core
+    - spine2:
+      leaf1:
+      pool: core
+    - spine2:
+      leaf2:
+      pool: core
+    - spine2:
+      leaf3:
+      pool: core
+    - spine2:
+      leaf4:
+      pool: core
+    # Enlaces a Hosts (l2vpn azul)
+    - name: l2vpn-host11
+      leaf1:
+          vlan.access: azul
+      host11:
+    - name: l2vpn-host21
+      leaf2:
+          vlan.access: azul
+      host21:
+    - name: l2vpn-host31
+      leaf3:
+        vlan.access: azul
+      host31:
+    - name: l2vpn-host41
+      leaf4:
+        vlan.access: azul
+      host41:
+    # Enlaces a Hosts (l2vpn verde)
+    - name: l2vpn-host12
+      leaf1:
+          vlan.access: verde
+      host12:
+    - name: l2vpn-host22
+      leaf2:
+          vlan.access: verde
+      host22:
+    - name: l2vpn-host32
+      leaf3:
+        vlan.access: verde
+      host32:
+    - name: l2vpn-host42
+      leaf4:
+        vlan.access: verde
+      host42:
+    # Clientes IP solamente
+    - leaf1:
+      hostA:
+    - leaf2:
+      hostB:
