@@ -1,0 +1,154 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l3/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv4: true
+  vpnv4: true
+bgp:
+  advertise_loopback: true
+  as: 65000
+  community:
+    ebgp:
+    - standard
+    ibgp:
+    - standard
+    - extended
+    ibgp_localas:
+    - standard
+    - extended
+  ipv4: true
+  neighbors:
+  - activate:
+      ipv4: true
+    as: 65000
+    evpn: true
+    ipv4: 10.0.0.2
+    name: s2
+    type: ibgp
+  next_hop_self: true
+  router_id: 10.0.0.1
+box: ghcr.io/sysoleg/vyos-container
+clab:
+  binds:
+  - /lib/modules:/lib/modules
+  kind: linux
+evpn:
+  session:
+  - ibgp
+  vrfs:
+  - red
+  - blue
+hostname: clab-vxlan_l3-s1
+interfaces:
+- ifindex: 1
+  ifname: eth1
+  ipv4: 10.1.0.1/30
+  linkindex: 1
+  mtu: 1600
+  name: s1 -> s2
+  neighbors:
+  - ifname: eth1
+    ipv4: 10.1.0.2/30
+    node: s2
+  ospf:
+    area: 0.0.0.0
+    network_type: point-to-point
+    passive: false
+  type: p2p
+- bgp:
+    advertise: true
+  bridge: vxlan_l3_2
+  ifindex: 2
+  ifname: eth2
+  ipv4: 172.16.0.1/24
+  linkindex: 2
+  mtu: 1500
+  name: s1 -> h1
+  neighbors:
+  - ifname: eth1
+    ipv4: 172.16.0.3/24
+    node: h1
+  role: stub
+  type: lan
+  vrf: red
+- bgp:
+    advertise: true
+  bridge: vxlan_l3_4
+  ifindex: 3
+  ifname: eth3
+  ipv4: 172.16.2.1/24
+  linkindex: 4
+  mtu: 1500
+  name: s1 -> h3
+  neighbors:
+  - ifname: eth1
+    ipv4: 172.16.2.5/24
+    node: h3
+  role: stub
+  type: lan
+  vrf: blue
+loopback:
+  ifindex: 0
+  ifname: dum0
+  ipv4: 10.0.0.1/32
+  neighbors: []
+  ospf:
+    area: 0.0.0.0
+  type: loopback
+  virtual_interface: true
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.101
+  mac: 08:4f:a9:00:00:01
+module:
+- vlan
+- bgp
+- ospf
+- vrf
+- vxlan
+- evpn
+mtu: 1500
+ospf:
+  af:
+    ipv4: true
+  area: 0.0.0.0
+  router_id: 10.0.0.1
+vrf:
+  as: 65000
+vrfs:
+  blue:
+    af:
+      ipv4: true
+    evpn:
+      evi: 2
+      rd: 10.0.0.1:2
+      transit_vni: 200001
+    export:
+    - '65000:2'
+    id: 2
+    import:
+    - '65000:2'
+    rd: '65000:2'
+    vrfidx: 101
+  red:
+    af:
+      ipv4: true
+    evpn:
+      evi: 1
+      rd: 10.0.0.1:1
+      transit_vni: 200000
+    export:
+    - '65000:1'
+    id: 1
+    import:
+    - '65000:1'
+    rd: '65000:1'
+    vrfidx: 100
+vxlan:
+  domain: global
+  flooding: evpn
+  l3vnis:
+  - red
+  - blue
+  vtep: 10.0.0.1
+  vtep_interface: dum0

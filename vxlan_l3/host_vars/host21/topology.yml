@@ -1,0 +1,34 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l3/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv6: true
+box: python:3.9-alpine
+clab:
+  binds:
+  - clab_files/host21/hosts:/etc/hosts
+  config_templates:
+  - hosts:/etc/hosts
+  kind: linux
+hostname: clab-vxlan_l3-host21
+interfaces:
+- bridge: vxlan_l3_10
+  ifindex: 1
+  ifname: eth1
+  ipv6: 2001:db8:21::21/64
+  linkindex: 10
+  mtu: 1500
+  name: host21 -> leaf2
+  neighbors:
+  - ifname: eth3
+    ipv6: 2001:db8:21::2/64
+    node: leaf2
+    vrf: azul
+  role: stub
+  type: lan
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.133
+  mac: 08:4f:a9:00:00:21
+mtu: 1500
+role: host

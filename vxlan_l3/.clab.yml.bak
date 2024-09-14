@@ -1,0 +1,199 @@
+name: vxlan_l3
+
+mgmt:
+  network: netlab_mgmt
+  ipv4-subnet: 192.168.121.0/24
+  # Note: 'start' not validated
+topology:
+  nodes:
+    host11:
+      mgmt-ipv4: 192.168.121.117
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host11/hosts:/etc/hosts
+    host21:
+      mgmt-ipv4: 192.168.121.133
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host21/hosts:/etc/hosts
+    host31:
+      mgmt-ipv4: 192.168.121.149
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host31/hosts:/etc/hosts
+    host41:
+      mgmt-ipv4: 192.168.121.165
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host41/hosts:/etc/hosts
+    host12:
+      mgmt-ipv4: 192.168.121.118
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host12/hosts:/etc/hosts
+    host22:
+      mgmt-ipv4: 192.168.121.134
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host22/hosts:/etc/hosts
+    host32:
+      mgmt-ipv4: 192.168.121.150
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host32/hosts:/etc/hosts
+    host42:
+      mgmt-ipv4: 192.168.121.166
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/host42/hosts:/etc/hosts
+    hostA:
+      mgmt-ipv4: 192.168.121.110
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/hostA/hosts:/etc/hosts
+    hostB:
+      mgmt-ipv4: 192.168.121.111
+      kind: linux
+      image: python:3.9-alpine
+      runtime: docker
+      group: 
+      binds:
+      - clab_files/hostB/hosts:/etc/hosts
+    leaf1:
+      mgmt-ipv4: 192.168.121.101
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: leaf,as4220010001
+      binds:
+      - clab_files/leaf1/daemons:/etc/frr/daemons
+      - clab_files/leaf1/hosts:/etc/hosts
+    leaf2:
+      mgmt-ipv4: 192.168.121.102
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: leaf,as4220010002
+      binds:
+      - clab_files/leaf2/daemons:/etc/frr/daemons
+      - clab_files/leaf2/hosts:/etc/hosts
+    leaf3:
+      mgmt-ipv4: 192.168.121.103
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: leaf,as4220010003
+      binds:
+      - clab_files/leaf3/daemons:/etc/frr/daemons
+      - clab_files/leaf3/hosts:/etc/hosts
+    leaf4:
+      mgmt-ipv4: 192.168.121.104
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: leaf,as4220010004
+      binds:
+      - clab_files/leaf4/daemons:/etc/frr/daemons
+      - clab_files/leaf4/hosts:/etc/hosts
+    spine1:
+      mgmt-ipv4: 192.168.121.105
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: spine,as4210010001
+      binds:
+      - clab_files/spine1/daemons:/etc/frr/daemons
+      - clab_files/spine1/hosts:/etc/hosts
+    spine2:
+      mgmt-ipv4: 192.168.121.106
+      kind: linux
+      image: quay.io/frrouting/frr:9.1.0
+      runtime: docker
+      group: spine,as4210010001
+      binds:
+      - clab_files/spine2/daemons:/etc/frr/daemons
+      - clab_files/spine2/hosts:/etc/hosts
+
+
+  links:
+  - endpoints:
+    - "leaf1:eth1"
+    - "spine1:eth1"
+  - endpoints:
+    - "leaf2:eth1"
+    - "spine1:eth2"
+  - endpoints:
+    - "leaf3:eth1"
+    - "spine1:eth3"
+  - endpoints:
+    - "leaf4:eth1"
+    - "spine1:eth4"
+  - endpoints:
+    - "leaf1:eth2"
+    - "spine2:eth1"
+  - endpoints:
+    - "leaf2:eth2"
+    - "spine2:eth2"
+  - endpoints:
+    - "leaf3:eth2"
+    - "spine2:eth3"
+  - endpoints:
+    - "leaf4:eth2"
+    - "spine2:eth4"
+  - endpoints:
+    - "host11:eth1"
+    - "leaf1:eth3"
+  - endpoints:
+    - "host21:eth1"
+    - "leaf2:eth3"
+  - endpoints:
+    - "host31:eth1"
+    - "leaf3:eth3"
+  - endpoints:
+    - "host41:eth1"
+    - "leaf4:eth3"
+  - endpoints:
+    - "host12:eth1"
+    - "leaf1:eth4"
+  - endpoints:
+    - "host22:eth1"
+    - "leaf2:eth4"
+  - endpoints:
+    - "host32:eth1"
+    - "leaf3:eth4"
+  - endpoints:
+    - "host42:eth1"
+    - "leaf4:eth4"
+  - endpoints:
+    - "hostA:eth1"
+    - "leaf1:eth5"
+  - endpoints:
+    - "hostB:eth1"
+    - "leaf2:eth5"

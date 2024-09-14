@@ -1,0 +1,199 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l3/topology.yml', 'package:topology-defaults.yml']
+#
+
+hosts:
+  host11:
+    ipv6:
+    - 2001:db8:11::11
+  host12:
+    ipv6:
+    - 2001:db8:12::12
+  host21:
+    ipv6:
+    - 2001:db8:21::21
+  host22:
+    ipv6:
+    - 2001:db8:22::22
+  host31:
+    ipv6:
+    - 2001:db8:31::31
+  host32:
+    ipv6:
+    - 2001:db8:32::32
+  host41:
+    ipv6:
+    - 2001:db8:41::41
+  host42:
+    ipv6:
+    - 2001:db8:42::42
+  hostA:
+    ipv6:
+    - 2001:db8:bb::a
+  hostB:
+    ipv6:
+    - 2001:db8:bb:1::b
+  leaf1:
+    ipv4:
+    - 10.0.0.1
+    ipv6:
+    - 2001:db8:64:1::1
+    - 2001:db8:bb::1
+  leaf1-azul:
+    ipv6:
+    - 2001:db8:11::1
+  leaf1-verde:
+    ipv6:
+    - 2001:db8:12::1
+  leaf2:
+    ipv4:
+    - 10.0.0.2
+    ipv6:
+    - 2001:db8:64:2::2
+    - 2001:db8:bb:1::2
+  leaf2-azul:
+    ipv6:
+    - 2001:db8:21::2
+  leaf2-verde:
+    ipv6:
+    - 2001:db8:22::2
+  leaf3:
+    ipv4:
+    - 10.0.0.3
+    ipv6:
+    - 2001:db8:64:3::3
+  leaf3-azul:
+    ipv6:
+    - 2001:db8:31::3
+  leaf3-verde:
+    ipv6:
+    - 2001:db8:32::3
+  leaf4:
+    ipv4:
+    - 10.0.0.4
+    ipv6:
+    - 2001:db8:64:4::4
+  leaf4-azul:
+    ipv6:
+    - 2001:db8:41::4
+  leaf4-verde:
+    ipv6:
+    - 2001:db8:42::4
+  spine1:
+    ipv4:
+    - 10.0.0.5
+    ipv6:
+    - 2001:db8:64:11::11
+  spine2:
+    ipv4:
+    - 10.0.0.6
+    ipv6:
+    - 2001:db8:64:22::22
+netlab_name: vxlan_l3
+netlab_provider: clab
+paths_collect:
+  dirs:
+  - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/fetch-config
+paths_custom:
+  dirs:
+  - /root/lacnic_ipv6dc/vxlan_l3
+  - /root/.netlab
+  - /usr/local/lib/python3.8/dist-packages/netsim/extra
+  files:
+  - '{{ custom_config + ''/'' + inventory_hostname + ''.'' + netlab_device_type +
+    ''-'' + node_provider + ''.j2'' }}'
+  - '{{ custom_config + ''/'' + inventory_hostname + ''.'' + netlab_device_type +
+    ''.j2'' }}'
+  - '{{ custom_config + ''/'' + inventory_hostname + ''.j2'' }}'
+  - '{{ custom_config + ''/'' + inventory_hostname + ''.cfg'' }}'
+  - '{{ custom_config + ''/'' + netlab_device_type + ''-'' + node_provider + ''.j2''
+    }}'
+  - '{{ custom_config + ''/'' + netlab_device_type + ''.j2'' }}'
+  - '{{ custom_config + ''/'' + ansible_network_os + ''-'' + node_provider + ''.j2''
+    }}'
+  - '{{ custom_config + ''/'' + ansible_network_os + ''.j2'' }}'
+  - '{{ custom_config + ''.'' + inventory_hostname + ''.'' + netlab_device_type +
+    ''.j2'' }}'
+  - '{{ custom_config + ''.'' + inventory_hostname + ''.'' + ansible_network_os +
+    ''.j2'' }}'
+  - '{{ custom_config + ''.'' + inventory_hostname + ''.j2'' }}'
+  - '{{ custom_config + ''.'' + netlab_device_type + ''.j2'' }}'
+  - '{{ custom_config + ''.'' + ansible_network_os + ''.j2'' }}'
+  - '{{ custom_config }}'
+  - '{{ custom_config + ''.j2'' }}'
+  tasks:
+  - '{{ custom_config }}/deploy-{{ inventory_hostname }}.yml'
+  - '{{ custom_config }}/deploy.{{ netlab_device_type }}-{{ node_provider }}.yml'
+  - '{{ custom_config }}/deploy.{{ netlab_device_type }}.yml'
+  - '{{ custom_config }}/deploy.{{ ansible_network_os }}-{{ node_provider }}.yml'
+  - '{{ custom_config }}/deploy.{{ ansible_network_os }}.yml'
+  - '{{ custom_config }}/deploy.yml'
+paths_deploy:
+  dirs:
+  - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks
+  files:
+  - '{{ netlab_device_type }}/{{ config_module }}-{{ provider|default(netlab_provider)
+    }}.yml'
+  - '{{ netlab_device_type }}/{{ config_module }}.yml'
+  - deploy-config/{{ netlab_device_type }}-{{ provider|default(netlab_provider) }}.yml
+  - deploy-config/{{ netlab_device_type }}.yml
+  - '{{ ansible_network_os }}/{{ config_module }}-{{ provider|default(netlab_provider)
+    }}.yml'
+  - '{{ ansible_network_os }}/{{ config_module }}.yml'
+  - deploy-config/{{ ansible_network_os }}-{{ provider|default(netlab_provider) }}.yml
+  - deploy-config/{{ ansible_network_os }}.yml
+  tasks_generic:
+  - deploy-config/{{ netlab_device_type }}-{{ node_provider }}.yml
+  - deploy-config/{{ netlab_device_type }}.yml
+  - deploy-config/{{ ansible_network_os }}-{{ node_provider }}.yml
+  - deploy-config/{{ ansible_network_os }}.yml
+paths_plugin:
+- /root/lacnic_ipv6dc/vxlan_l3
+- /root/.netlab
+- /usr/local/lib/python3.8/dist-packages/netsim/extra
+paths_ready:
+  dirs:
+  - /usr/local/lib/python3.8/dist-packages/netsim/ansible/tasks/readiness-check
+  files:
+  - '{{netlab_device_type}}-{{provider|default(netlab_provider)}}.yml'
+  - '{{netlab_device_type}}.yml'
+  - '{{ansible_network_os}}-{{provider|default(netlab_provider)}}.yml'
+  - '{{ansible_network_os}}.yml'
+paths_t_files:
+  files:
+  - '{{config_module}}/{{netlab_device_type}}-{{provider|default(netlab_provider)}}.j2'
+  - '{{config_module}}/{{netlab_device_type}}.j2'
+  - '{{config_module}}.{{netlab_device_type}}.j2'
+  - '{{config_module}}/{{ansible_network_os}}-{{provider|default(netlab_provider)}}.j2'
+  - '{{config_module}}/{{ansible_network_os}}.j2'
+  - '{{config_module}}.{{ansible_network_os}}.j2'
+  - '{{netlab_device_type}}/{{config_module}}.j2'
+paths_templates:
+  dirs:
+  - /usr/local/lib/python3.8/dist-packages/netsim/ansible/templates
+  - /usr/local/lib/python3.8/dist-packages/netsim/daemons
+paths_validate:
+- /usr/local/lib/python3.8/dist-packages/netsim/validate
+pools:
+  core:
+    unnumbered: true
+  l2only: {}
+  lan:
+    ipv6: 2001:db8:bb::/48
+    prefix: 24
+  loopback:
+    ipv4: 10.0.0.0/24
+    prefix: 32
+  mgmt:
+    ipv4: 192.168.121.0/24
+    mac: 08-4F-A9-00-00-00
+    prefix: 24
+    start: 100
+  p2p:
+    ipv4: 10.1.0.0/16
+    prefix: 30
+  router_id:
+    ipv4: 10.0.0.0/24
+    prefix: 32
+  vrf_loopback:
+    ipv4: 10.2.0.0/24
+    prefix: 32

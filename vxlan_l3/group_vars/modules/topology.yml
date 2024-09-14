@@ -1,0 +1,9 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l3/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_module:
+- vlan
+- bgp
+- vrf
+- vxlan
+- evpn

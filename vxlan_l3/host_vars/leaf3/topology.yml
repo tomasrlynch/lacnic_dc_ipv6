@@ -1,0 +1,198 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/vxlan_l3/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv4: true
+  ipv6: true
+  vpnv6: true
+bgp:
+  activate:
+    ipv4:
+    - ebgp
+    ipv6:
+    - ebgp
+  advertise_loopback: true
+  as: 4220010003
+  community:
+    ebgp:
+    - standard
+    - large
+    - extended
+    ibgp:
+    - standard
+    - large
+    - extended
+    ibgp_localas:
+    - standard
+    - large
+    - extended
+  ipv4: true
+  ipv6: true
+  neighbors:
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4210010001
+    evpn: true
+    ifindex: 1
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth1
+    name: spine1
+    type: ebgp
+  - activate:
+      ipv4: true
+      ipv6: true
+    as: 4210010001
+    evpn: true
+    ifindex: 2
+    ipv4: true
+    ipv4_rfc8950: true
+    ipv6: true
+    local_if: eth2
+    name: spine2
+    type: ebgp
+  next_hop_self: true
+  router_id: 10.0.0.3
+box: quay.io/frrouting/frr:9.1.0
+clab:
+  binds:
+  - clab_files/leaf3/daemons:/etc/frr/daemons
+  - clab_files/leaf3/hosts:/etc/hosts
+  config_templates:
+  - daemons:/etc/frr/daemons
+  - hosts:/etc/hosts
+  kind: linux
+evpn:
+  session:
+  - ebgp
+  vrfs:
+  - azul
+  - verde
+hostname: clab-vxlan_l3-leaf3
+interfaces:
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.3/32
+  ifindex: 1
+  ifname: eth1
+  ipv4: true
+  ipv6: true
+  linkindex: 3
+  mtu: 1500
+  name: leaf3 -> spine1
+  neighbors:
+  - ifname: eth3
+    ipv4: true
+    ipv6: true
+    node: spine1
+  pool: core
+  role: external
+  type: p2p
+- _parent_intf: lo
+  _parent_ipv4: 10.0.0.3/32
+  ifindex: 2
+  ifname: eth2
+  ipv4: true
+  ipv6: true
+  linkindex: 7
+  mtu: 1500
+  name: leaf3 -> spine2
+  neighbors:
+  - ifname: eth3
+    ipv4: true
+    ipv6: true
+    node: spine2
+  pool: core
+  role: external
+  type: p2p
+- bgp:
+    advertise: true
+  bridge: vxlan_l3_11
+  ifindex: 3
+  ifname: eth3
+  ipv6: 2001:db8:31::3/64
+  linkindex: 11
+  mtu: 1500
+  name: leaf3 -> host31
+  neighbors:
+  - ifname: eth1
+    ipv6: 2001:db8:31::31/64
+    node: host31
+  role: stub
+  type: lan
+  vrf: azul
+- bgp:
+    advertise: true
+  bridge: vxlan_l3_15
+  ifindex: 4
+  ifname: eth4
+  ipv6: 2001:db8:32::3/64
+  linkindex: 15
+  mtu: 1500
+  name: leaf3 -> host32
+  neighbors:
+  - ifname: eth1
+    ipv6: 2001:db8:32::32/64
+    node: host32
+  role: stub
+  type: lan
+  vrf: verde
+loopback:
+  ifindex: 0
+  ifname: lo
+  ipv4: 10.0.0.3/32
+  ipv6: 2001:db8:64:3::3/128
+  neighbors: []
+  type: loopback
+  virtual_interface: true
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.103
+  mac: 08:4f:a9:00:00:03
+module:
+- vlan
+- bgp
+- vrf
+- vxlan
+- evpn
+mtu: 1500
+vrf:
+  as: 65000
+vrfs:
+  azul:
+    af:
+      ipv6: true
+    evpn:
+      evi: 1
+      rd: 10.0.0.3:1
+      transit_vni: 200000
+    export:
+    - '65000:1'
+    id: 1
+    import:
+    - '65000:1'
+    rd: '65000:1'
+    vrfidx: 100
+  verde:
+    af:
+      ipv6: true
+    evpn:
+      evi: 2
+      rd: 10.0.0.3:2
+      transit_vni: 200001
+    export:
+    - '65000:2'
+    id: 2
+    import:
+    - '65000:2'
+    rd: '65000:2'
+    vrfidx: 101
+vxlan:
+  domain: global
+  flooding: evpn
+  l3vnis:
+  - azul
+  - verde
+  vtep: 10.0.0.3
+  vtep_interface: lo
