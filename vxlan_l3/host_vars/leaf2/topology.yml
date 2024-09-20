@@ -64,12 +64,14 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- leaves.j2
 evpn:
   session:
   - ebgp
   vrfs:
-  - azul
-  - verde
+  - AZUL
+  - VERDE
 hostname: clab-vxlan_l3-leaf2
 interfaces:
 - _parent_intf: lo
@@ -79,7 +81,7 @@ interfaces:
   ipv4: true
   ipv6: true
   linkindex: 2
-  mtu: 1500
+  mtu: 9000
   name: leaf2 -> spine1
   neighbors:
   - ifname: eth2
@@ -96,7 +98,7 @@ interfaces:
   ipv4: true
   ipv6: true
   linkindex: 6
-  mtu: 1500
+  mtu: 9000
   name: leaf2 -> spine2
   neighbors:
   - ifname: eth2
@@ -111,45 +113,45 @@ interfaces:
   bridge: vxlan_l3_10
   ifindex: 3
   ifname: eth3
-  ipv6: 2001:db8:21::2/64
+  ipv6: 2001:db8:21::2/48
   linkindex: 10
   mtu: 1500
   name: leaf2 -> host21
   neighbors:
   - ifname: eth1
-    ipv6: 2001:db8:21::21/64
+    ipv6: 2001:db8:21::21/48
     node: host21
   role: stub
   type: lan
-  vrf: azul
+  vrf: AZUL
 - bgp:
     advertise: true
   bridge: vxlan_l3_14
   ifindex: 4
   ifname: eth4
-  ipv6: 2001:db8:22::2/64
+  ipv6: 2001:db8:22::2/48
   linkindex: 14
   mtu: 1500
   name: leaf2 -> host22
   neighbors:
   - ifname: eth1
-    ipv6: 2001:db8:22::22/64
+    ipv6: 2001:db8:22::22/48
     node: host22
   role: stub
   type: lan
-  vrf: verde
+  vrf: VERDE
 - bgp:
     advertise: true
   bridge: vxlan_l3_18
   ifindex: 5
   ifname: eth5
-  ipv6: 2001:db8:bb:1::2/64
+  ipv6: 2001:db8:aa:1::2/64
   linkindex: 18
   mtu: 1500
   name: leaf2 -> hostB
   neighbors:
   - ifname: eth1
-    ipv6: 2001:db8:bb:1::b/64
+    ipv6: 2001:db8:aa:1::b/64
     node: hostB
   role: stub
   type: lan
@@ -175,39 +177,39 @@ mtu: 1500
 vrf:
   as: 65000
 vrfs:
-  azul:
+  AZUL:
     af:
       ipv6: true
     evpn:
       evi: 1
       rd: 10.0.0.2:1
-      transit_vni: 200000
+      transit_vni: 10001
     export:
-    - '65000:1'
+    - 65000:10001
     id: 1
     import:
-    - '65000:1'
-    rd: '65000:1'
+    - 65000:10001
+    rd: 65000:10001
     vrfidx: 100
-  verde:
+  VERDE:
     af:
       ipv6: true
     evpn:
       evi: 2
       rd: 10.0.0.2:2
-      transit_vni: 200001
+      transit_vni: 20002
     export:
-    - '65000:2'
+    - 65000:20002
     id: 2
     import:
-    - '65000:2'
-    rd: '65000:2'
+    - 65000:20002
+    rd: 65000:20002
     vrfidx: 101
 vxlan:
   domain: global
   flooding: evpn
   l3vnis:
-  - azul
-  - verde
+  - AZUL
+  - VERDE
   vtep: 10.0.0.2
   vtep_interface: lo

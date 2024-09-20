@@ -71,8 +71,23 @@ El laboratorio muestra las configuraciones de VXLAN y EVPN para túneles de capa
 - Dos Spines
 - Cuatro Leaves
 
-Los archivos de este laboratorio se encuentran en `./configuraciones/vxlan_l2`
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/vxlan_l2`
+
+Templates netlab:
+- En `vxlan_l2` encontrarán los templates para generar el laboratorio.
 
 ### Servicio de Redes Privadas Capa 3
+El laboratorio muestra las configuraciones de VXLAN y EVPN para túneles de capa 3. Existen dos VXLAN distintas y estos son sus componentes:
+- Cuatro hosts de VXLAN 10001 / VRF Azul denominados `host[1-4]1`
+- Cuatro hosts de VXLAN 20002 / VRF Verde denominados `host[1-4]2`
+- Dos hosts `host[AB]` que son clientes unicast IPv6
+- Dos Spines
+- Cuatro Leaves
+
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/vxlan_l2`
+
+Templates netlab:
+- En `vxlan_l2` encontrarán los templates para generar el laboratorio.
+
 ### Servicio de Conexión Externa
 ### Interconexión de Data Centers (DCI)

@@ -13,12 +13,21 @@ evpn:
     as: 65000 # recomendable utilizar un sistema autonomo publico
     session:
     - ebgp
-
 vrfs:
-  azul:
-    evpn.transit_vni: True
-  verde:
-    evpn.transit_vni: True
+  AZUL:
+    evpn.transit_vni: 10001
+    export:
+    - '65000:10001'
+    import:
+    - '65000:10001'
+    rd: '65000:10001'
+  VERDE:
+    evpn.transit_vni: 20002
+    export:
+    - '65000:20002'
+    import:
+    - '65000:20002'
+    rd: '65000:20002'
 
 addressing:
     core:
@@ -74,12 +83,10 @@ nodes:
     spine1:
         id: 5
         loopback:
-            #ipv4: 10.0.0.11/32
             ipv6: 2001:db8:64:11::11/128
     spine2:
         id: 6
         loopback:
-            #ipv4: 10.0.0.22/32
             ipv6: 2001:db8:64:22::22/128
 
 groups:
@@ -87,12 +94,12 @@ groups:
         members: [ spine1, spine2 ]
         module: [ bgp, evpn ]
         bgp.as: 4210010001
-        #config: [ spines.j2 ]
+        config: [ spines.j2 ]
         device: frr
     leaf:
         members: [ leaf1, leaf2, leaf3, leaf4 ]
         module: [ vlan, vxlan, bgp, evpn, vrf ]
-        #config: [ leaves.j2 ]
+        config: [ leaves.j2 ]
         device: frr
 
 links:
@@ -100,53 +107,61 @@ links:
     - spine1:
       leaf1:
       pool: core
+      mtu: 9000
     - spine1:
       leaf2:
       pool: core
+      mtu: 9000
     - spine1:
       leaf3:
       pool: core
+      mtu: 9000
     - spine1:
       leaf4:
       pool: core
+      mtu: 9000
     - spine2:
       leaf1:
       pool: core
+      mtu: 9000
     - spine2:
       leaf2:
       pool: core
+      mtu: 9000
     - spine2:
       leaf3:
       pool: core
+      mtu: 9000
     - spine2:
       leaf4:
       pool: core
+      mtu: 9000
     # Enlaces VRF Azul
-    - leaf1: { vrf: azul }
+    - leaf1: { vrf: AZUL }
       host11:
-      prefix.ipv6: 2001:db8:11::/64
-    - leaf2: { vrf: azul }
+      prefix.ipv6: 2001:db8:11::/48
+    - leaf2: { vrf: AZUL }
       host21:
-      prefix.ipv6: 2001:db8:21::/64
-    - leaf3: { vrf: azul }
+      prefix.ipv6: 2001:db8:21::/48
+    - leaf3: { vrf: AZUL }
       host31:
-      prefix.ipv6: 2001:db8:31::/64
-    - leaf4: { vrf: azul }
+      prefix.ipv6: 2001:db8:31::/48
+    - leaf4: { vrf: AZUL }
       host41:
-      prefix.ipv6: 2001:db8:41::/64
+      prefix.ipv6: 2001:db8:41::/48
     # Enlaces VRF Verde
-    - leaf1: { vrf: verde }
+    - leaf1: { vrf: VERDE }
       host12:
-      prefix.ipv6: 2001:db8:12::/64
-    - leaf2: { vrf: verde }
+      prefix.ipv6: 2001:db8:12::/48
+    - leaf2: { vrf: VERDE }
       host22:
-      prefix.ipv6: 2001:db8:22::/64
-    - leaf3: { vrf: verde }
+      prefix.ipv6: 2001:db8:22::/48
+    - leaf3: { vrf: VERDE }
       host32:
-      prefix.ipv6: 2001:db8:32::/64
-    - leaf4: { vrf: verde }
+      prefix.ipv6: 2001:db8:32::/48
+    - leaf4: { vrf: VERDE }
       host42:
-      prefix.ipv6: 2001:db8:42::/64
+      prefix.ipv6: 2001:db8:42::/48
     # Clientes IP solamente
     - leaf1:
       hostA:

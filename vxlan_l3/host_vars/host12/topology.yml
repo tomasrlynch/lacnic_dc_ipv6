@@ -15,15 +15,15 @@ interfaces:
 - bridge: vxlan_l3_13
   ifindex: 1
   ifname: eth1
-  ipv6: 2001:db8:12::12/64
+  ipv6: 2001:db8:12::12/48
   linkindex: 13
   mtu: 1500
   name: host12 -> leaf1
   neighbors:
   - ifname: eth4
-    ipv6: 2001:db8:12::1/64
+    ipv6: 2001:db8:12::1/48
     node: leaf1
-    vrf: verde
+    vrf: VERDE
   role: stub
   type: lan
 mgmt:

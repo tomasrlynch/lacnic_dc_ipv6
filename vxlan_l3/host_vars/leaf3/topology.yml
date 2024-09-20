@@ -64,12 +64,14 @@ clab:
   - daemons:/etc/frr/daemons
   - hosts:/etc/hosts
   kind: linux
+config:
+- leaves.j2
 evpn:
   session:
   - ebgp
   vrfs:
-  - azul
-  - verde
+  - AZUL
+  - VERDE
 hostname: clab-vxlan_l3-leaf3
 interfaces:
 - _parent_intf: lo
@@ -79,7 +81,7 @@ interfaces:
   ipv4: true
   ipv6: true
   linkindex: 3
-  mtu: 1500
+  mtu: 9000
   name: leaf3 -> spine1
   neighbors:
   - ifname: eth3
@@ -96,7 +98,7 @@ interfaces:
   ipv4: true
   ipv6: true
   linkindex: 7
-  mtu: 1500
+  mtu: 9000
   name: leaf3 -> spine2
   neighbors:
   - ifname: eth3
@@ -111,33 +113,33 @@ interfaces:
   bridge: vxlan_l3_11
   ifindex: 3
   ifname: eth3
-  ipv6: 2001:db8:31::3/64
+  ipv6: 2001:db8:31::3/48
   linkindex: 11
   mtu: 1500
   name: leaf3 -> host31
   neighbors:
   - ifname: eth1
-    ipv6: 2001:db8:31::31/64
+    ipv6: 2001:db8:31::31/48
     node: host31
   role: stub
   type: lan
-  vrf: azul
+  vrf: AZUL
 - bgp:
     advertise: true
   bridge: vxlan_l3_15
   ifindex: 4
   ifname: eth4
-  ipv6: 2001:db8:32::3/64
+  ipv6: 2001:db8:32::3/48
   linkindex: 15
   mtu: 1500
   name: leaf3 -> host32
   neighbors:
   - ifname: eth1
-    ipv6: 2001:db8:32::32/64
+    ipv6: 2001:db8:32::32/48
     node: host32
   role: stub
   type: lan
-  vrf: verde
+  vrf: VERDE
 loopback:
   ifindex: 0
   ifname: lo
@@ -160,39 +162,39 @@ mtu: 1500
 vrf:
   as: 65000
 vrfs:
-  azul:
+  AZUL:
     af:
       ipv6: true
     evpn:
       evi: 1
       rd: 10.0.0.3:1
-      transit_vni: 200000
+      transit_vni: 10001
     export:
-    - '65000:1'
+    - 65000:10001
     id: 1
     import:
-    - '65000:1'
-    rd: '65000:1'
+    - 65000:10001
+    rd: 65000:10001
     vrfidx: 100
-  verde:
+  VERDE:
     af:
       ipv6: true
     evpn:
       evi: 2
       rd: 10.0.0.3:2
-      transit_vni: 200001
+      transit_vni: 20002
     export:
-    - '65000:2'
+    - 65000:20002
     id: 2
     import:
-    - '65000:2'
-    rd: '65000:2'
+    - 65000:20002
+    rd: 65000:20002
     vrfidx: 101
 vxlan:
   domain: global
   flooding: evpn
   l3vnis:
-  - azul
-  - verde
+  - AZUL
+  - VERDE
   vtep: 10.0.0.3
   vtep_interface: lo
