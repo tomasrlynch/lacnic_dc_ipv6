@@ -1,0 +1,14 @@
+# don't display the copyright page
+startup_message off
+
+# increase scrollback buffer size
+defscrollback 10000
+sessionname directa
+#
+# create windows
+screen -t host1 netlab connect host1
+screen -t host2 netlab connect host2
+screen -t router1 netlab connect router1
+screen -t leaf1 netlab connect leaf1
+screen -t leaf_cd netlab connect leaf_cd
+screen -t spine1 netlab connect spine1

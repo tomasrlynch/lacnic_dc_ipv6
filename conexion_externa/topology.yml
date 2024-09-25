@@ -1,0 +1,89 @@
+---
+provider: clab
+defaults.device: linux
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+        ipv4: [ ebgp ]
+vlans:
+    azul:
+        mode: bridge # default es irb
+        prefix.ipv6: 2001:db8:1::/48
+evpn:
+    as: 65000 # recomendable utilizar un sistema autonomo publico
+    session:
+    - ebgp
+    vlans:
+    - azul
+addressing:
+    core:
+        unnumbered: true
+    lan:
+        ipv4:
+        ipv6: 2001:db8:aa::/48
+nodes:
+    host1:
+        id: 1
+    host2:
+        id: 2
+    router1:
+        id: 3
+        loopback:
+            ipv4: 10.0.0.22/32
+            ipv6: 2001:db8:64:22::22/128
+    leaf1:
+        id: 4
+        bgp.as: 4220010001
+        loopback:
+            ipv4: 10.0.0.1/32
+            ipv6: 2001:db8:64:1::1/128
+    leaf_cd:
+        id: 5
+        bgp.as: 4220010002
+        loopback:
+            ipv4: 10.0.0.2/32
+            ipv6: 2001:db8:64:2::2/128
+    spine1:
+        id: 6
+        bgp.as: 4210010001
+        loopback:
+            ipv6: 2001:db8:64:11::11/128
+groups:
+    spine:
+        members: [ spine1 ]
+        module: [ bgp, evpn ]
+        config: [ spines.j2 ]
+        device: frr
+    leaf:
+        members: [ leaf1, leaf_cd ]
+        module: [ vlan, vxlan, bgp, evpn ]
+        config: [ leaves.j2 ]
+        device: frr
+    hosts:
+        members: [ host1, host2, router1 ]
+        config: [ hosts.j2 ]
+        device: linux
+links:
+    # Enlaces Internos LLA
+    - spine1:
+      leaf1:
+      pool: core
+    - spine1:
+      leaf_cd:
+      pool: core
+    # Enlaces a Hosts (l2vpn azul)
+    - name: l2vpn-host1
+      leaf1:
+          vlan.access: azul
+      host1:
+    - name: l2vpn-router1
+      leaf_cd:
+          vlan.access: azul
+      router1:
+    # Elementos de red del cliente
+    - router1:
+      host2:
+      prefix.ipv6: 2001:db8:2::/48

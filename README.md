@@ -84,10 +84,10 @@ El laboratorio muestra las configuraciones de VXLAN y EVPN para túneles de capa
 - Dos Spines
 - Cuatro Leaves
 
-Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/vxlan_l2`
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/vxlan_l3`
 
 Templates netlab:
-- En `vxlan_l2` encontrarán los templates para generar el laboratorio.
+- En `vxlan_l3` encontrarán los templates para generar el laboratorio.
 
 ### Servicio de Conexión Externa
 ### Interconexión de Data Centers (DCI)

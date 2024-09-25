@@ -1,0 +1,13 @@
+#!/bin/vbash
+source /opt/vyatta/etc/functions/script-template
+
+if [ "$(id -g -n)" != 'vyattacfg' ] ; then
+    exec sg vyattacfg -c "/bin/vbash $(readlink -f $0) $@"
+fi
+#
+configure
+delete interfaces ethernet eth1 address {{ loopback.ipv4 }}
+delete interfaces ethernet eth2 address {{ loopback.ipv4 }}
+commit
+save
+exit

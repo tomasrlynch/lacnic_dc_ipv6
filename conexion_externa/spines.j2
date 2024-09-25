@@ -1,0 +1,28 @@
+interface eth1
+no ip address {{ loopback.ipv4 }}
+interface eth2
+no ip address {{ loopback.ipv4 }}
+interface lo
+no ip address {{ loopback.ipv4 }}
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors if 'leaf' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+{% endfor %}
+neighbor LEAVES peer-group
+neighbor LEAVES remote-as external
+{% for ngb in bgp.neighbors if 'leaf' in ngb.name %}
+neighbor {{ ngb.local_if }} interface peer-group LEAVES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+address-family ipv4 unicast
+no network {{ loopback.ipv4 }}
+neighbor LEAVES activate
+address-family ipv6 unicast
+neighbor LEAVES activate
+address-family l2vpn evpn
+neighbor LEAVES activate
+neighbor LEAVES soft-reconfiguration inbound
+no advertise-all-vni
+no advertise-svi-ip
+no advertise ipv4 unicast
+no advertise ipv6 unicast

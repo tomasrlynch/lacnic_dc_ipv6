@@ -1,0 +1,25 @@
+#
+# Created by netlab (containerlab Linux host)
+#
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+#
+10.10.0.26 2001:db8:10::1a host1a
+10.10.0.42 2001:db8:10::2a host2a
+10.10.0.27 2001:db8:10::1b host1b
+10.10.0.43 2001:db8:10::2b host2b
+10.1.0.1 2001:db8:1::1 leaf1a
+10.1.0.2 2001:db8:1::2 leaf2a
+10.2.0.1 2001:db8:2::1 leaf1b
+10.2.0.2 2001:db8:2::2 leaf2b
+10.0.0.5 2001:db8:1::11 spine1a
+10.0.0.6 2001:db8:1::22 spine2a
+10.0.0.7 2001:db8:2::11 spine1b
+10.0.0.8 2001:db8:2::22 spine2b
+10.0.0.10 192.0.2.1 2001:db8:1::10 2001:db8:ff::1 borde1a
+10.0.0.20 192.0.2.5 2001:db8:2::10 2001:db8:ff:1::1 borde1b
+10.0.0.9 192.0.2.2 192.0.2.6 2001:db8:ff::2 2001:db8:ff:1::2 transito

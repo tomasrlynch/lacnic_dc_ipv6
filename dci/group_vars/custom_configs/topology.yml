@@ -1,0 +1,9 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/dci/topology.yml', 'package:topology-defaults.yml']
+#
+
+netlab_custom_config:
+- hosts.j2
+- spines_a.j2
+- spines_b.j2
+- bordes.j2
+- leaves.j2

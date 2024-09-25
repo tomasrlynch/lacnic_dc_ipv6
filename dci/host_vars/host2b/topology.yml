@@ -1,0 +1,53 @@
+# Ansible inventory created from ['/root/lacnic_ipv6dc/dci/topology.yml', 'package:topology-defaults.yml']
+#
+
+af:
+  ipv4: true
+  ipv6: true
+box: python:3.9-alpine
+clab:
+  binds:
+  - clab_files/host2b/hosts:/etc/hosts
+  config_templates:
+  - hosts:/etc/hosts
+  kind: linux
+config:
+- hosts.j2
+hostname: clab-dci-host2b
+interfaces:
+- bridge: dci_12
+  ifindex: 1
+  ifname: eth1
+  ipv4: 10.10.0.43/24
+  ipv6: 2001:db8:10::2b/48
+  linkindex: 12
+  mtu: 1500
+  name: l2vpn-host2b -> [host1a,leaf1a,host2a,leaf2a,host1b,leaf1b,leaf2b]
+  neighbors:
+  - ifname: eth1
+    ipv4: 10.10.0.26/24
+    ipv6: 2001:db8:10::1a/48
+    node: host1a
+  - ifname: vlan1000
+    node: leaf1a
+  - ifname: eth1
+    ipv4: 10.10.0.42/24
+    ipv6: 2001:db8:10::2a/48
+    node: host2a
+  - ifname: vlan1000
+    node: leaf2a
+  - ifname: eth1
+    ipv4: 10.10.0.27/24
+    ipv6: 2001:db8:10::1b/48
+    node: host1b
+  - ifname: vlan1000
+    node: leaf1b
+  - ifname: vlan1000
+    node: leaf2b
+  type: lan
+mgmt:
+  ifname: eth0
+  ipv4: 192.168.121.143
+  mac: 08:4f:a9:00:00:2b
+mtu: 1500
+role: host

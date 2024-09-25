@@ -1,0 +1,22 @@
+apk add iputils mtr bird
+sysctl -w net.ipv6.conf.all.forwarding=1
+mv /etc/bird.conf /etc/bird.conf.bak
+touch /etc/bird.conf
+cat >> /etc/bird.conf<<EOF
+protocol device {
+}
+protocol kernel {
+        ipv6 {
+                export all;
+        };
+        learn;
+}
+protocol ospf v3 {
+        area 0.0.0.0 {
+                interface "eth1*";
+                interface "eth2*";
+        };
+}
+EOF
+bird
+birdc config

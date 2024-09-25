@@ -1,0 +1,22 @@
+# don't display the copyright page
+startup_message off
+
+# increase scrollback buffer size
+defscrollback 10000
+sessionname vxlan_l2
+#
+# create windows
+screen -t host11 netlab connect host11
+screen -t host21 netlab connect host21
+screen -t host31 netlab connect host31
+screen -t host41 netlab connect host41
+screen -t host12 netlab connect host12
+screen -t host22 netlab connect host22
+screen -t host32 netlab connect host32
+screen -t host42 netlab connect host42
+screen -t leaf1 netlab connect leaf1
+screen -t leaf2 netlab connect leaf2
+screen -t leaf3 netlab connect leaf3
+screen -t leaf4 netlab connect leaf4
+screen -t spine1 netlab connect spine1
+screen -t spine2 netlab connect spine2
