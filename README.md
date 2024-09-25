@@ -90,4 +90,14 @@ Templates netlab:
 - En `vxlan_l3` encontrarán los templates para generar el laboratorio.
 
 ### Servicio de Conexión Externa
+En este laboratorio se extiende el concepto de VXLAN capa 2 para dar servicios de conectividad externa. Para simplificar el laboratior solamente hay una VXLAN y los siguientes componentes:
+- Un spine
+- Dos leaves, uno dedicado a conectividad externa
+- Un host conectado a la red de data center
+- Un router y un host simulando una red remota en la oficina del cliente.
+
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/conexion_externa`
+
+Templates netlab:
+- En `conexion_externa` encontrarán los templates para generar el laboratorio.`
 ### Interconexión de Data Centers (DCI)
