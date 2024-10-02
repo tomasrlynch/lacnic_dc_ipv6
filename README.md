@@ -101,3 +101,13 @@ Los archivos de configuración de este laboratorio se encuentran en `./configura
 Templates netlab:
 - En `conexion_externa` encontrarán los templates para generar el laboratorio.`
 ### Interconexión de Data Centers (DCI)
+El laboratorio de DCI simula dos data centers interconectados por sus routers de borde. Cada DC cuenta con:
+- Un router de borde
+- Dos spines
+- Dos leaves
+- Dos hosts
+
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/dci`
+
+Templates netlab:
+- En `dci` encontrarán los templates para generar el laboratorio.

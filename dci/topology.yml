@@ -9,185 +9,185 @@ bgp:
         ipv6: [ ebgp ]
         ipv4: [ ebgp ]
 vlans:
-    azul:
+    verde:
         mode: bridge # default es irb
-        prefix.ipv4: 10.10.0.0/24 # Requerido por Netlab, no puede hacer VXLAN IPv6-only
         prefix.ipv6: 2001:db8:10::/48
 evpn:
     as: 65000 # recomendable utilizar un sistema autonomo publico
     session:
     - ebgp
     vlans:
-    - azul
+    - verde
 addressing:
     core:
         unnumbered: true
     p2p:
-        ipv4: 192.0.2.0/24
+        ipv4: #192.0.2.0/24
         ipv6: 2001:db8:ff::/48
 nodes:
-    host1a:
-        id: 26
-    host2a:
-        id: 42
-    host1b:
-        id: 27
-    host2b:
-        id: 43
-    leaf1a:
+    host11:
+        id: 17
+    host12:
+        id: 18
+    host21:
+        id: 33
+    host22:
+        id: 34
+    leaf11:
         id: 1
         bgp.as: 4220010001
         loopback:
             ipv4: 10.1.0.1/32
             ipv6: 2001:db8:1::1/128
-    leaf2a:
+    leaf12:
         id: 2
         bgp.as: 4220010002
         loopback:
             ipv4: 10.1.0.2/32
             ipv6: 2001:db8:1::2/128
-    leaf1b:
+    leaf21:
         id: 3
         bgp.as: 4220020001
         loopback:
             ipv4: 10.2.0.1/32
             ipv6: 2001:db8:2::1/128
-    leaf2b:
+    leaf22:
         id: 4
         bgp.as: 4220020002
         loopback:
             ipv4: 10.2.0.2/32
             ipv6: 2001:db8:2::2/128
-    spine1a:
+    spine11:
         id: 5
         loopback:
-            #ipv4: 10.1.0.11/32
+            ipv4: 10.1.0.11/32
             ipv6: 2001:db8:1::11/128
-    spine2a:
+    spine12:
         id: 6
         loopback:
-            #ipv4: 10.1.0.22/32
+            ipv4: 10.1.0.22/32
             ipv6: 2001:db8:1::22/128
-    spine1b:
+    spine21:
         id: 7
         loopback:
-            #ipv4: 10.2.0.11/32
+            ipv4: 10.2.0.11/32
             ipv6: 2001:db8:2::11/128
-    spine2b:
+    spine22:
         id: 8
         loopback:
-            #ipv4: 10.2.0.22/32
+            ipv4: 10.2.0.22/32
             ipv6: 2001:db8:2::22/128
-    borde1a:
+    borde11:
         id: 10
-        bgp.as: 64501
         loopback:
-            #ipv4: 10.1.0.10/32
+            ipv4: 10.1.0.10/32
             ipv6: 2001:db8:1::10/128
-    borde1b:
+    borde21:
         id: 20
-        bgp.as: 64502
         loopback:
-            #ipv4: 10.2.0.10/32
+            ipv4: 10.2.0.10/32
             ipv6: 2001:db8:2::10/128
-    transito:
-        device: vyos
-        bgp.as: 64500
 groups:
-    spine_a:
-        members: [ spine1a, spine2a ]
+    spine_1:
+        members: [ spine11, spine12 ]
         module: [ bgp, evpn ]
         bgp.as: 4210010001
-        config: [ spines_a.j2 ]
-    spine_b:
-        members: [ spine1b, spine2b ]
+        config: [ spines1.j2 ]
+    spine_2:
+        members: [ spine21, spine22 ]
         module: [ bgp, evpn ]
         bgp.as: 4210020001
-        config: [ spines_b.j2 ]
+        config: [ spines2.j2 ]
     leaf:
-        members: [ leaf1a, leaf2a, leaf1b, leaf2b ]
+        members: [ leaf11, leaf12, leaf21, leaf22 ]
         module: [ vlan, vxlan, bgp, evpn ]
         config: [ leaves.j2 ]
     hosts:
-        members: [ host1a, host2a, host1b, host2b ]
+        members: [ host11, host12, host21, host22 ]
         device: linux
         config: [ hosts.j2 ]
     borde:
-        members: [ borde1a, borde1b ]
+        members: [ borde11, borde21 ]
+        module: [ bgp, ospf ]
+        ospf.af.ipv4: false
+        ospf.af.ipv6: true
+        bgp:
+            as: 65000
+            activate:
+                ipv4: [ebgp, ibgp]
+                ipv6: [ebgp, ibgp]
         device: vyos
         config: [ bordes.j2 ]
 links:
     # Enlaces Internos Spine - Leaf
-    - spine1a:
-      leaf1a:
+    - spine11:
+      leaf11:
       pool: core
       mtu: 9000
-    - spine1a:
-      leaf2a:
+    - spine11:
+      leaf12:
       pool: core
       mtu: 9000
-    - spine2a:
-      leaf1a:
+    - spine12:
+      leaf11:
       pool: core
       mtu: 9000
-    - spine2a:
-      leaf2a:
+    - spine12:
+      leaf12:
       pool: core
       mtu: 9000
-    - spine1b:
-      leaf1b:
+    - spine21:
+      leaf21:
       pool: core
       mtu: 9000
-    - spine1b:
-      leaf2b:
+    - spine21:
+      leaf22:
       pool: core
       mtu: 9000
-    - spine2b:
-      leaf1b:
+    - spine22:
+      leaf21:
       pool: core
       mtu: 9000
-    - spine2b:
-      leaf2b:
+    - spine22:
+      leaf22:
       pool: core
       mtu: 9000
-    # Enlaces a Hosts (l2vpn azul)
-    - name: l2vpn-host1a
-      leaf1a:
-          vlan.access: azul
-      host1a:
-    - name: l2vpn-host2a
-      leaf2a:
-          vlan.access: azul
-      host2a:
-    - name: l2vpn-host1b
-      leaf1b:
-          vlan.access: azul
-      host1b:
-    - name: l2vpn-host2b
-      leaf2b:
-          vlan.access: azul
-      host2b:
+    # Enlaces a Hosts (l2vpn verde)
+    - name: l2vpn-host11
+      leaf11:
+          vlan.access: verde
+      host11:
+    - name: l2vpn-host12
+      leaf12:
+          vlan.access: verde
+      host12:
+    - name: l2vpn-host21
+      leaf21:
+          vlan.access: verde
+      host21:
+    - name: l2vpn-host22
+      leaf22:
+          vlan.access: verde
+      host22:
     # Enlaces Internos Spine - Edge
-    - spine1a:
-      borde1a:
+    - spine11:
+      borde11:
       pool: core
       mtu: 9000
-    - spine2a:
-      borde1a:
+    - spine12:
+      borde11:
       pool: core
       mtu: 9000
-    - spine1b:
-      borde1b:
+    - spine21:
+      borde21:
       pool: core
       mtu: 9000
-    - spine2b:
-      borde1b:
+    - spine22:
+      borde21:
       pool: core
       mtu: 9000
     # Enlaces Edge - Transito
-    - borde1a:
-      transito:
-      #mtu: 9000
-    - borde1b:
-      transito:
-      #mtu: 9000
+    - borde11:
+      borde21:
+      pool: core
+      mtu: 9000
