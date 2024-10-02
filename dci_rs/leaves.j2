@@ -1,0 +1,23 @@
+interface eth1
+no ip address {{ loopback.ipv4 }}
+router bgp {{ bgp.as }}
+{% for ngb in bgp.neighbors if 'leaf' in ngb.name %}
+no neighbor {{ ngb.ipv4 }}
+no neighbor {{ ngb.ipv6 }}
+{% endfor %}
+neighbor SPINES peer-group
+neighbor SPINES remote-as external
+{% for ngb in bgp.neighbors if 'spine' in ngb.name %}
+no neighbor {{ ngb.local_if }}
+neighbor {{ ngb.local_if }} interface peer-group SPINES
+neighbor {{ ngb.local_if }} description {{ ngb.name }}
+{% endfor %}
+address-family ipv4 unicast
+neighbor SPINES activate
+address-family ipv6 unicast
+neighbor SPINES activate
+address-family l2vpn evpn
+neighbor SPINES activate
+no advertise-svi-ip
+no advertise ipv4 unicast
+no advertise ipv6 unicast

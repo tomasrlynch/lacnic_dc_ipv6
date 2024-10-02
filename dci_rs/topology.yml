@@ -1,0 +1,166 @@
+---
+provider: clab
+defaults.device: frr
+module: [ bgp ]
+plugin: [ bgp.session, ebgp.multihop ]
+bgp:
+    community.ebgp: [ standard, extended ]
+    activate:
+        ipv6: [ ebgp ]
+        ipv4: [ ebgp ]
+vlans:
+    verde:
+        mode: bridge # default es irb
+        prefix.ipv6: 2001:db8:10::/48
+evpn:
+    as: 65000 # recomendable utilizar un sistema autonomo publico
+    session:
+    - ebgp
+    vlans:
+    - verde
+addressing:
+    core:
+        unnumbered: true
+    p2p:
+        ipv4: #192.0.2.0/24
+        ipv6: 2001:db8:ff::/48
+nodes:
+    leaf1:
+        #id: 1
+        bgp.as: 4220010001
+        loopback:
+            ipv4: 10.1.0.1/32
+            ipv6: 2001:db8:1::1/128
+    leaf2:
+        #id: 2
+        bgp.as: 4220020002
+        loopback:
+            ipv4: 10.2.0.2/32
+            ipv6: 2001:db8:2::2/128
+    leaf3:
+        #id: 3
+        bgp.as: 4220030003
+        loopback:
+            ipv4: 10.3.0.3/32
+            ipv6: 2001:db8:3::3/128
+    spine1:
+        #id: 4
+        bgp.as: 4210010001
+        loopback:
+            ipv4: 10.1.0.11/32
+            ipv6: 2001:db8:1::11/128
+    spine2:
+        bgp.as: 4210020002
+        #id: 5
+        loopback:
+            ipv4: 10.2.0.22/32
+            ipv6: 2001:db8:2::22/128
+    spine3:
+        bgp.as: 4210030003
+        #id: 6
+        loopback:
+            ipv4: 10.3.0.33/32
+            ipv6: 2001:db8:3::33/128
+    borde1:
+        #id: 7
+        loopback:
+            ipv4: 10.1.0.10/32
+            ipv6: 2001:db8:1::10/128
+    borde2:
+        #id: 8
+        loopback:
+            ipv4: 10.2.0.10/32
+            ipv6: 2001:db8:2::10/128
+    borde3:
+        #id: 9
+        loopback:
+            ipv4: 10.3.0.10/32
+            ipv6: 2001:db8:3::10/128
+    host1:
+        id: 11
+    host2:
+        id: 12
+    host3:
+        id: 13
+groups:
+    spines:
+        members: [ spine1, spine3 ]
+        module: [ bgp, evpn ]
+        config: [ spines.j2 ]
+    routeserver:
+        members: [ spine2 ]
+        module: [ bgp, evpn ]
+        config: [ routeserver.j2 ]
+    leaf:
+        members: [ leaf1, leaf2, leaf3 ]
+        module: [ vlan, vxlan, bgp, evpn ]
+        config: [ leaves.j2 ]
+    hosts:
+        members: [ host1, host2, host3 ]
+        device: linux
+        config: [ hosts.j2 ]
+    borde:
+        members: [ borde1, borde2, borde3 ]
+        module: [ bgp, ospf ]
+        ospf.af.ipv4: false
+        ospf.af.ipv6: true
+        bgp:
+            as: 65000
+            activate:
+                ipv4: [ebgp, ibgp]
+                ipv6: [ebgp, ibgp]
+        device: vyos
+        config: [ bordes.j2 ]
+links:
+    # Enlaces Internos Spine - Leaf
+    - spine1:
+      leaf1:
+      pool: core
+      mtu: 9000
+    - spine2:
+      leaf2:
+      pool: core
+      mtu: 9000
+    - spine3:
+      leaf3:
+      pool: core
+      mtu: 9000
+    # Enlaces a Hosts (l2vpn verde)
+    - name: l2vpn-host1
+      leaf1:
+          vlan.access: verde
+      host1:
+    - name: l2vpn-host2
+      leaf2:
+          vlan.access: verde
+      host2:
+    - name: l2vpn-host3
+      leaf3:
+          vlan.access: verde
+      host3:
+    # Enlaces Internos Spine - Edge
+    - spine1:
+      borde1:
+      pool: core
+      mtu: 9000
+    - spine2:
+      borde2:
+      pool: core
+      mtu: 9000
+    - spine3:
+      borde3:
+      pool: core
+      mtu: 9000
+    # Enlaces Edge - Transito
+    - borde1:
+      borde2:
+      pool: core
+      mtu: 9000
+    - borde1:
+      borde3:
+      pool: core
+      mtu: 9000
+    - borde3:
+      borde2:
+      pool: core
+      mtu: 9000

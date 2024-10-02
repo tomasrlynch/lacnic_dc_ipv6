@@ -1,0 +1,22 @@
+#!/bin/vbash
+source /opt/vyatta/etc/functions/script-template
+
+if [ "$(id -g -n)" != 'vyattacfg' ] ; then
+    exec sg vyattacfg -c "/bin/vbash $(readlink -f $0) $@"
+fi
+#
+configure
+delete interfaces ethernet eth1 address {{ loopback.ipv4 }}
+delete interfaces ethernet eth2 address {{ loopback.ipv4 }}
+delete interfaces ethernet eth3 address {{ loopback.ipv4 }}
+delete interfaces dummy dum0 address {{ loopback.ipv4 }}
+delete protocols bgp address-family ipv4-unicast 
+{% for ngb in bgp.neighbors if 'borde' in ngb.name %}
+delete protocols bgp neighbor {{ ngb.ipv4 }}
+set protocols bgp neighbor {{ ngb.ipv6 }} capability extended-nexthop
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv4-unicast nexthop-self
+set protocols bgp neighbor {{ ngb.ipv6 }} address-family ipv4-unicast soft-reconfiguration inbound
+{% endfor %}
+commit
+save
+exit

@@ -1,0 +1,20 @@
+# don't display the copyright page
+startup_message off
+
+# increase scrollback buffer size
+defscrollback 10000
+sessionname dcirs
+#
+# create windows
+screen -t host1 netlab connect host1
+screen -t host2 netlab connect host2
+screen -t host3 netlab connect host3
+screen -t leaf1 netlab connect leaf1
+screen -t leaf2 netlab connect leaf2
+screen -t leaf3 netlab connect leaf3
+screen -t spine1 netlab connect spine1
+screen -t spine2 netlab connect spine2
+screen -t spine3 netlab connect spine3
+screen -t borde1 netlab connect borde1
+screen -t borde2 netlab connect borde2
+screen -t borde3 netlab connect borde3

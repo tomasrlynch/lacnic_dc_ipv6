@@ -44,6 +44,7 @@ Templates netlab:
 - En `acceso_internet_con_filtros` encontrarán los templates para generar el laboratorio con filtros.
 
 ## Servicios Avanzados de Data Center 
+El curso de Servicios Avanzados cuenta con seis laboratorios. El primero es de BGP para clientes y los restantes están basados en VXLAN y EVPN.
 
 ### Servicio de BGP
 El laboratorio muestra las configuraciones necesarias en los Leaves y Hosts para dar un servicio de BGP a los clientes. Los componentes son:
@@ -111,3 +112,14 @@ Los archivos de configuración de este laboratorio se encuentran en `./configura
 
 Templates netlab:
 - En `dci` encontrarán los templates para generar el laboratorio.
+### Interconexión de Data Centers (DCI) para Múltiples Data Centers
+El laboratorio de DCI simula tres data centers interconectados por sus routers de borde. Cada DC cuenta con:
+- Un router de borde
+- Un spine
+- Un leaf
+- Un host
+
+Los archivos de configuración de este laboratorio se encuentran en `./configuraciones/dci_rs`
+
+Templates netlab:
+- En `dci_rs` encontrarán los templates para generar el laboratorio.
