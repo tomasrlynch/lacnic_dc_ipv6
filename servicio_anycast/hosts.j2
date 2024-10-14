@@ -1,5 +1,0 @@
-router bgp {{ bgp.as }}
-{% for ngb in bgp.neighbors if 'host' in ngb.name %}
-no neighbor {{ ngb.ipv6 }}
-{% endfor %}
-
