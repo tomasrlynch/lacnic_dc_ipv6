@@ -8,7 +8,7 @@ Los pasos que siguen los pueden ver comentados en la [página de instalación de
 ## Error en la Instalación de netlab
 Si reciben un error parecido a este `packaging.version.InvalidVersion: Invalid version: 'xxxxxxxxxx'` sigan las siguientes instrucciones luego del tercer paso:
 1) `sudo snap install yq`
-2) `for MODULO in  pyopenssl cryptography testresources pyyaml httplib2 jinja2 six bracket-expansion netaddr pynacl lxml paramiko netmiko ansible-pylibssh textfsm ttp jmespath ntc-templates yamllint ansible; do echo instalando $MODULO; sudo pip3 install $MODULO; done`
+2) ```for MODULO in  pyopenssl cryptography testresources pyyaml httplib2 jinja2 six bracket-expansion netaddr pynacl lxml paramiko netmiko ansible-pylibssh textfsm ttp jmespath ntc-templates yamllint ansible; do echo instalando $MODULO; sudo pip3 install $MODULO; done```
 3) `sudo vi /usr/local/lib/python3.8/dist-packages/netsim/install/ansible.sh`
 - Cambiar cambiar línea 32 para que quede: `REPLACE=""`
 - Cambiar linea 33 para que quede: `IGNORE=""`
