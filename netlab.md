@@ -1,22 +1,24 @@
-# Instalación
-1) sudo apt-get update && sudo apt-get install -y python3-pip
-2) sudo python3 -m pip install networklab
-3) netlab install ubuntu ansible libvirt containerlab #(decir que si a todo)
+# Introducción
+Esta es una guía simple para que puedan instalar netlab, bajen el repositorio y corran los laboratorios. Les recomiendo mucho ir a la [página del projecto netlab](https://netlab.tools/) y leer las instrucciones para poder armar o modificar los laboratorios a su mejor parece.
+# Instalación de netlab
+Los pasos que siguen los pueden ver comentados en la [página de instalación de netlab](https://netlab.tools/install/):
+1) `sudo apt-get update && sudo apt-get install -y python3-pip`
+2) `sudo python3 -m pip install networklab`
+3) `netlab install ubuntu ansible libvirt containerlab` **decir que si a todo**
+## Error en la Instalación de netlab
+Si reciben un error parecido a este `packaging.version.InvalidVersion: Invalid version: 'xxxxxxxxxx'` sigan las siguientes instrucciones luego del tercer paso:
+1) `sudo snap install yq`
+2) `for MODULO in  pyopenssl cryptography testresources pyyaml httplib2 jinja2 six bracket-expansion netaddr pynacl lxml paramiko netmiko ansible-pylibssh textfsm ttp jmespath ntc-templates yamllint ansible; do echo instalando $MODULO; sudo pip3 install $MODULO; done`
+3) `sudo vi /usr/local/lib/python3.8/dist-packages/netsim/install/ansible.sh`
+- Cambiar cambiar línea 32 para que quede: `REPLACE=""`
+- Cambiar linea 33 para que quede: `IGNORE=""`
+- Eliminar `yq` del final de la línea 52
+4) `netlab install ubuntu ansible libvirt containerlab`
+# Usando netlab
+Para utilizar los laboratorios de este repositorio, simplemente bajen el mismo. Una vez bajado, cambien al directorio del lab. Para levantar el lab simplemente corran `netlab up`.
 
-Si reciben un error parecido a este,
-packaging.version.InvalidVersion: Invalid version: 'xxxxxxxxxx'
+Luego, ingresen a los equipos haciendo `netlab connect <nombre del equipo>`.
 
-sigan las siguientes instrucciones:
-0.1) sudo snap install yq
-0.2) for MODULO in  pyopenssl cryptography testresources pyyaml httplib2 jinja2 six bracket-expansion netaddr pynacl lxml paramiko netmiko ansible-pylibssh textfsm ttp jmespath ntc-templates yamllint ansible; do echo instalando $MODULO; sudo pip3 install $MODULO; done
-0.3) sudo vi /usr/local/lib/python3.8/dist-packages/netsim/install/ansible.sh
-Cambiar cambiar línea 32 para que quede: REPLACE=""
-cambiar linea 33 para que quede: IGNORE=""
-eliminar yq del final de la lunea 52
-0.4) netlab install ubuntu ansible libvirt containerlab
+Una vez finalizado con el lab, lo pueden dar de baja con `netlab down`
 
-# Uso
-Copien los archivos topology.yml, o descarguen el repositorio en el servidor instalado.
-Luego hagan `netlab up`
-Ingresen a los equipos haciendo `netlab connect <nombre del equipo>`
-El lab lo pueden dar de baja con `netlab down`
+Nota: Si no quieren bajar el repositorio completo, busquen el archivo `topology.yml` dentro de cada directorio, copienló a sus máquina y si gan las instrucciones de acceso explicadas anteriormente.
