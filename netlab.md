@@ -21,4 +21,4 @@ Luego, ingresen a los equipos haciendo `netlab connect <nombre del equipo>`.
 
 Una vez finalizado con el lab, lo pueden dar de baja con `netlab down`
 
-Nota: Si no quieren bajar el repositorio completo, busquen el archivo `topology.yml` dentro de cada directorio, copienló a sus máquina y si gan las instrucciones de acceso explicadas anteriormente.
+Nota: Si no quieren bajar el repositorio completo, busquen el archivo `topology.yml` dentro de cada directorio, cópienlo a sus máquinas y sigan las instrucciones de acceso explicadas anteriormente.
