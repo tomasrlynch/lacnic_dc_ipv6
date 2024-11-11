@@ -1,4 +1,5 @@
 # Introducción
+> Agradezco a Ariel Weher por haberme ayudado a encontrar cómo subsanar el error de instalación.
 Esta es una guía simple para que puedan instalar netlab, bajen el repositorio y corran los laboratorios. Les recomiendo mucho ir a la [página del projecto netlab](https://netlab.tools/) y leer las instrucciones para poder armar o modificar los laboratorios a su mejor parecer.
 # Requerimientos
 Los siguientes no son los requerimientos mínimos del servidor, son las propiedades del servidor donde corrí sin problemas todos los laboratorios del curso.
